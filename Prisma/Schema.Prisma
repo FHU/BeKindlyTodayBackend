@@ -56,6 +56,7 @@ enum report_type {
     Impersonation
     Abuse
     SelfHarm
+    PrivacyViolation
 }
 
 model user_completions {
