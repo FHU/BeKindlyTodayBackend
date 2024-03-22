@@ -2,7 +2,7 @@
   "name": "bekindlytodaybackend",
   "version": "1.0.0",
   "description": "The backend for the bekindlytoday app",
-  "main": "main.ts",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
