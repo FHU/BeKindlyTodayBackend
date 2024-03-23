@@ -3,7 +3,7 @@
 import express from "express";
 
 // Import the users router
-import users from "./routers/users";
+import users from "./api/users";
 
 // Create the app
 const app = express();
