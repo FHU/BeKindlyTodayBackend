@@ -20,7 +20,7 @@ model users {
 model challenges {
     id Int @id @default(autoincrement()) @unique
     description String
-    date DateTime
+    date DateTime?
     challenge_completions challenge_completions[]
     source String
 }
