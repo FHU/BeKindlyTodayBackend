@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  db:
+    build:
+      context: ./db
+      target: dev #Change to prod for production
+      dockerfile: Dockerfile
+    container_name: db_c
+    ports:
+      - 5432:5432
