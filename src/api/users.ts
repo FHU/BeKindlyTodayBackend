@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 // Routes go here (get, post, put, delete)
 
 users.get("/", async (req, res) => {
-  const users = await prisma.users.all();
+  const users = await prisma.users.findMany();
   res.json(users);
 });
 
