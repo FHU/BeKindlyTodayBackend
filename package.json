@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "dotenv -e ./.env.dev nodemon ./server.ts"
+    "dev": "dotenv -e ./.env.dev nodemon ./server.ts",
+    "migrate": "sh ./db/redo-sql.sh"
   },
   "keywords": [
     "backend",
