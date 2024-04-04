@@ -21,7 +21,9 @@ const server = app.listen(PORT, () => {
   const HOST = process.env.HOSTNAME || "localhost";
   console.log(`Listening on ${HOST}:${PORT}`);
   DEBUG ??
-    console.log("Running in debug mode. Turn of debugging for production.");
+    console.log(
+      "Running in debug mode. Set DEBUG to false in environment variables to disable debug mode."
+    );
 });
 
 // Export server for testing
