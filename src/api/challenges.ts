@@ -44,3 +44,5 @@ challenges.use("/:id", async (req, res, next) => {
 });
 
 // Endpoints are defined here
+
+export default challenges;
