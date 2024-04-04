@@ -18,7 +18,7 @@ app.use(morgan(logging_level));
 
 // Have the app listen on the desired port
 const server = app.listen(PORT, () => {
-  const HOST = process.env.HOSTNAME || "localhost";
+  const HOST = process.env.HOSTNAME ?? "localhost";
   console.log(`Listening on ${HOST}:${PORT}`);
   DEBUG ??
     console.log(
