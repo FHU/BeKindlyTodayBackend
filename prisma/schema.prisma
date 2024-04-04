@@ -15,14 +15,27 @@ model users {
     user_completions user_completions[]
     comments comments[]
     report_creators report_creators[]
+    user_feedback user_feedback[]
 }
 
 model challenges {
     id Int @id @default(autoincrement()) @unique
     description String
-    date DateTime?
+    date DateTime
     challenge_completions challenge_completions[]
     source String
+    user_feedback user_feedback[]
+}
+
+model user_feedback {
+    id Int @id @default(autoincrement()) @unique
+    feedback_text String
+    user_id Int
+    challenge_id Int
+    user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    challenge challenges @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
+
+    @@unique([user_id, challenge_id], name: "user_id_challenge_id")
 }
 
 model completions {
