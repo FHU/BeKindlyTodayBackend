@@ -51,6 +51,15 @@ challenges.get("/", async (req, res) => {
         date: Date(),
       },
     });
+
+    if (challenge === null) {
+      res.status(404).json({
+        message: "Not Found: No challenge has been created for today.",
+      });
+      return;
+    }
+
+    res.json(challenge);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
