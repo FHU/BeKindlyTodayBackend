@@ -5,6 +5,7 @@ import express from "express";
 // Import the routers for the app
 import users from "./api/users";
 import challenges from "./api/challenges";
+import completions from "./api/completions";
 
 // Create the app
 const app = express();
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use("/api/v1/users", users);
 
 app.use("/api/v1/challenge", challenges);
+
+app.use("api/v1/completions", completions);
 
 // Export the app for the server to run.
 export default app;
