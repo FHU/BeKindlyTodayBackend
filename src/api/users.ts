@@ -11,6 +11,7 @@ const prisma = new PrismaClient();
 
 // Routes go here (get, post, put, delete)
 
+// TODO Update this route after changes to schema are pulled in
 users.use("/memories", async (req, res) => {
   try {
     // Find all user_completions for the current user. Include the completion model for each user_completion

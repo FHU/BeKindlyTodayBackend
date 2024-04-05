@@ -18,7 +18,7 @@ completions.post("/", async (req, res) => {
       },
     });
 
-    // FIXME Schema does not easily support enforcing uniqueness completions based on user + challenge
+    // TODO Need to pull in changes to schema in order to filter by user + challenge
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
