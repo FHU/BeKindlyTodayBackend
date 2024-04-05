@@ -12,15 +12,15 @@ model User {
     email String @unique
     username String
     password String
-    user_challenge_completion UserChallengeCompletion[]
+    completions Completion[]
 }
 
 model Challenge {
     id Int @id @default(autoincrement()) @unique
     description String
     date DateTime @unique
-    UserChallengeCompletion UserChallengeCompletion[]
     source String
+    completions Completion[]
 
     @@index([date])
 }
@@ -29,22 +29,11 @@ model Completion {
     id Int @id @default(autoincrement()) @unique
     description String
     date DateTime @default(now())
-    user_challenge_completion UserChallengeCompletion[]
-}
-
-
-model UserChallengeCompletion {
-    id Int @id @default(autoincrement()) @unique
     user_id Int
     challenge_id Int
-    completion_id Int
     user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
     challenge Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
-    completion Completion @relation(fields: [completion_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, challenge_id], name: "user_id_challenge_id")
-    @@unique([user_id, completion_id], name: "user_id_completion_id")
-    @@unique([user_id, challenge_id, completion_id], name: "user_challenge_completion_ids")
+    @@index([date])
 }
-
-
