@@ -48,7 +48,7 @@ challenges.get("/", async (req, res) => {
   try {
     const challenge = await prisma.challenges.findUnique({
       where: {
-        date: Date(),
+        date: new Date().toISOString(),
       },
     });
 
