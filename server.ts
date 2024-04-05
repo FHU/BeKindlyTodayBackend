@@ -22,7 +22,7 @@ const server = app.listen(PORT, () => {
   console.log(`Listening on ${HOST}:${PORT}`);
   DEBUG ??
     console.log(
-      "Running in debug mode. Set DEBUG to false in environment variables to disable debug mode."
+      "Running in debug mode. Set DEBUG to false in environment variables to disable debug mode.\nDisable debug mode for production!"
     );
 });
 
