@@ -8,6 +8,7 @@ const challenges = express.Router();
 
 const prisma = new PrismaClient();
 
+// Might be unnecessary with current frontend requirements
 // Example middleware to filter out 404 errors early
 challenges.use("/:id/*", async (req, res, next) => {
   // Create variable for the id
@@ -44,14 +45,17 @@ challenges.use("/:id/*", async (req, res, next) => {
 });
 
 // Endpoints are defined here
+// Get the daily challenge
 challenges.get("/", async (req, res) => {
   try {
+    // Find the challenge in the database with the date that matches today's date.
     const challenge = await prisma.challenges.findUnique({
       where: {
         date: new Date().toISOString(),
       },
     });
 
+    // If there is no challenge with the correct date, send a 404 error
     if (challenge === null) {
       res.status(404).json({
         message: "Not Found: No challenge has been created for today.",
@@ -59,6 +63,7 @@ challenges.get("/", async (req, res) => {
       return;
     }
 
+    // Send challenge as response
     res.json(challenge);
   } catch (err) {
     console.error(err);
