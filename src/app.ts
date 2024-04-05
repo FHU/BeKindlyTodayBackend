@@ -13,9 +13,9 @@ const app = express();
 app.use(express.json());
 
 // Use the users router in the corresponding route.
-app.use("/api/v1/users/", users);
+app.use("/api/v1/users", users);
 
-app.use("/api/v1/challenges", challenges);
+app.use("/api/v1/challenge", challenges);
 
 // Export the app for the server to run.
 export default app;
