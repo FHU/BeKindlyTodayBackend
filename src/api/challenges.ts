@@ -27,7 +27,7 @@ challenges.use("/:id", async (req, res, next) => {
 
   let challenge;
   try {
-    challenge = prisma.challenges.findUnique({ where: { id: id } });
+    challenge = await prisma.challenges.findUnique({ where: { id: id } });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
