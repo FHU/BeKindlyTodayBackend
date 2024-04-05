@@ -9,7 +9,7 @@ const challenges = express.Router();
 const prisma = new PrismaClient();
 
 // Example middleware to filter out 404 errors early
-challenges.use("/:id", async (req, res, next) => {
+challenges.use("/:id/*", async (req, res, next) => {
   // Create variable for the id
   let id: number;
 
@@ -44,5 +44,17 @@ challenges.use("/:id", async (req, res, next) => {
 });
 
 // Endpoints are defined here
+challenges.get("/", async (req, res) => {
+  try {
+    const challenge = await prisma.challenges.findUnique({
+      where: {
+        date: Date(),
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 export default challenges;
