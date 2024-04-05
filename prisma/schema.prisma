@@ -7,40 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model User {
     id Int @id @default(autoincrement()) @unique
     email String @unique
     username String
     password String
-    user_challenge_completion user_challenge_completions[]
+    user_challenge_completion UserChallengeCompletion[]
 }
 
-model challenges {
+model Challenge {
     id Int @id @default(autoincrement()) @unique
     description String
     date DateTime @unique
-    user_challenge_completions user_challenge_completions[]
+    UserChallengeCompletion UserChallengeCompletion[]
     source String
 
     @@index([date])
 }
 
-model completions {
+model Completion {
     id Int @id @default(autoincrement()) @unique
     description String
     date DateTime @default(now())
-    user_challenge_completion user_challenge_completions[]
+    user_challenge_completion UserChallengeCompletion[]
 }
 
 
-model user_challenge_completions {
+model UserChallengeCompletion {
     id Int @id @default(autoincrement()) @unique
     user_id Int
     challenge_id Int
     completion_id Int
-    user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    challenge challenges @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
-    completion completions @relation(fields: [completion_id], references: [id], onDelete: Cascade)
+    user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    challenge Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
+    completion Completion @relation(fields: [completion_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, challenge_id], name: "user_id_challenge_id")
     @@unique([user_id, completion_id], name: "user_id_completion_id")
