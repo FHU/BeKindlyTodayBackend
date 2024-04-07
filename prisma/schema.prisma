@@ -17,7 +17,8 @@ model User {
 
 model Challenge {
     id          Int          @id @unique @default(autoincrement())
-    description String
+    prompt      String
+    suggestion  String
     date        DateTime     @unique
     source      String
     completions Completion[]
