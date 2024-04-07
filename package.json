@@ -9,7 +9,7 @@
     "spin-db": "dotenv -e ./.env.dev docker compose up",
     "kill-db": "docker stop db_c && docker rm db_c",
     "prod": "npx ts-node ./server.ts",
-    "docker-dev": "docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up"
+    "docker-dev": "docker compose up --detach && docker compose watch"
   },
   "keywords": [
     "backend",

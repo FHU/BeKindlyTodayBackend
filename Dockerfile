@@ -30,8 +30,7 @@ CMD [ "npm", "run", "prod" ]
 
 FROM base as dev
 
-WORKDIR /api
-RUN npm i
+RUN npm install
 COPY . .
 RUN npx prisma generate
 CMD [ "npm", "run", "dev" ]
