@@ -23,13 +23,13 @@ This file will not be tracked by git and is unique to your local directory.\
   - Optional for development
   - Lists the port that the server will run on
 
-[comment]: <> (The section below should be updated with the more automated commands once those changes are pulled.)
-
 ### Starting the server
 
 - Start the docker container
   - Open a terminal in the root directory ([CTL] + `)
-  - Run `dotenv -f ./.env.dev run docker compose up`
+  - Run `npm run spin-db`
+  - The postgres docker should now be running
+- Start the server
   - Open a new terminal in the root directory ([CTL] + [SHIFT] + `)
   - Run `npm run dev`
-  - The server should be running on http://localhost:3000
+  - The server should now be running on http://localhost:3000
