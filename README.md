@@ -22,6 +22,9 @@ This file will not be tracked by git and is unique to your local directory.\
 - Port
   - Optional for development
   - Lists the port that the server will run on
+- POSTGRES_PASSWORD
+  - <span style="color:yellow;">**Required**</span>
+  - Contains the password used for the postgres database
 
 ### Starting the server
 
