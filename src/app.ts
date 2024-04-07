@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 // Use the users router in the corresponding route.
-app.use("/users/", users);
+app.use("/api/v1/users/", users);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello World!" });
