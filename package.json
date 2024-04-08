@@ -4,7 +4,7 @@
   "description": "The backend for the bekindlytoday app",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "dev": "dotenv -e ./.env.dev nodemon ./server.ts",
     "spin-db": "dotenv -e ./.env.dev docker compose up",
     "kill-db": "docker stop db_c && docker rm db_c"
@@ -26,7 +26,9 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
     "prisma": "^5.11.0",
+    "supertest": "^6.3.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0"
   }
 }
