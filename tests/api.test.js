@@ -2,41 +2,35 @@ import { describe } from 'node:test';
 import {test, expect, request} from 'vitest';
 import request from "supertest";
 
-const URL = "http://virtserver.swaggerhub.com/sean.janiec/BeKindly/1.0.0"
+const URL = "https://app.swaggerhub.com/apis/GREENE8616/BeKindly/1.0.0#/"
 
-describe('CHALLENGES', () =>{
+describe('USERS table tests', () =>{
     
-    test('GET Challenges', async () => {
-        const res = await request(URL).get('/api/v1/challenge');
+    test('GET from /challenges/today ', async () => {
+        const res = await request(URL).get('/challenges/today');
         expect(res.statusCode).toBe(200);    
     });
 
-    test('GET completions', async () => {
-        const res = await request(URL).get('/api/v1/completion');
+    test('GET from /completions', async () => {
+        const res = await request(URL).get('/completions');
         expect(res.statusCode).toBe(200);
     });
 
-    //FIX END POINT
-    // test('GET completions for today', async () => {
-    //     const res = await request(URL).get('/api/v1/completion/today');
-    //     expect(res.statusCode).toBe(200);
-    // });
+    test('GET from /users/memories', async () =>{
+        const res = await request(URL).get('/users/memories');
+        expect(res.statusCode).toBe(200);
+    });
 
-    test('GET completions for user', async () => {
+    test('GET from /completions/count', async () => {
         const res = await request(URL).get('/api/v1/completed');
         expect(res.statusCode).toBe(200);
     });
 });
 
-describe('GET User Info', () =>{
+describe('DEVELOPERS table tests', () =>{
 
-    test('GET Users', async () => {
-        const res = await request(URL).get('/api/v1/user');
-        expect(res.statusCode).toBe(200);    
-    });
-
-    test('GET User Memories', async () => {
-        const res = await request(URL).get('/api/v1/user/memories');
+    test('GET Challenges with ID 1', async () => {
+        const res = await request(URL).get('/challenges/1');
         expect(res.statusCode).toBe(200);    
     });
 
