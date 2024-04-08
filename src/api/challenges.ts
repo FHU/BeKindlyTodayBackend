@@ -28,7 +28,7 @@ challenges.use("/:id/*", async (req, res, next) => {
 
   let challenge;
   try {
-    challenge = await prisma.challenges.findUnique({ where: { id: id } });
+    challenge = await prisma.challenge.findUnique({ where: { id: id } });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
@@ -49,7 +49,7 @@ challenges.use("/:id/*", async (req, res, next) => {
 challenges.get("/", async (req, res) => {
   try {
     // Find the challenge in the database with the date that matches today's date.
-    const challenge = await prisma.challenges.findUnique({
+    const challenge = await prisma.challenge.findUnique({
       where: {
         date: new Date().toISOString().slice(0, 10),
       },

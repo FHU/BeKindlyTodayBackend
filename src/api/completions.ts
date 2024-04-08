@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 
 completions.post("/", async (req, res) => {
   try {
-    const challenge = await prisma.challenges.findUnique({
+    const challenge = await prisma.challenge.findUnique({
       where: {
         date: new Date().toISOString().slice(0, 10),
       },

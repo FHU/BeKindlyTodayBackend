@@ -15,15 +15,10 @@ const prisma = new PrismaClient();
 users.use("/memories", async (req, res) => {
   try {
     // Find all user_completions for the current user. Include the completion model for each user_completion
-    const user_completions = await prisma.user_completions.findMany({
+    const completions = await prisma.completion.findMany({
       where: {
         user_id: req.body.user.id,
       },
-      include: { completion: true },
-    });
-
-    const completions = user_completions.map((user_completion) => {
-      return user_completion.completion;
     });
 
     res.json(completions);
