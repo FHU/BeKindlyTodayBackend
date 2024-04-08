@@ -10,6 +10,34 @@ const completions = express.Router();
 // Create prisma client
 const prisma = new PrismaClient();
 
+completions.get("/:id", async (req, res) => {
+  try {
+    let completion_id;
+    try {
+      completion_id = parseInt(req.params.id);
+    } catch (err) {
+      res
+        .status(400)
+        .json({ message: "Bad request. Id parameters must be integers." });
+      return;
+    }
+
+    const completion = await prisma.completion.findUnique({
+      where: { id: completion_id },
+    });
+
+    if (completion === null) {
+      res.status(404).json({ message: "Not Found" });
+      return;
+    }
+
+    res.json(completion);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 completions.post("/", async (req, res) => {
   try {
     const challenge = await prisma.challenge.findUnique({
