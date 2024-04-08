@@ -5,7 +5,9 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "dotenv -e ./.env.dev nodemon ./server.ts"
+    "dev": "dotenv -e ./.env.dev nodemon ./server.ts",
+    "spin-db": "dotenv -e ./.env.dev docker compose up",
+    "kill-db": "docker stop db_c && docker rm db_c"
   },
   "keywords": [
     "backend",
@@ -17,9 +19,11 @@
   "devDependencies": {
     "@prisma/client": "^5.11.0",
     "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.30",
     "dotenv-cli": "^7.4.1",
     "express": "^4.19.1",
+    "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
     "prisma": "^5.11.0",
     "ts-node": "^10.9.2",
