@@ -77,29 +77,26 @@ completions.get("/", async (req, res) => {
 });
 
 // Get the count of completions that pass a filter
-completions.get("/count", async (req, res) => {
+completions.get("/stats", async (req, res) => {
   try {
-    // Get filter from request query
-    const filter = req.query.filter;
-
-    // Get user id from request body
+    // get the user id from the request body
     const user_id = parseInt(req.body.user.id);
 
-    // Check that filter matches allowed filters
-    if (!["all", "today", "user", undefined].includes(filter?.toString())) {
-      res.status(400).json({
-        message:
-          "Bad Request. Filter, if included, must be 'all', 'user', or 'today'",
-      });
-      return;
-    }
+    // get the world completions and the daily world completions
+    const world_completions = await prisma.completion.findMany();
+    const world_daily_completions = await filter_completions("today", user_id);
 
-    // Get completions and count the number
-    const completions = await filter_completions(filter?.toString(), user_id);
-    const count = completions.length;
+    // get the user's completions
+    const user_completions = await filter_completions("user", user_id);
+
+    const response_body = {
+      world_completions_count: world_completions.length,
+      world_daily_completions_count: world_daily_completions.length,
+      user_completions_count: user_completions.length,
+    };
 
     // Return the count
-    res.json({ count });
+    res.json(response_body);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
