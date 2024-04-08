@@ -194,4 +194,19 @@ completions.post("/", async (req, res) => {
   }
 });
 
+completions.delete("/:id", async (req, res) => {
+  try {
+    // get completion id from parameters
+    const completion_id = parseInt(req.params.id);
+
+    // delete the requested resource
+    await prisma.completion.delete({ where: { id: completion_id } });
+
+    res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 export default completions;
