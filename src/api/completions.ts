@@ -18,7 +18,28 @@ completions.post("/", async (req, res) => {
       },
     });
 
-    // TODO Need to pull in changes to schema in order to filter by user + challenge
+    if (challenge === null) {
+      res.status(404).json({ message: "No challenge found for current date." });
+      return;
+    }
+
+    const { user_id } = req.body.user; // FIXME Figure out how Kinde will integrate then change this to find the user or user id
+    const challenge_id = challenge.id;
+
+    const user_id_challenge_id = { user_id, challenge_id };
+
+    const completion = await prisma.completion.findUnique({
+      where: { user_id_challenge_id },
+    });
+
+    if (completion !== null) {
+      res
+        .setHeader("location", `api/v1/completions/${completion.id}`)
+        .sendStatus(303);
+      return;
+    }
+
+    res.json(completion);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
