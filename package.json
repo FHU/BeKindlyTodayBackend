@@ -6,6 +6,7 @@
   "scripts": {
     "test": "vitest",
     "dev": "dotenv -e ./.env.dev nodemon ./server.ts",
+    "redo-sql": "sh ./db/redo-sql.sh",
     "spin-db": "dotenv -e ./.env.dev docker compose up",
     "kill-db": "docker stop db_c && docker rm db_c",
     "prod": "npx ts-node ./server.ts",
