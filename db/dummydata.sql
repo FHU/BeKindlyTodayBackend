@@ -1,89 +1,38 @@
--- Insert dummy users
-INSERT INTO users (email, username, password)
-VALUES 
-    ('user1@example.com', 'user1', 'password1'),
-    ('user2@example.com', 'user2', 'password2'),
-    ('user3@example.com', 'user3', 'password3'),
-    ('user4@example.com', 'user4', 'password4'),
-    ('user5@example.com', 'user5', 'password5');
+-- Dummy Users
+INSERT INTO "User" (email, username, password) VALUES
+  ('user1@example.com', 'user1', 'password1'),
+  ('user2@example.com', 'user2', 'password2'),
+  ('user3@example.com', 'user3', 'password3'),
+  ('user4@example.com', 'user4', 'password4'),
+  ('user5@example.com', 'user5', 'password5'),
+  ('user6@example.com', 'user6', 'password6'),
+  ('user7@example.com', 'user7', 'password7'),
+  ('user8@example.com', 'user8', 'password8'),
+  ('user9@example.com', 'user9', 'password9'),
+  ('user10@example.com', 'user10', 'password10');
 
--- Insert dummy challenges
-INSERT INTO challenges (description, date, source)
-VALUES 
-    ('Challenge 1', '2024-03-22T10:00:00', 'Source 1'),
-    ('Challenge 2', '2024-03-23T11:00:00', 'Source 2'),
-    ('Challenge 3', '2024-03-24T12:00:00', 'Source 3'),
-    ('Challenge 4', '2024-03-25T13:00:00', 'Source 4'),
-    ('Challenge 5', '2024-03-26T14:00:00', 'Source 5');
+-- Dummy Challenges
+INSERT INTO "Challenge" (prompt, suggestion, date, source) VALUES
+  ('Challenge 1 prompt', 'Challenge 1 suggestion', '2024-04-01T12:00:00Z', 'Source 1'),
+  ('Challenge 2 prompt', 'Challenge 2 suggestion', '2024-04-02T12:00:00Z', 'Source 2'),
+  ('Challenge 3 prompt', 'Challenge 3 suggestion', '2024-04-03T12:00:00Z', 'Source 3'),
+  ('Challenge 4 prompt', 'Challenge 4 suggestion', '2024-04-04T12:00:00Z', 'Source 4'),
+  ('Challenge 5 prompt', 'Challenge 5 suggestion', '2024-04-05T12:00:00Z', 'Source 5'),
+  ('Challenge 6 prompt', 'Challenge 6 suggestion', '2024-04-06T12:00:00Z', 'Source 6'),
+  ('Challenge 7 prompt', 'Challenge 7 suggestion', '2024-04-07T12:00:00Z', 'Source 7'),
+  ('Challenge 8 prompt', 'Challenge 8 suggestion', '2024-04-08T12:00:00Z', 'Source 8'),
+  ('Challenge 9 prompt', 'Challenge 9 suggestion', '2024-04-09T12:00:00Z', 'Source 9'),
+  ('Challenge 10 prompt', 'Challenge 10 suggestion', '2024-04-10T12:00:00Z', 'Source 10');
 
--- Insert dummy completions
-INSERT INTO completions (description, date)
-VALUES 
-    ('Completion 1', '2024-03-22T10:00:00'),
-    ('Completion 2', '2024-03-23T11:00:00'),
-    ('Completion 3', '2024-03-24T12:00:00'),
-    ('Completion 4', '2024-03-25T13:00:00'),
-    ('Completion 5', '2024-03-26T14:00:00');
-
--- Insert dummy comments
-INSERT INTO comments (body, date, user_id, completion_id)
-VALUES 
-    ('Comment 1', '2024-03-22T10:00:00', 1, 1),
-    ('Comment 2', '2024-03-23T11:00:00', 2, 2),
-    ('Comment 3', '2024-03-24T12:00:00', 3, 3),
-    ('Comment 4', '2024-03-25T13:00:00', 4, 4),
-    ('Comment 5', '2024-03-26T14:00:00', 5, 5);
-
--- Insert dummy reports
-INSERT INTO reports (description, type, date)
-VALUES 
-    ('Report 1', 'Discrimination', '2024-03-22T10:00:00'),
-    ('Report 2', 'Harassment', '2024-03-23T11:00:00'),
-    ('Report 3', 'Violence', '2024-03-24T12:00:00'),
-    ('Report 4', 'Scam', '2024-03-25T13:00:00'),
-    ('Report 5', 'Abuse', '2024-03-26T14:00:00');
-
--- Insert dummy user completions
-INSERT INTO user_completions (user_id, completion_id)
-VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5);
-
--- Insert dummy challenge completions
-INSERT INTO challenge_completions (challenge_id, completion_id)
-VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5);
-
--- Insert dummy comment reports
-INSERT INTO comment_reports (comment_id, report_id)
-VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5);
-
--- Insert dummy report creators
-INSERT INTO report_creators (user_id, report_id)
-VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5);
-
--- Insert dummy completion reports
-INSERT INTO completion_reports (completion_id, report_id)
-VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5);
+-- Dummy Completions
+INSERT INTO "Completion" (description, date, user_id, challenge_id) VALUES
+  ('Completion 1 description', '2024-04-01T12:00:00Z', 1, 1),
+  ('Completion 2 description', '2024-04-02T12:00:00Z', 2, 2),
+  ('Completion 3 description', '2024-04-03T12:00:00Z', 3, 3),
+  ('Completion 4 description', '2024-04-04T12:00:00Z', 4, 4),
+  ('Completion 5 description', '2024-04-05T12:00:00Z', 5, 5),
+  ('Completion 6 description', '2024-04-06T12:00:00Z', 6, 6),
+  ('Completion 7 description', '2024-04-07T12:00:00Z', 7, 7),
+  ('Completion 8 description', '2024-04-08T12:00:00Z', 8, 8),
+  ('Completion 9 description', '2024-04-09T12:00:00Z', 9, 9),
+  ('Completion 10 description', '2024-04-10T12:00:00Z', 10, 10);
