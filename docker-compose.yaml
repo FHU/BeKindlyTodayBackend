@@ -8,3 +8,25 @@ services:
     container_name: db_c
     ports:
       - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  api:
+    build:
+      context: ./
+      target: dev #Change to prod for production
+      dockerfile: Dockerfile
+    container_name: api_c
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: ./
+          target: ./api
+          action: sync

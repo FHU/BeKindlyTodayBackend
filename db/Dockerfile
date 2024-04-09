@@ -1,6 +1,6 @@
 FROM postgres:16-alpine as base
 EXPOSE 5432
-ENV POSTGRES_PASSWORD="MYSUPERSECUREPASSWORD1"
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
 FROM base as prod
 #This should be changed to involve prisma migrate deploy in the future
