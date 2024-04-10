@@ -11,20 +11,14 @@ const prisma = new PrismaClient();
 
 // Routes go here (get, post, put, delete)
 
-// TODO Update this route after changes to schema are pulled in
-users.use("/memories", async (req, res) => {
+users.get("/", async (req, res) => {
   try {
-    // Find all user_completions for the current user. Include the completion model for each user_completion
-    const completions = await prisma.completion.findMany({
-      where: {
-        user_id: req.body.user.id,
-      },
-    });
+    const users = await prisma.user.findMany();
 
-    res.json(completions);
+    res.json(users);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error." });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
