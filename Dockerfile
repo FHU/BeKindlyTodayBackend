@@ -4,11 +4,10 @@ WORKDIR /api
 COPY package*.json ./
 ENV PORT=${PORT}
 EXPOSE ${PORT}
+ENV DATABASE_URL=${DATABASE_URL}
 
 
 FROM base as prod
-
-ENV DATABASE_URL=${DATABASE_URL}
 
 RUN addgroup api && adduser -S -G api api
 
