@@ -174,6 +174,16 @@ ALTER TABLE ONLY public."User" ALTER COLUMN id SET DEFAULT nextval('public."User
 --
 
 COPY public."Challenge" (id, date, source, prompt, suggestion) FROM stdin;
+1	2024-04-01 12:00:00	Source 1	Challenge 1 prompt	Challenge 1 suggestion
+2	2024-04-02 12:00:00	Source 2	Challenge 2 prompt	Challenge 2 suggestion
+3	2024-04-03 12:00:00	Source 3	Challenge 3 prompt	Challenge 3 suggestion
+4	2024-04-04 12:00:00	Source 4	Challenge 4 prompt	Challenge 4 suggestion
+5	2024-04-05 12:00:00	Source 5	Challenge 5 prompt	Challenge 5 suggestion
+6	2024-04-06 12:00:00	Source 6	Challenge 6 prompt	Challenge 6 suggestion
+7	2024-04-07 12:00:00	Source 7	Challenge 7 prompt	Challenge 7 suggestion
+8	2024-04-08 12:00:00	Source 8	Challenge 8 prompt	Challenge 8 suggestion
+9	2024-04-09 12:00:00	Source 9	Challenge 9 prompt	Challenge 9 suggestion
+10	2024-04-10 12:00:00	Source 10	Challenge 10 prompt	Challenge 10 suggestion
 \.
 
 
@@ -182,6 +192,16 @@ COPY public."Challenge" (id, date, source, prompt, suggestion) FROM stdin;
 --
 
 COPY public."Completion" (id, description, date, user_id, challenge_id) FROM stdin;
+1	Completion 1 description	2024-04-01 12:00:00	1	1
+2	Completion 2 description	2024-04-02 12:00:00	2	2
+3	Completion 3 description	2024-04-03 12:00:00	3	3
+4	Completion 4 description	2024-04-04 12:00:00	4	4
+5	Completion 5 description	2024-04-05 12:00:00	5	5
+6	Completion 6 description	2024-04-06 12:00:00	6	6
+7	Completion 7 description	2024-04-07 12:00:00	7	7
+8	Completion 8 description	2024-04-08 12:00:00	8	8
+9	Completion 9 description	2024-04-09 12:00:00	9	9
+10	Completion 10 description	2024-04-10 12:00:00	10	10
 \.
 
 
@@ -190,6 +210,16 @@ COPY public."Completion" (id, description, date, user_id, challenge_id) FROM std
 --
 
 COPY public."User" (id, email, username, password) FROM stdin;
+1	user1@example.com	user1	password1
+2	user2@example.com	user2	password2
+3	user3@example.com	user3	password3
+4	user4@example.com	user4	password4
+5	user5@example.com	user5	password5
+6	user6@example.com	user6	password6
+7	user7@example.com	user7	password7
+8	user8@example.com	user8	password8
+9	user9@example.com	user9	password9
+10	user10@example.com	user10	password10
 \.
 
 
@@ -209,21 +239,21 @@ cabb53ac-5550-4601-b6c5-5e530278ee99	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe
 -- Name: Challenge_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Challenge_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Challenge_id_seq"', 10, true);
 
 
 --
 -- Name: Completion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Completion_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Completion_id_seq"', 10, true);
 
 
 --
 -- Name: User_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."User_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."User_id_seq"', 10, true);
 
 
 --
