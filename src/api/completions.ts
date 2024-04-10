@@ -4,6 +4,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { Completion } from "@prisma/client";
+import { RequestHandler } from "express";
 
 // Create router
 const completions = express.Router();
@@ -51,22 +52,29 @@ async function filter_completions(
 completions.get("/", async (req, res) => {
   try {
     // Get filter from request query
-    const filter = req.query.filter;
+    const user_id = req.query.user_id as string;
+    let user_id_int;
 
-    // Get the user id from the request
-    const user_id = parseInt(req.body.user.id);
-
-    // Ensure filter matches allowed values
-    if (!["all", "today", "user", undefined].includes(filter?.toString())) {
-      res.status(400).json({
-        message:
-          "Bad Request. Filter, if included, must be 'all', 'user', or 'today'",
-      });
-      return;
+    // Ensure the user_id is an integer
+    if (user_id !== undefined) {
+      try {
+        user_id_int = parseInt(user_id);
+      } catch (error) {
+        res.status(400).json({ message: "Bad Request. Ids must be integers." });
+      }
     }
 
-    // Get the completions based on the filter
-    const completions = await filter_completions(filter?.toString(), user_id);
+    // Declare completions variable
+    let completions;
+
+    // Set completions based user id
+    if (user_id === undefined) {
+      completions = await prisma.completion.findMany();
+    } else {
+      completions = await prisma.completion.findMany({
+        where: { user_id: user_id_int },
+      });
+    }
 
     // Return the completions
     res.json(completions);
