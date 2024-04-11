@@ -11,42 +11,6 @@ const completions = express.Router();
 // Create prisma client
 const prisma = new PrismaClient();
 
-async function get_completions(
-  filter: string | undefined,
-  user_id: number
-): Promise<Completion[]> {
-  let completions: Completion[];
-
-  // No filter is same as filter for 'all'
-  if (filter === undefined || filter === "all") {
-    completions = await prisma.completion.findMany(); // Find all completions
-
-    // Filter completions for today's challenge
-  } else if (filter === "today") {
-    // Get today's challenge
-    const challenge = await prisma.challenge.findUnique({
-      where: { date: new Date().toISOString().slice(0, 10) },
-    });
-
-    // Return empty list if no challenge for today.
-    if (challenge === null) {
-      return [];
-    }
-
-    // Find completions based on challenge
-    completions = await prisma.completion.findMany({ where: { challenge } });
-
-    // Filter completions for logged in user
-  } else if (filter === "user") {
-    // Find completions based on user
-    completions = await prisma.completion.findMany({ where: { user_id } });
-  } else {
-    completions = []; // Don't know why ts doesn't recognize that completions is defined without this else statement.
-  }
-
-  return completions;
-}
-
 // Get all completions that pass filter
 completions.get("/", async (req, res) => {
   try {
@@ -85,18 +49,22 @@ completions.get("/stats", async (req, res) => {
     // get the user id from the request body
     const user_id = parseInt(req.body.user.id);
 
-    // get the world completions and the daily world completions
-    const world_completions = await prisma.completion.findMany();
-    const world_daily_completions = await get_completions("today", user_id);
+    // get the world completions and the daily world completions counts
+    const world_completions_count = await prisma.completion.count();
+    const world_daily_completions_count = await prisma.completion.count({
+      where: { date: new Date().toISOString().slice(0, 10) },
+    });
 
-    // get the user's completions
-    const user_completions = await get_completions("user", user_id);
+    // get the user's completions count
+    const user_completions_count = await prisma.completion.count({
+      where: { user_id },
+    });
 
     // Create the response body
     const response_body = {
-      world_completions_count: world_completions.length,
-      world_daily_completions_count: world_daily_completions.length,
-      user_completions_count: user_completions.length,
+      world_completions_count,
+      world_daily_completions_count,
+      user_completions_count,
     };
 
     // Return the count
