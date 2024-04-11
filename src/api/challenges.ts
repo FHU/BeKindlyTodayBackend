@@ -11,32 +11,32 @@ const prisma = new PrismaClient();
 // Might be unnecessary with current frontend requirements
 // Example middleware to filter out 404 errors early
 challenges.use("/:id/*", async (req, res, next) => {
-  // Create variable for the id
-  let id: number;
-
-  // Try to parse the id into a number, if it fails, inform the user that the id was invalid
   try {
-    id = parseInt(req.params.id);
-  } catch (err) {
-    console.log(err);
-    res.status(401).json({ message: "Invalid id. All ids must be integers." });
-    return;
-  }
+    // Try to parse the id into a number, if it is NaN, return 400 error
+    const id = parseInt(req.params.id);
+    if (Number.isNaN(id)) {
+      res.status(400).json({ message: "Bad Request, ids must be integers" });
+      return;
+    }
 
-  // Once the id is parsed, retrieve the corresponding challenge from the database
-  // If no challenges have a matching id, return a 404 error and return to stop execution.
+    // Once the id is parsed, retrieve the corresponding challenge from the database
+    // If no challenges have a matching id, return a 404 error and return to stop execution.
 
-  let challenge;
-  try {
+    let challenge;
     challenge = await prisma.challenge.findUnique({ where: { id: id } });
+
+    if (challenge === null) {
+      res
+        .status(404)
+        .json({ message: `Not Found, requested resource was not found` });
+      return;
+    }
+
+    // Add the requested challenge to the body of the request
+    req.body.challenge = challenge;
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
-    return;
-  }
-
-  if (challenge === null) {
-    res.status(404).json({ message: `No challenge with id=${id} was found.` });
     return;
   }
 

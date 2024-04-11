@@ -4,7 +4,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { Completion } from "@prisma/client";
-import { RequestHandler } from "express";
 
 // Create router
 const completions = express.Router();
@@ -12,7 +11,7 @@ const completions = express.Router();
 // Create prisma client
 const prisma = new PrismaClient();
 
-async function filter_completions(
+async function get_completions(
   filter: string | undefined,
   user_id: number
 ): Promise<Completion[]> {
@@ -52,16 +51,12 @@ async function filter_completions(
 completions.get("/", async (req, res) => {
   try {
     // Get filter from request query
-    const user_id = req.query.user_id as string;
-    let user_id_int;
+    let user_id = req.query.user_id as string;
 
-    // Ensure the user_id is an integer
-    if (user_id !== undefined) {
-      try {
-        user_id_int = parseInt(user_id);
-      } catch (error) {
-        res.status(400).json({ message: "Bad Request. Ids must be integers." });
-      }
+    // Ensure the user_id is an integer, return 400 error for bad requests
+    if (user_id !== undefined && Number.isNaN(parseInt(user_id))) {
+      res.status(400).json({ message: "Bad Request, ids must be integers" });
+      return;
     }
 
     // Declare completions variable
@@ -72,7 +67,7 @@ completions.get("/", async (req, res) => {
       completions = await prisma.completion.findMany();
     } else {
       completions = await prisma.completion.findMany({
-        where: { user_id: user_id_int },
+        where: { user_id: parseInt(user_id) },
       });
     }
 
@@ -92,11 +87,12 @@ completions.get("/stats", async (req, res) => {
 
     // get the world completions and the daily world completions
     const world_completions = await prisma.completion.findMany();
-    const world_daily_completions = await filter_completions("today", user_id);
+    const world_daily_completions = await get_completions("today", user_id);
 
     // get the user's completions
-    const user_completions = await filter_completions("user", user_id);
+    const user_completions = await get_completions("user", user_id);
 
+    // Create the response body
     const response_body = {
       world_completions_count: world_completions.length,
       world_daily_completions_count: world_daily_completions.length,
@@ -118,12 +114,8 @@ completions.get("/:id", async (req, res) => {
     let completion_id;
 
     // Parse the id parameter provided to filter out bad request
-    try {
-      completion_id = parseInt(req.params.id);
-    } catch (err) {
-      res
-        .status(400)
-        .json({ message: "Bad request. Id parameters must be integers." });
+    if (Number.isNaN(completion_id)) {
+      res.status(400).json({ message: "Bad Request, ids must be integers" });
       return;
     }
 
@@ -206,6 +198,12 @@ completions.delete("/:id", async (req, res) => {
   try {
     // get completion id from parameters
     const completion_id = parseInt(req.params.id);
+
+    // Check that the id can be parsed to an integer, return 400 error for bad requests
+    if (Number.isNaN(completion_id)) {
+      res.status(400).json({ message: "Bad Request, ids must be integers" });
+      return;
+    }
 
     // delete the requested resource
     await prisma.completion.delete({ where: { id: completion_id } });

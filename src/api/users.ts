@@ -1,8 +1,8 @@
 // users.ts - The router for the users model in our API
 
 // Import dependencies
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import express from "express";
+import { PrismaClient } from "@prisma/client";
 
 // Create the router
 const users = express.Router();
@@ -18,7 +18,7 @@ users.get("/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
-
+  }
 });
 
 // Export the router for use in the app.
