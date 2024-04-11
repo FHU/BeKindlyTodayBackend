@@ -151,7 +151,6 @@ completions.post("/", async (req, res) => {
         challenge_id,
         user_id,
         description,
-        date: new Date(), // Set date to current date & time
       },
     });
 
