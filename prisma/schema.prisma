@@ -21,6 +21,7 @@ model Challenge {
     suggestion  String
     date        DateTime     @unique
     source      String
+    image       String
     completions Completion[]
 
     @@index([date])

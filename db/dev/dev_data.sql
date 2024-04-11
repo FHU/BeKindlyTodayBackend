@@ -29,7 +29,8 @@ CREATE TABLE public."Challenge" (
     date timestamp(3) without time zone NOT NULL,
     source text NOT NULL,
     prompt text NOT NULL,
-    suggestion text NOT NULL
+    suggestion text NOT NULL,
+    image text NOT NULL
 );
 
 
@@ -173,17 +174,17 @@ ALTER TABLE ONLY public."User" ALTER COLUMN id SET DEFAULT nextval('public."User
 -- Data for Name: Challenge; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Challenge" (id, date, source, prompt, suggestion) FROM stdin;
-1	2024-04-01 12:00:00	Source 1	Challenge 1 prompt	Challenge 1 suggestion
-2	2024-04-02 12:00:00	Source 2	Challenge 2 prompt	Challenge 2 suggestion
-3	2024-04-03 12:00:00	Source 3	Challenge 3 prompt	Challenge 3 suggestion
-4	2024-04-04 12:00:00	Source 4	Challenge 4 prompt	Challenge 4 suggestion
-5	2024-04-05 12:00:00	Source 5	Challenge 5 prompt	Challenge 5 suggestion
-6	2024-04-06 12:00:00	Source 6	Challenge 6 prompt	Challenge 6 suggestion
-7	2024-04-07 12:00:00	Source 7	Challenge 7 prompt	Challenge 7 suggestion
-8	2024-04-08 12:00:00	Source 8	Challenge 8 prompt	Challenge 8 suggestion
-9	2024-04-09 12:00:00	Source 9	Challenge 9 prompt	Challenge 9 suggestion
-10	2024-04-10 12:00:00	Source 10	Challenge 10 prompt	Challenge 10 suggestion
+COPY public."Challenge" (id, date, source, prompt, suggestion, image) FROM stdin;
+1	2024-04-01 12:00:00	Source 1	Challenge 1 prompt	Challenge 1 suggestion	image 1
+2	2024-04-02 12:00:00	Source 2	Challenge 2 prompt	Challenge 2 suggestion	image 2
+3	2024-04-03 12:00:00	Source 3	Challenge 3 prompt	Challenge 3 suggestion	image 3
+4	2024-04-04 12:00:00	Source 4	Challenge 4 prompt	Challenge 4 suggestion	image 4
+5	2024-04-05 12:00:00	Source 5	Challenge 5 prompt	Challenge 5 suggestion	image 5
+6	2024-04-06 12:00:00	Source 6	Challenge 6 prompt	Challenge 6 suggestion	image 6
+7	2024-04-07 12:00:00	Source 7	Challenge 7 prompt	Challenge 7 suggestion	image 7
+8	2024-04-08 12:00:00	Source 8	Challenge 8 prompt	Challenge 8 suggestion	image 8
+9	2024-04-09 12:00:00	Source 9	Challenge 9 prompt	Challenge 9 suggestion	image 9
+10	2024-04-10 12:00:00	Source 10	Challenge 10 prompt	Challenge 10 suggestion	image 10
 \.
 
 
@@ -228,10 +229,11 @@ COPY public."User" (id, email, username, password) FROM stdin;
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
-553218ae-647a-49bf-9692-5b8f0f461a21	3d0965bc4bf33156535e47ee4c4a41597d146a14b3e9eb3c302b2280863ad806	2024-04-09 13:37:58.453685+00	20240323012108_test	\N	\N	2024-04-09 13:37:58.288789+00	1
-27b95ed1-60d1-4349-90e0-b68608b77bbe	89c534372340892b20a1060fa45d2ffcea26de0363e51a99d223b01043355c25	2024-04-09 13:37:58.496072+00	20240405145248_add_frontend_reqs	\N	\N	2024-04-09 13:37:58.456634+00	1
-cabb53ac-5550-4601-b6c5-5e530278ee99	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe4896e46d09370652c9c0d	2024-04-09 13:37:58.633002+00	20240405193931_simplify_schema	\N	\N	2024-04-09 13:37:58.499376+00	1
-3b9eb517-e157-470b-8eaf-f2cf64eab55f	1deb7e1cffd882e1b868a5898e06b784c4213f101ae52f5962f2bba3df18f6f6	2024-04-09 13:37:58.646306+00	20240407021219_add_prompt_field	\N	\N	2024-04-09 13:37:58.636306+00	1
+a0e3d8b2-1527-4956-b829-e20fc41bdf13	3d0965bc4bf33156535e47ee4c4a41597d146a14b3e9eb3c302b2280863ad806	2024-04-11 03:40:55.257189+00	20240323012108_test	\N	\N	2024-04-11 03:40:55.180761+00	1
+9210f1c3-20d2-4996-a59d-3ee29d3a9289	89c534372340892b20a1060fa45d2ffcea26de0363e51a99d223b01043355c25	2024-04-11 03:40:55.276904+00	20240405145248_add_frontend_reqs	\N	\N	2024-04-11 03:40:55.258557+00	1
+f446881b-ea8d-40e3-b76b-eb46b552440a	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe4896e46d09370652c9c0d	2024-04-11 03:40:55.34886+00	20240405193931_simplify_schema	\N	\N	2024-04-11 03:40:55.278353+00	1
+ab8bd078-a3a7-44ca-b29c-0566c8d4fbb9	1deb7e1cffd882e1b868a5898e06b784c4213f101ae52f5962f2bba3df18f6f6	2024-04-11 03:40:55.354747+00	20240407021219_add_prompt_field	\N	\N	2024-04-11 03:40:55.35028+00	1
+0c11e302-7f57-4647-9e10-45a10647cef1	236aa2fa39007e721889991c99a7f6f86cc095e4517c8483060a9b8f217eb34b	2024-04-11 03:40:55.360627+00	20240410182129_add_image_to_challenge	\N	\N	2024-04-11 03:40:55.356111+00	1
 \.
 
 
