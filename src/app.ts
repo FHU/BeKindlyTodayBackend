@@ -2,8 +2,10 @@
 
 import express from "express";
 
-// Import the users router
+// Import the routers for the app
 import users from "./api/users";
+import challenges from "./api/challenges";
+import completions from "./api/completions";
 
 // Create the app
 const app = express();
@@ -12,11 +14,11 @@ const app = express();
 app.use(express.json());
 
 // Use the users router in the corresponding route.
-app.use("/api/v1/users/", users);
+app.use("/api/v1/users", users);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello World!" });
-});
+app.use("/api/v1/challenges", challenges);
+
+app.use("api/v1/completions", completions);
 
 // Export the app for the server to run.
 export default app;
