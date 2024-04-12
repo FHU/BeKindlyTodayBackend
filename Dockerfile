@@ -4,11 +4,9 @@ WORKDIR /api
 COPY package*.json ./
 ENV PORT=${PORT}
 EXPOSE ${PORT}
-
+ENV DATABASE_URL=${DATABASE_URL}
 
 FROM base as prod
-
-ENV DATABASE_URL=${DATABASE_URL}
 
 RUN addgroup api && adduser -S -G api api
 
@@ -33,4 +31,4 @@ FROM base as dev
 RUN npm install
 COPY . .
 RUN npx prisma generate
-CMD [ "npm", "run", "dev:migrate" ]
+CMD [ "npm", "run", "dev" ]
