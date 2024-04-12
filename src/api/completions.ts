@@ -1,9 +1,8 @@
 // completions.ts - Router for the completions model
 
 // Import dependencies
-import express from "express";
-import { PrismaClient } from "@prisma/client";
-import { Completion } from "@prisma/client";
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
 // Create router
 const completions = express.Router();
@@ -12,14 +11,14 @@ const completions = express.Router();
 const prisma = new PrismaClient();
 
 // Get all completions that pass filter
-completions.get("/", async (req, res) => {
+completions.get('/', async (req, res) => {
   try {
     // Get filter from request query
     let user_id = req.query.user_id as string;
 
     // Ensure the user_id is an integer, return 400 error for bad requests
     if (user_id !== undefined && Number.isNaN(parseInt(user_id))) {
-      res.status(400).json({ message: "Bad Request, ids must be integers" });
+      res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
 
@@ -39,12 +38,12 @@ completions.get("/", async (req, res) => {
     res.json(completions);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
 // Get the count of completions that pass a filter
-completions.get("/stats", async (req, res) => {
+completions.get('/stats', async (req, res) => {
   try {
     // get the user id from the request body
     const user_id = parseInt(req.body.user.id);
@@ -71,19 +70,19 @@ completions.get("/stats", async (req, res) => {
     res.json(response_body);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
 // Get completion based on id
-completions.get("/:id", async (req, res) => {
+completions.get('/:id', async (req, res) => {
   try {
     // declare variable for completion's id
     let completion_id;
 
     // Parse the id parameter provided to filter out bad request
     if (Number.isNaN(completion_id)) {
-      res.status(400).json({ message: "Bad Request, ids must be integers" });
+      res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
 
@@ -94,7 +93,7 @@ completions.get("/:id", async (req, res) => {
 
     // Check for 404 errors
     if (completion === null) {
-      res.status(404).json({ message: "Not Found" });
+      res.status(404).json({ message: 'Not Found' });
       return;
     }
 
@@ -102,12 +101,12 @@ completions.get("/:id", async (req, res) => {
     res.json(completion);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
 // Post method for completions
-completions.post("/", async (req, res) => {
+completions.post('/', async (req, res) => {
   try {
     // Get the daily challenge
     const challenge = await prisma.challenge.findUnique({
@@ -118,7 +117,7 @@ completions.post("/", async (req, res) => {
 
     // Check that the challenge was found
     if (challenge === null) {
-      res.status(404).json({ message: "No challenge found for current date." });
+      res.status(404).json({ message: 'No challenge found for current date.' });
       return;
     }
 
@@ -137,7 +136,7 @@ completions.post("/", async (req, res) => {
     // Redirect to existing completion if it already exists
     if (completion !== null) {
       res
-        .setHeader("location", `api/v1/completions/${completion.id}`)
+        .setHeader('location', `api/v1/completions/${completion.id}`)
         .sendStatus(303);
       return;
     }
@@ -157,18 +156,18 @@ completions.post("/", async (req, res) => {
     res.json(new_completion);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-completions.delete("/:id", async (req, res) => {
+completions.delete('/:id', async (req, res) => {
   try {
     // get completion id from parameters
     const completion_id = parseInt(req.params.id);
 
     // Check that the id can be parsed to an integer, return 400 error for bad requests
     if (Number.isNaN(completion_id)) {
-      res.status(400).json({ message: "Bad Request, ids must be integers" });
+      res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
 
@@ -178,7 +177,7 @@ completions.delete("/:id", async (req, res) => {
     res.sendStatus(204);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
