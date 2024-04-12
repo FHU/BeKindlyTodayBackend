@@ -11,7 +11,7 @@
     "redo-sql": "sh ./db/redo-sql.sh",
     "kill-db": "docker stop db_c && docker rm db_c",
     "prod": "npx ts-node ./server.ts",
-    "docker-dev": "docker compose --env-file ./.env.dev up --detach && docker compose --env-file ./.env.dev watch"
+    "docker-dev": "docker compose --env-file ./.env.dev up --detach && docker attach api_c"
   },
   "keywords": [
     "backend",
