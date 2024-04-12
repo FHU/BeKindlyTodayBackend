@@ -6,12 +6,11 @@
   "scripts": {
     "test": "vitest",
     "dev": "dotenv -e ./.env.dev nodemon ./server.ts",
-    "dev:migrate": "npx prisma migrate deploy && nodemon ./server.ts",
     "spin-db": ". ./.env.dev && docker build --target dev -t bkt_db_img_dev ./db && docker run -dp 5432:5432 -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD --name db_c bkt_db_img_dev",
     "redo-sql": "sh ./db/redo-sql.sh",
     "kill-db": "docker stop db_c && docker rm db_c",
-    "prod": "npx ts-node ./server.ts",
-    "docker-dev": "docker compose --env-file ./.env.dev up --detach && docker compose --env-file ./.env.dev watch"
+    "prod": "npx prisma migrate deploy && npx ts-node ./server.ts",
+    "dev:docker": "docker compose --env-file ./.env.dev up --detach && docker compose --env-file ./.env.dev watch"
   },
   "keywords": [
     "backend",
