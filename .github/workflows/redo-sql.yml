@@ -1,0 +1,61 @@
+name: Redo Seeding Sql
+
+on:
+  push:
+    paths:
+      - prisma/migrations/*
+
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  #   get_challenges:
+  #     runs-on: ubuntu-latest
+
+  #     steps:
+  #       - uses: actions/checkout@v4
+
+  #       - name: Set Up Python
+  #         uses: actions/setup-python@v5
+  #         with:
+  #           python-version: '3.12'
+
+  #       - name: Install Dependecies
+  #         run: |
+  #           python -m pip install --upgrade pip
+  #           python -m pip install pandas
+
+  #       - name: Load Challenge Spreadsheet to SQL
+  #         run: python3 ./db/get_challenges_from_spreadsheet.py
+
+  redo_sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Seed Sql
+        uses: addnab/docker-run-action@v3
+        with:
+          image: postgres:16-alpine
+          options: -e POSTGRES_PASSWORD=MyDatabasePassword1 -p 5432:5423
+          run: |
+            DATABASE_URL=postgresql://postgres:MyDatabasePassword1@localhost:5432/postgres
+            npx prisma migrate deploy
+            psql --dbname=$DATABASE_URL -f challenge.sql
+            pg_dump --dbname=$DATABASE_URL > ./db/prod/seed.sql
+            psql --dbname=$DATABASE_URL -f ./db/dummydata.sql
+            pg_dump --dbname=$DATABASE_URL > ./db/dev/dev_data.sql
+
+      - name: Switch from https to ssh
+        run: git remote set-url origin ${{ secrets.SSH }}
+      - name: Check for Changes
+        run: git status
+      - name: Stage Changed Files
+        run: git add .
+      - name: Commit Changes
+        run: git commit -m "Auto updating SQL"
+      - name: Fetch from Branch
+        run: git fetch ${{ env.BRANCH_NAME }}
+      - name: Push to ${{ env.BRANCH_NAME }}
+        run: git push origin ${{ env.BRANCH_NAME }}
