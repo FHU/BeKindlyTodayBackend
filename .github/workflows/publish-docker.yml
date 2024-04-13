@@ -1,14 +1,15 @@
 name: Publish Docker Image
 run-name: Publishing Docker Image...
-on:
-  pull_request:
-    branches:
-      - main
-    types: [closed]
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types: [closed]
 
+on: [push]
 jobs:
   push_to_registry_if_merged:
-    if: ${{ github.event.pull_request.merged }}
+    # if: ${{ github.event.pull_request.merged }}
     name: Push Docker images to Docker Hub
     runs-on: ubuntu-latest
     steps:
