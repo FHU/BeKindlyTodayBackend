@@ -7,33 +7,34 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
     id          Int          @id @unique @default(autoincrement())
     email       String       @unique
     username    String
     password    String
-    completions Completion[]
+    completions completion[]
 }
 
-model Challenge {
+model challenge {
     id          Int          @id @unique @default(autoincrement())
     prompt      String
     suggestion  String
     date        DateTime     @unique
     source      String
-    completions Completion[]
+    image       String
+    completions completion[]
 
     @@index([date])
 }
 
-model Completion {
+model completion {
     id           Int       @id @unique @default(autoincrement())
     description  String
     date         DateTime  @default(now())
     user_id      Int
     challenge_id Int
-    user         User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    challenge    Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
+    user         user      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    challenge    challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, challenge_id], name: "user_id_challenge_id")
     @@index([date])

@@ -6,7 +6,6 @@ ENV PORT=${PORT}
 EXPOSE ${PORT}
 ENV DATABASE_URL=${DATABASE_URL}
 
-
 FROM base as prod
 
 RUN addgroup api && adduser -S -G api api

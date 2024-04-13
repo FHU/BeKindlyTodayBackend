@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   db:
     build:
@@ -11,6 +11,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   api:
+    depends_on:
+      - db
     build:
       context: ./
       target: dev #Change to prod for production
