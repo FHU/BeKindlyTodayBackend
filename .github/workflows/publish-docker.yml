@@ -1,10 +1,12 @@
 name: Publish Docker Image
 run-name: Publishing Docker Image...
-on:
-  pull_request:
-    branches:
-      - main
-    types: [closed]
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types: [closed]
+
+on: [push]
 
 jobs:
   push_to_registry_if_merged:
@@ -25,27 +27,50 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: #usernmae/dockerimage
+          images: evandvance/bekindlytodaybackend
 
-      - name: Build and push Backend Docker Image
+      - name: Build and push Backend Docker Production Image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          target: prod
+          tags: evandvance/bekindlytodaybackend:latest
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Backend Docker Dev Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          target: dev
+          tags: evandvance/bekindlytodaybackend:dev
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for Database Image
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: #usernmae/dockerimage
+          images: evandvance/bekindlytodaydatabase
 
-      - name: Build and push Database Image
+      - name: Build and push Database Production Docker Image
         uses: docker/build-push-action@v5
         with:
           context: ./db
-          file: ./db/Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}
+          file: ./Dockerfile
+          push: true
+          target: prod
+          tags: evandvance/bekindlytodaydatabase:latest
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Database Development Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./db
+          file: ./Dockerfile
+          push: true
+          target: dev
+          tags: evandvance/bekindlytodaydatabase:dev
           labels: ${{ steps.meta.outputs.labels }}
