@@ -58,7 +58,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./db
-          file: ./Dockerfile
+          file: ./db/Dockerfile
           push: true
           target: prod
           tags: evandvance/bekindlytodaydatabase:latest
@@ -68,7 +68,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./db
-          file: ./Dockerfile
+          file: ./db/Dockerfile
           push: true
           target: dev
           tags: evandvance/bekindlytodaydatabase:dev
