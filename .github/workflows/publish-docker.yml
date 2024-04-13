@@ -10,7 +10,7 @@ on: [push]
 
 jobs:
   push_to_registry_if_merged:
-    if: ${{ github.event.pull_request.merged }}
+    # if: ${{ github.event.pull_request.merged }}
     name: Push Docker images to Docker Hub
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Backend
-        id: meta
+        id: backend_meta
         uses: docker/metadata-action@v5
         with:
           images: evandvance/bekindlytodaybackend
@@ -50,7 +50,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for Database Image
-        id: meta
+        id: database_meta
         uses: docker/metadata-action@v5
         with:
           images: evandvance/bekindlytodaydatabase
