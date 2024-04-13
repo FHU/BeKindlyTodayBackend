@@ -18,7 +18,7 @@ RUN chown -R api:api .
 
 USER api
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
