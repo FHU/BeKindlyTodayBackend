@@ -37,7 +37,7 @@ jobs:
           push: true
           target: prod
           tags: evandvance/bekindlytodaybackend:latest
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.backend_meta.outputs.labels }}
 
       - name: Build and push Backend Docker Dev Image
         uses: docker/build-push-action@v5
@@ -47,7 +47,7 @@ jobs:
           push: true
           target: dev
           tags: evandvance/bekindlytodaybackend:dev
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.backend_meta.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for Database Image
         id: database_meta
@@ -63,7 +63,7 @@ jobs:
           push: true
           target: prod
           tags: evandvance/bekindlytodaydatabase:latest
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.database_meta.outputs.labels }}
 
       - name: Build and push Database Development Docker Image
         uses: docker/build-push-action@v5
@@ -73,4 +73,4 @@ jobs:
           push: true
           target: dev
           tags: evandvance/bekindlytodaydatabase:dev
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ steps.database_meta.outputs.labels }}
