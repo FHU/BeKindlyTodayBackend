@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
   db:
     build:
@@ -29,6 +29,10 @@ services:
           action: rebuild
         - path: ./package-lock.json
           action: rebuild
+        - path: ./.env.dev
+          action: rebuild
         - path: ./
           target: ./api
+          ignore:
+            - .git
           action: sync
