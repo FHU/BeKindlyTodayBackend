@@ -37,12 +37,7 @@ jobs:
           image: postgres:16-alpine
           options: -e POSTGRES_PASSWORD=MyDatabasePassword1 -p 5432:5423
           run: |
-            DATABASE_URL=postgresql://postgres:MyDatabasePassword1@localhost:5432/postgres
-            npx prisma migrate deploy
-            psql --dbname=$DATABASE_URL -f challenge.sql
-            pg_dump --dbname=$DATABASE_URL > ./db/prod/seed.sql
-            psql --dbname=$DATABASE_URL -f ./db/dummydata.sql
-            pg_dump --dbname=$DATABASE_URL > ./db/dev/dev_data.sql
+            npm run redo-sql
 
       - name: Commit files
         run: |
