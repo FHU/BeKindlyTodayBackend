@@ -5,6 +5,8 @@ on:
     branches:
       - main
     types: [closed]
+    paths:
+      - prisma/*
 
 jobs:
   push_to_registry_if_merged:
@@ -20,32 +22,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
-      - name: Extract metadata (tags, labels) for Backend
-        id: backend_meta
-        uses: docker/metadata-action@v5
-        with:
-          images: evandvance/bekindlytodaybackend
-
-      - name: Build and push Backend Docker Production Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          target: prod
-          tags: evandvance/bekindlytodaybackend:latest
-          labels: ${{ steps.backend_meta.outputs.labels }}
-
-      - name: Build and push Backend Docker Dev Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          target: dev
-          tags: evandvance/bekindlytodaybackend:dev
-          labels: ${{ steps.backend_meta.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for Database Image
         id: database_meta
