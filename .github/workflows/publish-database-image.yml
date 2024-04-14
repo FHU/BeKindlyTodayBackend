@@ -7,6 +7,8 @@ on:
     types: [closed]
     paths:
       - prisma/*
+      - db/prod/*
+      - db/dev/*
 
 jobs:
   push_to_registry_if_merged:
