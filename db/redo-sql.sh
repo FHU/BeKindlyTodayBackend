@@ -17,6 +17,9 @@ npx prisma migrate deploy
 echo "Dumping Schema"
 pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/prod/schema.sql
 
+echo "Seeding Database"
+psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/challenges.sql
+
 #New dummy data might be needed when a schema change is made
 echo "Inserting dummy data"
 psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/dummydata.sql
