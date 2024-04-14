@@ -1,10 +1,5 @@
 import pandas as pd
 
-
-def make_values(prompt, description, twist, date, source, rating, image):
-    return f"\n  ('{prompt}', '{description}', '{twist}', NOW() + interval '{date} day', '{source}', 0, '{image}'),"
-
-
 print("Getting data from spreadsheet...")
 sheet_id = "1YQ5sRGze8MS6edGRFEHMjyDEnrYjvst5Hdy9HB5eQ_o"
 df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
