@@ -4,7 +4,7 @@ print("Getting data from spreadsheet...")
 sheet_id = "1YQ5sRGze8MS6edGRFEHMjyDEnrYjvst5Hdy9HB5eQ_o"
 df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
 
-sql_template = f'INSERT INTO "challenge" (prompt, suggestion, twist, date, source, rating, image) VALUES'
+sql_template = f'INSERT INTO "challenges" (prompt, suggestion, twist, date, source, rating, image) VALUES'
 
 print("Forming Sql...")
 #I do not know pandas well, so this is what I did. Also I know this is bad but itll work for now
@@ -21,7 +21,7 @@ for row in df.itertuples():
     rating = 0
     image = str(row[7]).replace("'","")
 
-    sql_template += f"\n  ('{prompt}', '{description}', '{twist}', {date}, '{source}', {rating}, '{image}'),"
+    sql_template += f"\n  ('{prompt}', '{description}', '{twist}', {date}, '{source}', '{rating}', '{image}'),"
 
 sql_template = sql_template.rstrip(",") + ";"
 
