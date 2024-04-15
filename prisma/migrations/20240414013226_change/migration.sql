@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "challenge" ADD COLUMN     "rating" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "twist" TEXT NOT NULL DEFAULT '';

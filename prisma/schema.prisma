@@ -7,113 +7,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-    id Int @id @default(autoincrement()) @unique
-    email String @unique
-    username String
-    password String
-    user_completions user_completions[]
-    comments comments[]
-    report_creators report_creators[]
+model user {
+  id          Int          @id @unique @default(autoincrement())
+  email       String       @unique
+  username    String
+  password    String
+  completions completion[]
 }
 
-model challenges {
-    id Int @id @default(autoincrement()) @unique
-    description String
-    date DateTime?
-    challenge_completions challenge_completions[]
-    source String
+model challenge {
+  id          Int          @id @unique @default(autoincrement())
+  prompt      String
+  suggestion  String
+  twist       String
+  date        DateTime     @unique
+  source      String
+  rating      Int
+  image       String
+  completions completion[]
+
+  @@index([date])
 }
 
-model completions {
-    id Int @id @default(autoincrement()) @unique
-    description String
-    date DateTime @default(now())
-    user_completion user_completions[]
-    challenge_completion challenge_completions[]
-    comments comments[]
-    completion_report completion_reports[]
-}
+model completion {
+  id           Int       @id @unique @default(autoincrement())
+  description  String
+  date         DateTime  @default(now())
+  user_id      Int
+  challenge_id Int
+  user         user      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  challenge    challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
 
-model comments {
-    id Int @id @default(autoincrement()) @unique
-    body String
-    date DateTime @default(now())
-    user_id Int
-    completion_id Int
-    user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    completion completions @relation(fields: [completion_id], references: [id], onDelete: Cascade)
-    comment_reports comment_reports[]
-}
-
-model reports {
-    id Int @id @default(autoincrement()) @unique
-    description String
-    type report_type
-    date DateTime @default(now())
-    comment_report comment_reports[]
-    completion_report completion_reports[]
-    report_creator report_creators[]
-}
-
-enum report_type {
-    Discrimination
-    Harassment
-    SexualContent
-    Violence
-    Scam
-    Impersonation
-    Abuse
-    SelfHarm
-    PrivacyViolation
-}
-
-model user_completions {
-    id Int @id @default(autoincrement()) @unique
-    user_id Int
-    completion_id Int
-    user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    completion completions @relation(fields: [completion_id], references: [id], onDelete: Cascade)
-
-    @@unique([user_id, completion_id], name: "user_id_completion_id")
-}
-
-model challenge_completions {
-    id Int @id @default(autoincrement()) @unique
-    challenge_id Int
-    completion_id Int
-    challenge challenges @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
-    completion completions @relation(fields: [completion_id], references: [id], onDelete: Cascade)
-
-    @@unique([challenge_id, completion_id], name: "challenge_id_completion_id")
-}
-
-model comment_reports {
-    id Int @id @default(autoincrement()) @unique
-    comment_id Int
-    report_id Int
-    comment comments @relation(fields: [comment_id], references: [id], onDelete: Cascade)
-    report reports @relation(fields: [report_id], references: [id], onDelete: Cascade)
-
-    @@unique([comment_id, report_id], name: "comment_id_report_id")
-}
-
-model report_creators {
-    id Int @id @default(autoincrement()) @unique
-    user_id Int
-    report_id Int
-    user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    report reports @relation(fields: [report_id], references: [id], onDelete: Cascade)
-
-    @@unique([user_id, report_id], name: "user_id_report_id")
-}
-
-model completion_reports {
-    id Int @id @default(autoincrement()) @unique
-    completion_id Int
-    report_id Int
-    completion completions @relation(fields: [completion_id], references: [id], onDelete: Cascade)
-    report reports @relation(fields: [report_id], references: [id], onDelete: Cascade)
-
-    @@unique([completion_id, report_id], name: "completion_id_report_id")
+  @@unique([user_id, challenge_id], name: "user_id_challenge_id")
+  @@index([date])
 }

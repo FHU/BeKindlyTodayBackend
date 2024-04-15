@@ -10,10 +10,15 @@ const users = express.Router();
 const prisma = new PrismaClient();
 
 // Routes go here (get, post, put, delete)
-
 users.get("/", async (req, res) => {
-  const users = await prisma.users.all();
-  res.json(users);
+  try {
+    const users = await prisma.user.findMany();
+
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // Export the router for use in the app.
