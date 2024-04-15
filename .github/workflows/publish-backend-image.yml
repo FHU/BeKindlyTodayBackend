@@ -1,4 +1,4 @@
-name: Publish Docker Image
+name: Publish Backend Docker Image
 run-name: Publishing Docker Image...
 on:
   pull_request:
