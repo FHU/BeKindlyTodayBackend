@@ -22,14 +22,12 @@ This file will not be tracked by git and is unique to your local directory.\
 - Port
   - Optional for development
   - Lists the port that the server will run on
+- POSTGRES_PASSWORD
+  - <span style="color:yellow;">**Required**</span>
+  - Contains the password used for the postgres database
 
 ### Starting the server
 
 - Start the docker container
-  - Open a terminal in the root directory ([CTL] + `)
-  - Run `npm run spin-db`
-  - The postgres docker should now be running
-- Start the server
-  - Open a new terminal in the root directory ([CTL] + [SHIFT] + `)
-  - Run `npm run dev`
-  - The server should now be running on http://localhost:3000
+  - Run `npm run dev:docker`
+  - Connect to the backend at https://localhost:$PORT
