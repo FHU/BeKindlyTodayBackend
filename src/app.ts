@@ -8,9 +8,29 @@ import morgan from "morgan";
 import users from "./api/users";
 import challenges from "./api/challenges";
 import completions from "./api/completions";
+import { GrantType } from "@kinde-oss/kinde-node-express";
 
 // Create the app
 const app = express();
+
+// Config settings for Kinde
+const {
+	setupKinde,
+} = require("@kinde-oss/kinde-node-express");
+
+const config = {
+    clientId: process.env.KINDE_CLIENT_ID,
+    issuerBaseUrl: process.env.KINDE_URL,
+    siteUrl: process.env.LOCAL_SITE_URL,
+    secret: process.env.KINDE_CLIENT_SECRET,
+    redirectUrl: process.env.LOCAL_SITE_URL,
+    scope: "openid profile email",
+    grantType: GrantType.AUTHORIZATION_CODE, //or CLIENT_CREDENTIALS or PKCE
+    unAuthorisedUrl: process.env.UNAUTHORIZED_URL,
+    postLogoutRedirectUrl: process.env.LOCAL_SITE_URL
+};
+
+setupKinde(config, app);
 
 // Use express json middleware for all routes
 app.use(express.json());

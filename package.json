@@ -34,5 +34,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
+  },
+  "dependencies": {
+    "@kinde-oss/kinde-node-express": "^1.3.0"
   }
 }
