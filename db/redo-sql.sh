@@ -9,10 +9,16 @@ docker run -dp 5432:5432 -e POSTGRES_PASSWORD=Mydatabasepassword1 --name bkt_db_
 #than 5ish seconds to run a brand new postgres instance
 sleep 5
 
-dotenv -e .env.dev -- npx prisma migrate deploy
+POSTGRES_PASSWORD=Mydatabasepassword1
+DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@localhost:5432/postgres
 
-echo "Dumping Schema"
-pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/prod/schema.sql
+npx prisma migrate deploy
+
+echo "Seeding Database"
+psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/challenges.sql
+
+echo "Dumping Seed"
+pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/prod/seed.sql
 
 #New dummy data might be needed when a schema change is made
 echo "Inserting dummy data"

@@ -1,5 +1,5 @@
-name: Publish Docker Image
-run-name: Publishing Docker Image...
+name: Publish Backend Docker Image
+run-name: Publishing Backend Docker Image...
 on:
   pull_request:
     branches:
