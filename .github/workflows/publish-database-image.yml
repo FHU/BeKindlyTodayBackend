@@ -1,5 +1,5 @@
 name: Publish Database Docker Image
-run-name: Publishing Docker Image...
+run-name: Publishing Database Docker Image...
 on:
   pull_request:
     branches:
