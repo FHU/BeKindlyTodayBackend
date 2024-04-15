@@ -11,6 +11,8 @@ print("Forming Sql...")
 for row in df.itertuples():
     #Each index of the row coresponds to the column that it is in in the spreadsheet
     
+    #The replaces here is to remove ' which breaks the way the sql is written. In future iterations, the sql should be changed to not need this
+    #but for now its fine.
     prompt = str(row[1]).replace("'","")
     description = str(row[2]).replace("'","")
     twist = str(row[3]).replace("'","")
