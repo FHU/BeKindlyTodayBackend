@@ -75,17 +75,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-
-  upsert_production_challenges:
-    name: Upsert Production Challenges
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: action/checkout@v4
-      - name: Install Postgres CLI
-        run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends postgresql-client
-
-      - name: Run Upsert
-        run: psql --dbname=${{ secrets.PRODUCTION_DATABASE_URL }} -f ./db/challenges_upsert.sql
