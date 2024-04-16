@@ -59,9 +59,9 @@ INSERT INTO "challenges" (prompt, spanish_prompt, suggestion, twist, spanish_twi
 
 ON Conflict(prompt)
 DO UPDATE SET
-    prompt = EXCLUDED.prompt,
     spanish_prompt = EXCLUDED.spanish_prompt,
     suggestion = EXCLUDED.suggestion,
     twist = EXCLUDED.twist,
     spanish_twist = EXCLUDED.spanish_twist,
+    date = EXCLUDED.date,
     image = EXCLUDED.image;
