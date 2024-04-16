@@ -39,3 +39,18 @@ jobs:
           push: true
           tags: evandvance/bekindlytodaydatabase:latest
           labels: ${{ steps.database_meta.outputs.labels }}
+
+  upsert_production_challenges:
+    if: ${{ github.event.pull_request.merged }}
+    name: Upsert Production Challenges
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: action/checkout@v4
+      - name: Install Postgres CLI
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends postgresql-client
+
+      - name: Run Upsert
+        run: psql --dbname=${{ secrets.PRODUCTION_DATABASE_URL }} -f ./db/challenges_upsert.sql
