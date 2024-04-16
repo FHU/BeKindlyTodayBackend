@@ -29,13 +29,14 @@ sql_template = sql_template.rstrip(",") + '''
 
 ON Conflict(prompt)
 DO UPDATE SET
-    prompt = EXCLUDED.prompt,
     spanish_prompt = EXCLUDED.spanish_prompt,
     suggestion = EXCLUDED.suggestion,
     twist = EXCLUDED.twist,
     spanish_twist = EXCLUDED.spanish_twist,
+    date = EXCLUDED.date
     image = EXCLUDED.image;
-'''
+''' 
+#I chose to add the new dates since were not really launched till a further date. Once we really launch we should change that.
 
 print("Writing SQL to file...")
 with open("./db/challenges_upsert.sql", "w") as file:
