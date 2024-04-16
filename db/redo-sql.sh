@@ -3,7 +3,7 @@
 #You need pg_dump installed locally to run this script.
 
 POSTGRES_PASSWORD=Mydatabasepassword1
-POSTGRES_USER=test
+POSTGRES_USER=postgres
 DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER}
 
 if [ ! -f ./.env ]; then
