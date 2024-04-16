@@ -10,9 +10,10 @@ db
 #Exclude git and github stuff
 .git
 .github
+.gitignore
 
 #Exclude tests from images
 tests
 
-#Exclude all markdow
+#Exclude all markdown
 *.md

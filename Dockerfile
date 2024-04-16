@@ -2,9 +2,11 @@ FROM node:21-alpine as base
 
 WORKDIR /api
 COPY package*.json ./
+
+#This wont put these env vars into the builds, but creates a way for people to know what each container needs
 ENV PORT=${PORT}
 EXPOSE ${PORT}
-ENV DATABASE_URL=${DATABASE_URL}
+# ENV DATABASE_URL=${DATABASE_URL}
 
 FROM base as prod
 
