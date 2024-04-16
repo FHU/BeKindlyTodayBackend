@@ -18,15 +18,17 @@ model User {
 }
 
 model Challenge {
-  id          Int          @id @unique @default(autoincrement())
-  prompt      String
-  suggestion  String
-  twist       String
-  date        DateTime     @unique
-  source      String
-  rating      Int
-  image       String
-  completions Completion[]
+  id             Int          @id @unique @default(autoincrement())
+  prompt         String       @unique
+  spanish_prompt String?
+  suggestion     String
+  twist          String
+  spanish_twist  String?
+  date           DateTime     @unique @db.Date
+  source         String
+  rating         Int
+  image          String
+  completions    Completion[]
 
   @@index([date])
   @@map("challenges")

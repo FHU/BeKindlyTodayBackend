@@ -44,14 +44,29 @@ completions.get('/', async (req, res) => {
 
 // Get the count of completions that pass a filter
 completions.get('/stats', async (req, res) => {
+  console.log('here');
   try {
+    const DAY_IN_MS = 86400000;
+
+    const start_of_challenge_day =
+      new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z';
+
+    const end_of_challenge_day = new Date(
+      new Date(start_of_challenge_day).getTime() + DAY_IN_MS
+    );
+
     // get the user id from the request body
     const user_id = parseInt(req.body.user.id);
 
     // get the world completions and the daily world completions counts
     const world_completions_count = await prisma.completion.count();
     const world_daily_completions_count = await prisma.completion.count({
-      where: { date: new Date().toISOString().slice(0, 10) },
+      where: {
+        date: {
+          gte: start_of_challenge_day,
+          lte: end_of_challenge_day,
+        },
+      },
     });
 
     // get the user's completions count

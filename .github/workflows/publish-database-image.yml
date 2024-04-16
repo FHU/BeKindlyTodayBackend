@@ -7,7 +7,6 @@ on:
     types: [closed]
     paths:
       - prisma/*
-      - db/prod/*
       - db/dev/*
       - db/challenges_upsert.sql
 
@@ -38,31 +37,5 @@ jobs:
           context: ./db
           file: ./db/Dockerfile
           push: true
-          target: prod
           tags: evandvance/bekindlytodaydatabase:latest
           labels: ${{ steps.database_meta.outputs.labels }}
-
-      - name: Build and push Database Development Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./db
-          file: ./db/Dockerfile
-          push: true
-          target: dev
-          tags: evandvance/bekindlytodaydatabase:dev
-          labels: ${{ steps.database_meta.outputs.labels }}
-
-  upsert_production_challenges:
-    if: ${{ github.event.pull_request.merged }}
-    name: Upsert Production Challenges
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: action/checkout@v4
-      - name: Install Postgres CLI
-        run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends postgresql-client
-
-      - name: Run Upsert
-        run: psql --dbname=${{ secrets.PRODUCTION_DATABASE_URL }} -f ./db/challenges_upsert.sql
