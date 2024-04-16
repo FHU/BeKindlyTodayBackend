@@ -4,6 +4,12 @@
 
 POSTGRES_PASSWORD=Mydatabasepassword1
 POSTGRES_USER=test
+DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER}
+
+if [ ! -f ./.env ]; then
+    echo "Generating .env..."
+    echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}\nPOSTGRES_USER=${POSTGRES_USER}\nDATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER}" > ./.env
+fi
 
 docker run -dp 5432:5432 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} -e POSTGRES_USER=${POSTGRES_USER} --name bkt_db_c postgres:16-alpine 
 
@@ -11,8 +17,6 @@ docker run -dp 5432:5432 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} -e POSTGRES_U
 #it was running using things like healthchecks, curl, nc, etc but I find this solution to be the simplest since it will never take more
 #than 5ish seconds to run a brand new postgres instance
 sleep 5
-
-DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER}
 
 npx prisma migrate deploy
 
