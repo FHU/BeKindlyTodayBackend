@@ -19,7 +19,7 @@ const {
 } = require("@kinde-oss/kinde-node-express");
 
 const config = {
-    clientId: process.env.KINDE_CLIENT_ID,
+    clientId: process.env.KINDE_BACKEND_CLIENT_ID,
     issuerBaseUrl: process.env.KINDE_URL,
     siteUrl: process.env.LOCAL_SITE_URL,
     secret: process.env.KINDE_CLIENT_SECRET,
