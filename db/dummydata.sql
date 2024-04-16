@@ -1,5 +1,5 @@
 -- Dummy Users
-INSERT INTO "user" (email, username, password) VALUES
+INSERT INTO "users" (email, username, password) VALUES
   ('user1@example.com', 'user1', 'password1'),
   ('user2@example.com', 'user2', 'password2'),
   ('user3@example.com', 'user3', 'password3'),
@@ -13,7 +13,7 @@ INSERT INTO "user" (email, username, password) VALUES
 
 
 -- Dummy Completions
-INSERT INTO "completion" (description, date, user_id, challenge_id) VALUES
+INSERT INTO "completions" (description, date, user_id, challenge_id) VALUES
   ('Completion 1 description', '2024-04-01T12:00:00Z', 1, 1),
   ('Completion 2 description', '2024-04-02T12:00:00Z', 2, 2),
   ('Completion 3 description', '2024-04-03T12:00:00Z', 3, 3),
