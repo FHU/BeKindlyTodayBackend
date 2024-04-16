@@ -20,7 +20,7 @@ sleep 5
 npx prisma migrate deploy
 
 echo "Inserting Challenges"
-psql --dbname=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER} -f ./db/challenges.sql
+psql --dbname=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER} -f ./db/challenges_upsert.sql
 
 echo "Dumping Production Seed"
 pg_dump --dbname=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER} > ./db/prod/seed.sql
@@ -42,7 +42,7 @@ sleep 5
 npx prisma migrate deploy
 
 echo "Inserting Challenges"
-psql --dbname=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER} -f ./db/challenges.sql
+psql --dbname=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER} -f ./db/challenges_upsert.sql
 
 #New dummy data might be needed when a schema change is made
 echo "Inserting dummy data"
