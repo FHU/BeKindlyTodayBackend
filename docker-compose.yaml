@@ -1,15 +1,21 @@
 version: '3.8'
 services:
   db:
-    build:
-      context: ./db
-      target: dev #Change to prod for production
-      dockerfile: Dockerfile
     container_name: db_c
-    ports:
-      - 5432:5432
+    image: evandvance/bekindlytodaydatabase:latest
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+  # db:
+  #   container_name: db_c
+  #   build:
+  #     context: ./db
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #   ports:
+  #     - 5432:5432
   api:
     depends_on:
       - db
