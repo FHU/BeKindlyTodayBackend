@@ -24,7 +24,7 @@ model Challenge {
   suggestion     String
   twist          String
   spanish_twist  String?
-  date           DateTime     @unique
+  date           DateTime     @unique @db.Date
   source         String
   rating         Int
   image          String

@@ -18,7 +18,7 @@ for row in df.itertuples():
     description = str(row[3]).replace("'","")
     twist = str(row[4]).replace("'","")
     spanish_twist = str(row[5]).replace("'","")
-    date = f"DATE_TRUNC('day', NOW() + interval '{row[0]} days')" #The index is the ammount of days past now that the date is being made
+    date = f"NOW() + interval '{row[0]} days'" #The index is the ammount of days past now that the date is being made
     source = str(row[6]).replace("'","")
     rating = 0
     image = str(row[8]).replace("'","")

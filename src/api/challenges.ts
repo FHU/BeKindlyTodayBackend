@@ -51,7 +51,7 @@ challenges.get('/today', async (req, res) => {
     // Find the challenge in the database with the date that matches today's date.
     const challenge = await prisma.challenge.findUnique({
       where: {
-        date: new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z',
+        date: new Date().toISOString(),
       },
     });
 
