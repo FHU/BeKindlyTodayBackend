@@ -23,10 +23,18 @@ for row in df.itertuples():
 
     sql_template += f"\n  ('{prompt}', '{description}', '{twist}', {date}, '{source}', '{rating}', '{image}'),"
 
-sql_template = sql_template.rstrip(",") + ";"
+sql_template = sql_template.rstrip(",") + '''
+
+ON Conflict(prompt)
+DO UPDATE SET
+    prompt = EXCLUDED.prompt
+    suggestion = EXCLUDED.suggestion
+    twist = EXCLUDED.twist
+    image = EXCLUDED.image;
+'''
 
 print("Writing SQL to file...")
-with open("./db/challenges.sql", "w") as file:
+with open("./db/challenges_upsert.sql", "w") as file:
     file.write(sql_template)
 
 print("Complete...")
