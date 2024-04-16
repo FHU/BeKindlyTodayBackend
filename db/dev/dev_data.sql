@@ -177,15 +177,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
-d82156e3-006f-4456-8e3e-1e2aacc77fec	3d0965bc4bf33156535e47ee4c4a41597d146a14b3e9eb3c302b2280863ad806	2024-04-15 18:57:06.157069+00	20240323012108_test	\N	\N	2024-04-15 18:57:06.010816+00	1
-760ddf5e-0092-41b7-811b-aaa36f64ea31	89c534372340892b20a1060fa45d2ffcea26de0363e51a99d223b01043355c25	2024-04-15 18:57:06.196023+00	20240405145248_add_frontend_reqs	\N	\N	2024-04-15 18:57:06.160188+00	1
-f51c2277-0979-4d57-8e04-3027330e5be2	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe4896e46d09370652c9c0d	2024-04-15 18:57:06.325778+00	20240405193931_simplify_schema	\N	\N	2024-04-15 18:57:06.199501+00	1
-a9a5faad-b95c-4047-a238-4d3ee4f64cf6	1deb7e1cffd882e1b868a5898e06b784c4213f101ae52f5962f2bba3df18f6f6	2024-04-15 18:57:06.338442+00	20240407021219_add_prompt_field	\N	\N	2024-04-15 18:57:06.328875+00	1
-62f470fd-11a3-44ad-8664-7dbb1b33822c	236aa2fa39007e721889991c99a7f6f86cc095e4517c8483060a9b8f217eb34b	2024-04-15 18:57:06.351811+00	20240410182129_add_image_to_challenge	\N	\N	2024-04-15 18:57:06.341598+00	1
-ab9bb2e3-0724-43ae-bd33-16cd840aeb99	be4f5e033118c01ec5ac87e78e07ecf2318ad27016a133780ab9477e3f55d351	2024-04-15 18:57:06.438183+00	20240412182541_change	\N	\N	2024-04-15 18:57:06.354846+00	1
-ac21b20d-d265-4982-876a-121cbb9b3f6e	ca0a334250251709f091f9b8f3a84e974ade534461ca5455571d4bdd95a53791	2024-04-15 18:57:06.450879+00	20240414013226_change	\N	\N	2024-04-15 18:57:06.441253+00	1
-808c3e46-4ffb-4845-8d44-d5a5798231e6	48bea31d29cc7421ed726dd2ed134583e66b27200cb582c5d4891214992a6ae7	2024-04-15 18:57:06.464116+00	20240414022443_fix_challenge_change_issues	\N	\N	2024-04-15 18:57:06.453698+00	1
-8ed088c1-3408-4df5-b1ea-4c54f4a4ac44	ec882d803bc38d05f8e1ba8daee82d6ec57dbd57d422f963b02d10ae3018dacd	2024-04-15 18:57:06.547048+00	20240415185228_add_correct_mapping	\N	\N	2024-04-15 18:57:06.467627+00	1
+9e4e87c7-897b-4799-8dc4-6614c58de6a1	3d0965bc4bf33156535e47ee4c4a41597d146a14b3e9eb3c302b2280863ad806	2024-04-16 02:53:16.550721+00	20240323012108_test	\N	\N	2024-04-16 02:53:16.398384+00	1
+e8f4ef97-4da8-40cd-a7e7-5860e9a3d16c	89c534372340892b20a1060fa45d2ffcea26de0363e51a99d223b01043355c25	2024-04-16 02:53:16.590326+00	20240405145248_add_frontend_reqs	\N	\N	2024-04-16 02:53:16.554255+00	1
+131d826c-c648-4fdc-8914-6824827e3b44	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe4896e46d09370652c9c0d	2024-04-16 02:53:16.722928+00	20240405193931_simplify_schema	\N	\N	2024-04-16 02:53:16.593786+00	1
+48dcfd36-e481-4bea-a583-e38dbdf5936b	1deb7e1cffd882e1b868a5898e06b784c4213f101ae52f5962f2bba3df18f6f6	2024-04-16 02:53:16.736422+00	20240407021219_add_prompt_field	\N	\N	2024-04-16 02:53:16.726052+00	1
+0bd7a899-a132-45d4-9286-b06b19be9a6b	236aa2fa39007e721889991c99a7f6f86cc095e4517c8483060a9b8f217eb34b	2024-04-16 02:53:16.748831+00	20240410182129_add_image_to_challenge	\N	\N	2024-04-16 02:53:16.739921+00	1
+4cbae390-4617-4d99-bd0b-d5be870f5452	be4f5e033118c01ec5ac87e78e07ecf2318ad27016a133780ab9477e3f55d351	2024-04-16 02:53:16.833669+00	20240412182541_change	\N	\N	2024-04-16 02:53:16.751939+00	1
+b965006a-adb6-4cf8-b682-127b506fb2bf	ca0a334250251709f091f9b8f3a84e974ade534461ca5455571d4bdd95a53791	2024-04-16 02:53:16.846572+00	20240414013226_change	\N	\N	2024-04-16 02:53:16.83674+00	1
+b8c337eb-796f-4897-99d7-342914d9886e	48bea31d29cc7421ed726dd2ed134583e66b27200cb582c5d4891214992a6ae7	2024-04-16 02:53:16.859503+00	20240414022443_fix_challenge_change_issues	\N	\N	2024-04-16 02:53:16.849761+00	1
 \.
 
 
@@ -258,17 +257,7 @@ COPY public.challenges (id, prompt, suggestion, twist, date, source, rating, ima
 -- Data for Name: completions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.completions (id, description, date, user_id, challenge_id) FROM stdin;
-1	Completion 1 description	2024-04-01 12:00:00	1	1
-2	Completion 2 description	2024-04-02 12:00:00	2	2
-3	Completion 3 description	2024-04-03 12:00:00	3	3
-4	Completion 4 description	2024-04-04 12:00:00	4	4
-5	Completion 5 description	2024-04-05 12:00:00	5	5
-6	Completion 6 description	2024-04-06 12:00:00	6	6
-7	Completion 7 description	2024-04-07 12:00:00	7	7
-8	Completion 8 description	2024-04-08 12:00:00	8	8
-9	Completion 9 description	2024-04-09 12:00:00	9	9
-10	Completion 10 description	2024-04-10 12:00:00	10	10
+COPY public.completion (id, description, date, user_id, challenge_id) FROM stdin;
 \.
 
 
@@ -276,17 +265,7 @@ COPY public.completions (id, description, date, user_id, challenge_id) FROM stdi
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, username, password) FROM stdin;
-1	user1@example.com	user1	password1
-2	user2@example.com	user2	password2
-3	user3@example.com	user3	password3
-4	user4@example.com	user4	password4
-5	user5@example.com	user5	password5
-6	user6@example.com	user6	password6
-7	user7@example.com	user7	password7
-8	user8@example.com	user8	password8
-9	user9@example.com	user9	password9
-10	user10@example.com	user10	password10
+COPY public."user" (id, email, username, password) FROM stdin;
 \.
 
 
@@ -294,21 +273,21 @@ COPY public.users (id, email, username, password) FROM stdin;
 -- Name: challenges_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.challenges_id_seq', 57, true);
+SELECT pg_catalog.setval('public.challenge_id_seq', 1, false);
 
 
 --
 -- Name: completions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.completions_id_seq', 10, true);
+SELECT pg_catalog.setval('public.completion_id_seq', 1, false);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 10, true);
+SELECT pg_catalog.setval('public.user_id_seq', 1, false);
 
 
 --
