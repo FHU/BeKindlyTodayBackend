@@ -1,5 +1,5 @@
-name: Publish Database Docker Image
-run-name: Publishing Database Docker Image...
+name: Auto Upsert Challenges
+run-name: Auto Upserting Challenges...
 on:
   pull_request:
     branches:
