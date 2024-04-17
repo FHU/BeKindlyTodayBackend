@@ -57,7 +57,7 @@ if (process.env.ENVIROMENT !== "dev"){
       // Find the challenge in the database with the date that matches today's date.
       const challenge = await prisma.challenge.findUnique({
         where: {
-          date: new Date().toISOString().slice(0, 10),
+          date: new Date().toISOString(),
         },
       });
   
@@ -82,7 +82,7 @@ if (process.env.ENVIROMENT !== "dev"){
       // Find the challenge in the database with the date that matches today's date.
       const challenge = await prisma.challenge.findUnique({
         where: {
-          date: new Date().toISOString().slice(0, 10),
+          date: new Date().toISOString(),
         },
       });
   

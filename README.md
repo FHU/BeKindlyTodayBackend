@@ -25,6 +25,9 @@ This file will not be tracked by git and is unique to your local directory.\
 - POSTGRES_PASSWORD
   - <span style="color:yellow;">**Required**</span>
   - Contains the password used for the postgres database
+- ENVIROMENT
+  - <span style="color:yellow;">**Required**</span>
+  - Sets the enviroment to know whether to use authentication or not
 
 ### Starting the server
 
