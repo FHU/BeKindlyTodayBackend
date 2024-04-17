@@ -7,6 +7,7 @@ on:
     types: [closed]
     paths:
       - db/dev/*
+      - prisma/migrations/*
 
 jobs:
   push_to_registry_if_merged:
@@ -37,3 +38,18 @@ jobs:
           push: true
           tags: evandvance/bekindlytodaydatabase:latest
           labels: ${{ steps.database_meta.outputs.labels }}
+
+  deploy:
+    name: Deploy Schema Changes to production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Apply all pending migrations to the database
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
