@@ -33,7 +33,6 @@ DO UPDATE SET
     suggestion = EXCLUDED.suggestion,
     twist = EXCLUDED.twist,
     spanish_twist = EXCLUDED.spanish_twist,
-    date = EXCLUDED.date,
     image = EXCLUDED.image;
 ''' 
 #I chose to add the new dates since were not really launched till a further date. Once we really launch we should change that.
