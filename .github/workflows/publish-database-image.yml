@@ -6,7 +6,6 @@ on:
       - main
     types: [closed]
     paths:
-      - prisma/*
       - db/dev/*
 
 jobs:
