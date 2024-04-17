@@ -26,6 +26,17 @@ jobs:
       - name: Load Challenge Spreadsheet to SQL
         run: python3 ./db/get_challenges_from_spreadsheet.py
 
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Redid SQL[bot]"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
   redo_sql:
     name: Redo SQL
     runs-on: ubuntu-latest
@@ -69,7 +80,7 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -a -m "Redid SQL[bpt]"
+          git commit -a -m "Redid SQL[bot]"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
