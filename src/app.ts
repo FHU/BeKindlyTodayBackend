@@ -14,9 +14,8 @@ import completions from './api/completions';
 const app = express();
 
 // Config settings for Kinde
-
-
-const {
+if (process.env.ENVIROMENT !== "dev"){
+  const {
     setupKinde,
 } = require("@kinde-oss/kinde-node-express");
   
@@ -33,6 +32,8 @@ const config = {
 };
   
 setupKinde(config, app);
+}
+
 
 // Use express json middleware for all routes
 app.use(express.json());
