@@ -29,7 +29,7 @@ if(process.env.ENVIROMENT !== "dev"){
   });
   
 }else{
-  users.get("/",  async (req, res) => {
+  users.get("/", async (req, res) => {
     try {
       const users = await prisma.user.findMany();
   

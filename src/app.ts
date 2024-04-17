@@ -3,12 +3,12 @@
 // Import dependencies
 import express from 'express';
 import morgan from 'morgan';
+import { GrantType } from "@kinde-oss/kinde-node-express";
 
 // Import the routers for the app
 import users from './api/users';
 import challenges from './api/challenges';
 import completions from './api/completions';
-import { GrantType } from "@kinde-oss/kinde-node-express";
 
 // Create the app
 const app = express();
@@ -34,6 +34,20 @@ setupKinde(config, app);
 
 // Use express json middleware for all routes
 app.use(express.json());
+
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    next();
+  });
+
 
 // Set debug based on environment variables
 const DEBUG = process.env.DEBUG?.toLowerCase() === 'true' || false;
