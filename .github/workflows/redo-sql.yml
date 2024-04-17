@@ -6,36 +6,36 @@ on:
       - prisma/migrations/*
 
 jobs:
-  get_challenges:
-    name: Redo Challenges
-    runs-on: ubuntu-latest
+  # get_challenges:
+  #   name: Redo Challenges
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Set Up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+  #     - name: Set Up Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.12'
 
-      - name: Install Dependecies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pandas
+  #     - name: Install Dependecies
+  #       run: |
+  #         python -m pip install --upgrade pip
+  #         python -m pip install pandas
 
-      - name: Load Challenge Spreadsheet to SQL
-        run: python3 ./db/get_challenges_from_spreadsheet.py
+  #     - name: Load Challenge Spreadsheet to SQL
+  #       run: python3 ./db/get_challenges_from_spreadsheet.py
 
-      - name: Commit files
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -a -m "Redid SQL[bot]"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+  #     - name: Commit files
+  #       run: |
+  #         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+  #         git config --local user.name "github-actions[bot]"
+  #         git commit -a -m "Redid SQL[bot]"
+  #     - name: Push changes
+  #       uses: ad-m/github-push-action@master
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         branch: ${{ github.ref }}
 
   redo_sql:
     name: Redo SQL
