@@ -14,22 +14,24 @@ import completions from './api/completions';
 const app = express();
 
 // Config settings for Kinde
+
+
 const {
-	setupKinde,
+    setupKinde,
 } = require("@kinde-oss/kinde-node-express");
-
+  
 const config = {
-    clientId: process.env.KINDE_BACKEND_CLIENT_ID,
-    issuerBaseUrl: process.env.KINDE_URL,
-    siteUrl: process.env.LOCAL_SITE_URL,
-    secret: process.env.KINDE_CLIENT_SECRET,
-    redirectUrl: process.env.LOCAL_SITE_URL,
-    scope: "openid profile email",
-    grantType: GrantType.AUTHORIZATION_CODE, //or CLIENT_CREDENTIALS or PKCE
-    unAuthorisedUrl: process.env.UNAUTHORIZED_URL,
-    postLogoutRedirectUrl: process.env.LOCAL_SITE_URL
+      clientId: process.env.KINDE_BACKEND_CLIENT_ID,
+      issuerBaseUrl: process.env.KINDE_URL,
+      siteUrl: process.env.SITE_URL,
+      secret: process.env.KINDE_CLIENT_SECRET,
+      redirectUrl: process.env.SITE_URL,
+      scope: "openid profile email",
+      grantType: GrantType.AUTHORIZATION_CODE, //or CLIENT_CREDENTIALS or PKCE
+      unAuthorisedUrl: process.env.UNAUTHORIZED_URL,
+      postLogoutRedirectUrl: process.env.SITE_URL
 };
-
+  
 setupKinde(config, app);
 
 // Use express json middleware for all routes

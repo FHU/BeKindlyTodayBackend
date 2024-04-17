@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 
 const {jwtVerify} = require("@kinde-oss/kinde-node-express");
 
-const verifier = jwtVerify(process.env.KINDE_URL, process.env.LOCAL_SITE_URL);
+const verifier = jwtVerify(process.env.KINDE_URL, process.env.SITE_URL);
 
 // Create the router
 const users = express.Router();
@@ -15,8 +15,7 @@ const prisma = new PrismaClient();
 
 // Routes go here (get, post, put, delete)
 
-if(process.env.ENVIROMENT !== "dev"){
-
+if (process.env.ENVIROMENT !== "dev"){
   users.get("/", verifier, async (req, res) => {
     try {
       const users = await prisma.user.findMany();
@@ -27,7 +26,6 @@ if(process.env.ENVIROMENT !== "dev"){
       res.status(500).json({ message: "Internal Server Error" });
     }
   });
-  
 }else{
   users.get("/", async (req, res) => {
     try {
@@ -39,6 +37,7 @@ if(process.env.ENVIROMENT !== "dev"){
       res.status(500).json({ message: "Internal Server Error" });
     }
   });
+
 }
 
 // Export the router for use in the app.

@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 
 const {jwtVerify} = require("@kinde-oss/kinde-node-express");
 
-const verifier = jwtVerify(process.env.KINDE_URL, process.env.LOCAL_SITE_URL);
+const verifier = jwtVerify(process.env.KINDE_URL, process.env.SITE_URL);
 
 // Create router
 const completions = express.Router();
