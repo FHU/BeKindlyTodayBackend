@@ -28,6 +28,16 @@ This file will not be tracked by git and is unique to your local directory.\
 - ENVIRONMENT
   - <span style="color:yellow;">**Required**</span>
   - Sets the enviroment to know whether to use authentication or not
+- KINDE_BACKEND_CLIENT_ID
+  - The ID of the client on Kinde
+- KINDE_URL
+  - The URL of the website on Kinde's subdomain
+- SITE_URL
+  - The URL of BeKindly
+- KINDE_CLIENT_SECRET
+  - The secret of the client on Kinde
+- UNAUTHORIZED_URL
+  - The URL that unauthorized users are redirected to when attempting access of a protected route
 
 ### Starting the server
 
