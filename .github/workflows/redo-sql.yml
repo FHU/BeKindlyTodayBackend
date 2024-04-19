@@ -63,7 +63,7 @@ jobs:
         run: |
           npx prisma migrate deploy
         env:
-          DATBASE_URL: postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres
+          DATABASE_URL: postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres
 
       - name: Redoing SQL
         run: |
