@@ -55,3 +55,6 @@ jobs:
           target: dev
           tags: evandvance/bekindlytodaybackend:dev
           labels: ${{ steps.backend_meta.outputs.labels }}
+
+      - name: Redploy on Render
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
