@@ -16,10 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install Postgres CLI
-        run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends postgresql-client
 
       - name: Run Upsert
         run: psql --dbname=${{ secrets.PRODUCTION_DATABASE_URL }} -f ./db/challenges_upsert.sql
