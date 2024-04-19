@@ -63,13 +63,13 @@ jobs:
         run: |
           npx prisma migrate deploy
         env:
-          DATABASE_URL: postgresql://postgres:Mydatabasepassword1@0.0.0.0:5432/postgres
+          DATABASE_URL: postgresql://postgres:Mydatabasepassword1@postgres:5432/postgres
 
       - name: Redoing SQL
         run: |
-          psql --dbname=postgresql://postgres:Mydatabasepassword1@0.0.0.0:5432/postgres -f ./db/sql/challenges_upsert.sql
-          psql --dbname=postgresql://postgres:Mydatabasepassword1@0.0.0.0:5432/postgres -f ./db/sql/dummydata.sql
-          pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@post0.0.0.0:5432/postgres > ./db/dev/dev_data.sql
+          psql --dbname=postgresql://postgres:Mydatabasepassword1@postgres:5432/postgres -f ./db/sql/challenges_upsert.sql
+          psql --dbname=postgresql://postgres:Mydatabasepassword1@postgres:5432/postgres -f ./db/sql/dummydata.sql
+          pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@postgres:5432/postgres > ./db/dev/dev_data.sql
 
       - name: Commit files
         run: |
