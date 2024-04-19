@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - prisma/migrations/*
+      - db/sql/*
 
 jobs:
   # get_challenges:
@@ -57,11 +58,6 @@ jobs:
         with:
           node-version: '21.x'
 
-      - name: Install Postgres CLI
-        run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends postgresql-client
-
       - name: Get Seed Sql
         uses: addnab/docker-run-action@v3
         with:
@@ -71,8 +67,8 @@ jobs:
 
             echo "DATBASE_URL=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres" > ./.env
             npx prisma migrate deploy
-            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/challenges_upsert.sql
-            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/dummydata.sql
+            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/challenges_upsert.sql
+            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/dummydata.sql
             pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/dev/dev_data.sql
             rm .env
 

@@ -33,12 +33,13 @@ DO UPDATE SET
     suggestion = EXCLUDED.suggestion,
     twist = EXCLUDED.twist,
     spanish_twist = EXCLUDED.spanish_twist,
+    source = EXCLUDED.source,
     image = EXCLUDED.image;
 ''' 
 #I chose to add the new dates since were not really launched till a further date. Once we really launch we should change that.
 
 print("Writing SQL to file...")
-with open("./db/challenges_upsert.sql", "w") as file:
+with open("./db/sql/challenges_upsert.sql", "w") as file:
     file.write(sql_template)
 
 print("Complete...")
