@@ -58,19 +58,15 @@ jobs:
         with:
           node-version: '21.x'
 
-      - name: Get Seed Sql
-        uses: addnab/docker-run-action@v3
-        with:
-          image: postgres:16-alpine
-          options: -e POSTGRES_PASSWORD=MyDatabasePassword1 -p 5432:5423
-          run: |
+      - name: Redoing Sql
+        run: |
 
-            echo "DATBASE_URL=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres" > ./.env
-            npx prisma migrate deploy
-            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/challenges_upsert.sql
-            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/dummydata.sql
-            pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/dev/dev_data.sql
-            rm .env
+          echo "DATBASE_URL=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres" > ./.env
+          npx prisma migrate deploy
+          psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/challenges_upsert.sql
+          psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/dummydata.sql
+          pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/dev/dev_data.sql
+          rm .env
 
       - name: Commit files
         run: |
