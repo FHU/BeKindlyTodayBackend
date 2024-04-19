@@ -1,11 +1,10 @@
 name: Redo Seeding Sql
 
 on:
-  [push]
-  # push:
-  # paths:
-  #   - prisma/migrations/*
-  #   - db/sql/*
+  push:
+    paths:
+      - prisma/migrations/*
+      - db/sql/*
 
 jobs:
   # get_challenges:
