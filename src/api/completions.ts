@@ -3,12 +3,21 @@
 // Import dependencies
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import { jwtVerify } from '@kinde-oss/kinde-node-express';
+
+const verifier = jwtVerify(process.env.KINDE_URL!, {
+  audience: process.env.SITE_URL!,
+});
 
 // Create router
 const completions = express.Router();
 
 // Create prisma client
 const prisma = new PrismaClient();
+
+if (process.env.ENVIRONMENT !== 'dev') {
+  completions.use(verifier);
+}
 
 // Get all completions that pass filter
 completions.get('/', async (req, res) => {

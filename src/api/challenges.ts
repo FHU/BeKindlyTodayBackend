@@ -3,6 +3,11 @@
 // import dependencies
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import { jwtVerify } from '@kinde-oss/kinde-node-express';
+
+const verifier = jwtVerify(process.env.KINDE_URL!, {
+  audience: process.env.SITE_URL!,
+});
 
 const challenges = express.Router();
 
@@ -46,6 +51,9 @@ challenges.use('/:id/*', async (req, res, next) => {
 
 // Endpoints are defined here
 // Get the daily challenge
+if (process.env.ENVIRONMENT !== 'dev') {
+  challenges.use(verifier);
+}
 challenges.get('/today', async (req, res) => {
   try {
     // Find the challenge in the database with the date that matches today's date.
