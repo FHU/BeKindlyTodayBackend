@@ -60,14 +60,14 @@ jobs:
           node-version: '21.x'
 
       - name: Redoing Sql
+        env:
+          DATBASE_URL: postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres
         run: |
 
-          echo "DATBASE_URL=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres" > ./.env
           npx prisma migrate deploy
           psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/challenges_upsert.sql
           psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/dummydata.sql
           pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/dev/dev_data.sql
-          rm .env
 
       - name: Commit files
         run: |
