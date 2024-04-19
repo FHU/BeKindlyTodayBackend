@@ -45,7 +45,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:14
         env:
           POSTGRES_PASSWORD: Mydatabasepassword1
         ports:
