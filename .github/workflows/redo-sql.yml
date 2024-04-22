@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - prisma/migrations/*
+      - db/sql/*
 
 jobs:
   # get_challenges:
@@ -43,11 +44,16 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:14
         env:
           POSTGRES_PASSWORD: Mydatabasepassword1
         ports:
-          - 5432:5423
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -57,24 +63,17 @@ jobs:
         with:
           node-version: '21.x'
 
-      - name: Install Postgres CLI
+      - name: Migrate Deploy
         run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends postgresql-client
+          npx prisma migrate deploy
+        env:
+          DATABASE_URL: postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres
 
-      - name: Get Seed Sql
-        uses: addnab/docker-run-action@v3
-        with:
-          image: postgres:16-alpine
-          options: -e POSTGRES_PASSWORD=MyDatabasePassword1 -p 5432:5423
-          run: |
-
-            echo "DATBASE_URL=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres" > ./.env
-            npx prisma migrate deploy
-            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/challenges_upsert.sql
-            psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/dummydata.sql
-            pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/dev/dev_data.sql
-            rm .env
+      - name: Redoing SQL
+        run: |
+          psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/challenges_upsert.sql
+          psql --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres -f ./db/sql/dummydata.sql
+          pg_dump --dbname=postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres > ./db/dev/dev_data.sql
 
       - name: Commit files
         run: |
