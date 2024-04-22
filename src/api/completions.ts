@@ -3,6 +3,7 @@
 // Import dependencies
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import getUser from '../services/UserServices';
 import { jwtVerify } from '@kinde-oss/kinde-node-express';
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
@@ -23,10 +24,10 @@ if (process.env.ENVIRONMENT !== 'dev') {
 completions.get('/', async (req, res) => {
   try {
     // Get filter from request query
-    let user_id = req.query.user_id as string;
+    let user_id = await (await getUser(req)).id;
 
     // Ensure the user_id is an integer, return 400 error for bad requests
-    if (user_id !== undefined && Number.isNaN(parseInt(user_id))) {
+    if (user_id !== undefined) {
       res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
@@ -65,7 +66,7 @@ completions.get('/stats', async (req, res) => {
     );
 
     // get the user id from the request body
-    const user_id = parseInt(req.body.user.id);
+    const user_id = (await getUser(req)).id;
 
     // get the world completions and the daily world completions counts
     const world_completions_count = await prisma.completion.count();
@@ -130,12 +131,12 @@ completions.get('/:id', async (req, res) => {
 });
 
 // Post method for completions
-completions.post('/', async (req, res) => {
+completions.post('/', getUser, async (req, res) => {
   try {
     // Get the daily challenge
     const challenge = await prisma.challenge.findUnique({
       where: {
-        date: new Date().toISOString().slice(0, 10),
+        date: new Date().toISOString(),
       },
     });
 
@@ -146,7 +147,7 @@ completions.post('/', async (req, res) => {
     }
 
     // Get the user id from the request
-    const { user_id } = req.body.user; // FIXME Figure out how Kinde will integrate then change this to find the user or user id
+    const user_id = (await getUser(req)).id;
 
     // Create object to query completions based on user id an challenge id
     const challenge_id = challenge.id;

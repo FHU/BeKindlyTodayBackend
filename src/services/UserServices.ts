@@ -1,14 +1,11 @@
 import { KindeRequest } from '../interfaces/KindeRequest';
-import { Response, NextFunction } from 'express';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const getUser = async (
-  req: KindeRequest,
-  res: Response,
-  next: NextFunction
-) => {
+//We are using such an unholy mix of things meant for JS and things meant for TS
+//I will accept one use of any if you do.
+const getUser = async (req: KindeRequest | any) => {
   let user = await prisma.user.findUnique({
     where: {
       kindeId: req.user.id,
@@ -23,9 +20,7 @@ const getUser = async (
     });
   }
 
-  req.body.user_id = user.id;
-
-  next();
+  return user;
 };
 
-export default { getUser };
+export default getUser;
