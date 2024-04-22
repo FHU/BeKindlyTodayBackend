@@ -13,6 +13,16 @@ import completions from './api/completions';
 // Create the app
 const app = express();
 
+// Use express json middleware for all routes
+app.use(express.json());
+
+// Set debug based on environment variables
+const DEBUG = process.env.DEBUG?.toLowerCase() === 'true' || false;
+
+// Set logging level based on debug mode and add morgan middleware to app
+const logging_level = DEBUG ? 'dev' : 'tiny';
+app.use(morgan(logging_level));
+
 // Config settings for Kinde
 if (process.env.ENVIRONMENT !== 'dev') {
   const { setupKinde } = require('@kinde-oss/kinde-node-express');
@@ -32,9 +42,6 @@ if (process.env.ENVIRONMENT !== 'dev') {
   setupKinde(config, app);
 }
 
-// Use express json middleware for all routes
-app.use(express.json());
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -47,13 +54,6 @@ app.use((req, res, next) => {
   );
   next();
 });
-
-// Set debug based on environment variables
-const DEBUG = process.env.DEBUG?.toLowerCase() === 'true' || false;
-
-// Set logging level based on debug mode and add morgan middleware to app
-const logging_level = DEBUG ? 'dev' : 'tiny';
-app.use(morgan(logging_level));
 
 // Use the users router in the corresponding route.
 app.use('/api/v1/users', users);
