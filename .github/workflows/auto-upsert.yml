@@ -1,17 +1,16 @@
 name: Auto Upsert Challenges
 run-name: Auto Upserting Challenges...
 on:
-  push
-  # pull_request:
-  #   branches:
-  #     - main
-  #   types: [closed]
-  #   paths:
-  #     - db/sql/challenges_upsert.sql
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+    paths:
+      - db/sql/challenges_upsert.sql
 
 jobs:
   upsert_production_challenges:
-    # if: ${{ github.event.pull_request.merged }}
+    if: ${{ github.event.pull_request.merged }}
     name: Upsert Production Challenges
     runs-on: ubuntu-latest
 
