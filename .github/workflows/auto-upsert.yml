@@ -11,7 +11,7 @@ on:
 
 jobs:
   upsert_production_challenges:
-    if: ${{ github.event.pull_request.merged }}
+    # if: ${{ github.event.pull_request.merged }}
     name: Upsert Production Challenges
     runs-on: ubuntu-latest
 
