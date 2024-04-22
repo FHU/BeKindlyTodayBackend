@@ -9,22 +9,24 @@ datasource db {
 
 model User {
   id          Int          @id @unique @default(autoincrement())
+  kindeId String? @map("kinde_id") @unique
   email       String       @unique
   username    String
-  password    String
   bio         String?
+  profilePicture String? @map("profile_picture")
   completions Completion[]
 
+  @@index([kindeId])
   @@map("users")
 }
 
 model Challenge {
   id             Int          @id @unique @default(autoincrement())
   prompt         String       @unique
-  spanish_prompt String?
+  spanishPrompt String? @map("spanish_prompt")
   suggestion     String
   twist          String
-  spanish_twist  String?
+  spanishTwist  String? @map("spanish_twist")
   date           DateTime     @unique @db.Date
   source         String
   rating         Int
