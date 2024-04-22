@@ -1,5 +1,5 @@
 -- Dummy Users
-INSERT INTO "users" (email, username, ) VALUES
+INSERT INTO "users" (email, username) VALUES
   ('user1@example.com', 'user1'),
   ('user2@example.com', 'user2'),
   ('user3@example.com', 'user3'),
