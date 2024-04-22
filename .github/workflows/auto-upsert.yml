@@ -1,9 +1,7 @@
 name: Auto Upsert Challenges
 run-name: Auto Upserting Challenges...
 on:
-  push:
-    branches:
-      - hotfix/*
+  push
   # pull_request:
   #   branches:
   #     - main
