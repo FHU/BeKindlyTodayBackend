@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - hotfix/*
-  pull_request:
-    branches:
-      - main
-    types: [closed]
-    paths:
-      - db/sql/challenges_upsert.sql
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types: [closed]
+  #   paths:
+  #     - db/sql/challenges_upsert.sql
 
 jobs:
   upsert_production_challenges:
