@@ -3,7 +3,7 @@ name: Redo Seeding Sql
 on:
   push:
     paths:
-      - prisma/migrations/*
+      - prisma/migrations/**
       - db/sql/*
 
 jobs:

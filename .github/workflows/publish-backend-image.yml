@@ -6,8 +6,8 @@ on:
       - main
     types: [closed]
     paths:
-      - prisma/*
-      - src/*
+      - prisma/**
+      - src/**
       - .dockerignore
       - Dockerfile
       - package-lock.json
