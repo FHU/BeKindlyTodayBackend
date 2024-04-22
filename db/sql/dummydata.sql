@@ -1,15 +1,15 @@
 -- Dummy Users
-INSERT INTO "users" (email, username, password) VALUES
-  ('user1@example.com', 'user1', 'password1'),
-  ('user2@example.com', 'user2', 'password2'),
-  ('user3@example.com', 'user3', 'password3'),
-  ('user4@example.com', 'user4', 'password4'),
-  ('user5@example.com', 'user5', 'password5'),
-  ('user6@example.com', 'user6', 'password6'),
-  ('user7@example.com', 'user7', 'password7'),
-  ('user8@example.com', 'user8', 'password8'),
-  ('user9@example.com', 'user9', 'password9'),
-  ('user10@example.com', 'user10', 'password10');
+INSERT INTO "users" (email, username, ) VALUES
+  ('user1@example.com', 'user1'),
+  ('user2@example.com', 'user2'),
+  ('user3@example.com', 'user3'),
+  ('user4@example.com', 'user4'),
+  ('user5@example.com', 'user5'),
+  ('user6@example.com', 'user6'),
+  ('user7@example.com', 'user7'),
+  ('user8@example.com', 'user8'),
+  ('user9@example.com', 'user9'),
+  ('user10@example.com', 'user10');
 
 
 -- Dummy Completions
