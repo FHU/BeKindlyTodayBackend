@@ -9,9 +9,8 @@ datasource db {
 
 model User {
   id             Int          @id @unique @default(autoincrement())
-  kindeId        String?      @unique @map("kinde_id")
-  email          String       @unique
-  username       String
+  kindeId        String      @unique @map("kinde_id")
+  username       String?
   bio            String?
   profilePicture String?      @map("profile_picture")
   completions    Completion[]

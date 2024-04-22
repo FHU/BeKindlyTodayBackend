@@ -1,15 +1,15 @@
 -- Dummy Users
-INSERT INTO "users" (email, username, kinde_id) VALUES
-  ('user1@example.com', 'user1', '1'),
-  ('user2@example.com', 'user2', '2'),
-  ('user3@example.com', 'user3', '3'),
-  ('user4@example.com', 'user4', '4'),
-  ('user5@example.com', 'user5', '5'),
-  ('user6@example.com', 'user6', '6'),
-  ('user7@example.com', 'user7', '7'),
-  ('user8@example.com', 'user8', '8'),
-  ('user9@example.com', 'user9', '9'),
-  ('user10@example.com', 'user10', '10');
+INSERT INTO "users" (username, kinde_id) VALUES
+  ('user1', '1'),
+  ('user2', '2'),
+  ('user3', '3'),
+  ('user4', '4'),
+  ('user5', '5'),
+  ('user6', '6'),
+  ('user7', '7'),
+  ('user8', '8'),
+  ('user9', '9'),
+  ('user10', '10');
 
 
 -- Dummy Completions
