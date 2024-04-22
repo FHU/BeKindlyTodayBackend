@@ -1,8 +1,9 @@
 // app.ts - Creates the express app and defines routes.
 
 // Import dependencies
-import express from 'express';
+import express, { Request } from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { GrantType } from '@kinde-oss/kinde-node-express';
 
 // Import the routers for the app
@@ -15,6 +16,7 @@ const app = express();
 
 // Use express json middleware for all routes
 app.use(express.json());
+app.use(cors<Request>());
 
 // Set debug based on environment variables
 const DEBUG = process.env.DEBUG?.toLowerCase() === 'true' || false;
