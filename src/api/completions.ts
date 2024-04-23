@@ -23,26 +23,7 @@ if (process.env.ENVIRONMENT !== 'dev') {
 // Get all completions that pass filter
 completions.get('/', async (req, res) => {
   try {
-    // Get filter from request query
-    let user_id = await (await getUser(req)).id;
-
-    // Ensure the user_id is an integer, return 400 error for bad requests
-    if (user_id === undefined) {
-      res.status(400).json({ message: 'Bad Request, ids must be integers' });
-      return;
-    }
-
-    // Declare completions variable
-    let completions;
-
-    // Set completions based user id
-    if (user_id === undefined) {
-      completions = await prisma.completion.findMany();
-    } else {
-      completions = await prisma.completion.findMany({
-        where: { user_id },
-      });
-    }
+    const completions = await prisma.completion.findMany();
 
     // Return the completions
     res.json(completions);
