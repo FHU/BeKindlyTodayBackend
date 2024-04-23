@@ -8,7 +8,7 @@ sql_template = f'INSERT INTO "challenges" (prompt, spanish_prompt, suggestion, t
 
 print("Forming Sql...")
 #I do not know pandas well, so this is what I did. Also I know this is bad but itll work for now
-for row in df.itertuples():
+for i, row in enumerate(df.itertuples()):
     #Each index of the row coresponds to the column that it is in in the spreadsheet
     
     #The replaces here is to remove ' which breaks the way the sql is written. In future iterations, the sql should be changed to not need this
@@ -18,7 +18,7 @@ for row in df.itertuples():
     description = str(row[3]).replace("'","")
     twist = str(row[4]).replace("'","")
     spanish_twist = str(row[5]).replace("'","")
-    date = f"NOW() + interval '{row[0]} days'" #The index is the ammount of days past now that the date is being made
+    date = f"NOW() + interval '{i} days'" #The index is the ammount of days past now that the date is being made
     source = str(row[8]).replace("'","")
     rating = 0
     image = str(row[9]).replace("'","")
