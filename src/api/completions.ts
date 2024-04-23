@@ -27,7 +27,7 @@ completions.get('/', async (req, res) => {
     let user_id = await (await getUser(req)).id;
 
     // Ensure the user_id is an integer, return 400 error for bad requests
-    if (user_id !== undefined) {
+    if (user_id === undefined) {
       res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
