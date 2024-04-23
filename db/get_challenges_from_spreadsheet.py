@@ -19,9 +19,9 @@ for row in df.itertuples():
     twist = str(row[4]).replace("'","")
     spanish_twist = str(row[5]).replace("'","")
     date = f"NOW() + interval '{row[0]} days'" #The index is the ammount of days past now that the date is being made
-    source = str(row[6]).replace("'","")
+    source = str(row[8]).replace("'","")
     rating = 0
-    image = str(row[8]).replace("'","")
+    image = str(row[9]).replace("'","")
 
     sql_template += f"\n  ('{prompt}', '{spanish_prompt}', '{description}', '{twist}', '{spanish_twist}', {date}, '{source}', '{rating}', '{image}'),"
 
