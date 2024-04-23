@@ -132,8 +132,6 @@ completions.post('/', async (req, res) => {
     // Create object to query completions based on user id an challenge id
     const challenge_id = challenge.id;
 
-    console.log(`userid:${user_id} challengeid:${challenge_id}`);
-
     // Check for existing completions
     const completion = await prisma.completion.findUnique({
       where: {
@@ -179,17 +177,12 @@ completions.delete('/:id', async (req, res) => {
       return;
     }
 
-    //check for deletion (I know this is bad but its a bandaid)
-    const completion = await prisma.completion.findUnique({
-      where: { id: completion_id },
-    });
-
-    if (completion === null) {
-      return res.status(404).json({ message: 'Completion not found' });
-    }
-
     // delete the requested resource
-    await prisma.completion.delete({ where: { id: completion_id } });
+    try {
+      await prisma.completion.delete({ where: { id: completion_id } });
+    } catch (err) {
+      res.status(404).json({ message: 'Error - user not found' });
+    }
 
     res.sendStatus(204);
   } catch (err) {
