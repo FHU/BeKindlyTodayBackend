@@ -44,12 +44,14 @@ users.get('/:id', (req, res) => {
   }
 
   try {
-    const user = prisma.user.findFirst({ where: { id } });
+    const user = await prisma.user.findFirst({ where: { id } });
 
     if (user === null) {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    user.id = 1; //Security decision and everyone will think theyre the first user :)
+    user.kindeId = 'classified';
     res.json(user);
   } catch (err) {
     console.log(err);
