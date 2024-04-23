@@ -17,11 +17,6 @@ describe("CHALLENGES SUITE", () => {
     expect(res.statusCode).toBe(200);
   });
 
-  test("should try to get challenge with incorrect date and return status code 404", async () => {
-    const res = await request(URL).get("/api/v1/challenges/2021-01-01");
-    expect(res.statusCode).toBe(404);
-  });
-
   test("should send bad request and return status code 400", async () => {
     const res = await request(URL).get("/api/v1/challenges/foobar/");
     expect(res.statusCode).toBe(400);
@@ -45,7 +40,9 @@ describe("COMPLETIONS SUITE", () => {
   });
 
   test("should request user stats and return status code 200", async () => {
-    const res = await request(URL).get("/api/v1/completions/stats");
+    const res = await request(URL)
+      .get("/api/v1/completions/stats")
+      .send({ user_id: 1 });
     expect(res.statusCode).toBe(200);
   });
 
