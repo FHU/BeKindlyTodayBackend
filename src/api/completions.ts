@@ -40,7 +40,7 @@ completions.get('/', async (req, res) => {
       completions = await prisma.completion.findMany();
     } else {
       completions = await prisma.completion.findMany({
-        where: { user_id: parseInt(user_id) },
+        where: { user_id },
       });
     }
 
