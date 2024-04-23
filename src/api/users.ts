@@ -34,7 +34,7 @@ users.get('/', async (req, res) => {
   }
 });
 
-users.get('/:id', (req, res) => {
+users.get('/:id', async (req, res) => {
   const id = parseInt(req.params.id);
 
   if (isNaN(id)) {
