@@ -8,28 +8,29 @@ datasource db {
 }
 
 model User {
-  id          Int          @id @unique @default(autoincrement())
-  email       String       @unique
-  username    String
-  password    String
-  bio         String?
-  completions Completion[]
+  id             Int          @id @unique @default(autoincrement())
+  kindeId        String      @unique @map("kinde_id")
+  username       String?
+  bio            String?
+  profilePicture String?      @map("profile_picture")
+  completions    Completion[]
 
+  @@index([kindeId])
   @@map("users")
 }
 
 model Challenge {
-  id             Int          @id @unique @default(autoincrement())
-  prompt         String       @unique
-  spanish_prompt String?
-  suggestion     String
-  twist          String
-  spanish_twist  String?
-  date           DateTime     @unique @db.Date
-  source         String
-  rating         Int
-  image          String
-  completions    Completion[]
+  id            Int          @id @unique @default(autoincrement())
+  prompt        String       @unique
+  spanishPrompt String?      @map("spanish_prompt")
+  suggestion    String
+  twist         String
+  spanishTwist  String?      @map("spanish_twist")
+  date          DateTime     @unique @db.Date
+  source        String
+  rating        Int
+  image         String
+  completions   Completion[]
 
   @@index([date])
   @@map("challenges")
@@ -45,7 +46,8 @@ model Completion {
   user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
   challenge       Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
 
-  @@unique([user_id, challenge_id], name: "user_id_challenge_id")
+  @@unique([user_id, challenge_id])
+  @@index([user_id, challenge_id], name: "user_id_challenge_id")
   @@index([date])
   @@map("completions")
 }

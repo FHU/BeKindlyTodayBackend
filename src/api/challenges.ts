@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 import { jwtVerify } from '@kinde-oss/kinde-node-express';
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
-  audience: process.env.SITE_URL!,
+  audience: '', //I know this seems odd, but audiences are not configured on kinde and as a result this works
 });
 
 const challenges = express.Router();

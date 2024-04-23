@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - main
     paths:
-      - prisma/migrations/*
+      - prisma/migrations/**
       - db/sql/*
 
 jobs:
