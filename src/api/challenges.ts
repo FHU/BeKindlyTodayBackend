@@ -51,9 +51,9 @@ challenges.use('/:id/*', async (req, res, next) => {
 
 // Endpoints are defined here
 // Get the daily challenge
-if (process.env.ENVIRONMENT !== 'dev') {
-  challenges.use(verifier);
-}
+// if (process.env.ENVIRONMENT !== 'dev') {
+//   challenges.use(verifier);
+// }
 challenges.get('/today', async (req, res) => {
   try {
     // Find the challenge in the database with the date that matches today's date.
