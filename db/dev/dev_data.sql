@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.11 (Debian 14.11-1.pgdg120+2)
--- Dumped by pg_dump version 14.11 (Ubuntu 14.11-1.pgdg22.04+1)
+-- Dumped from database version 16.2
+-- Dumped by pg_dump version 16.2 (Ubuntu 16.2-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -71,7 +71,7 @@ CREATE SEQUENCE public.challenges_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.challenges_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.challenges_id_seq OWNER TO postgres;
 
 --
 -- Name: challenges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -109,7 +109,7 @@ CREATE SEQUENCE public.completions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.completions_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.completions_id_seq OWNER TO postgres;
 
 --
 -- Name: completions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -146,7 +146,7 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -181,21 +181,22 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
-740ae5d6-c1c9-4f22-b670-8399807254b7	3d0965bc4bf33156535e47ee4c4a41597d146a14b3e9eb3c302b2280863ad806	2024-04-23 01:14:22.287314+00	20240323012108_test	\N	\N	2024-04-23 01:14:22.239903+00	1
-68ef096d-448f-46e8-8483-054f30d96692	e3e31429dea8e107b7cc0a00fbbdc10823bca6b0a000236c467a0667f58cfffd	2024-04-23 01:14:22.395585+00	20240422195755_user_schema_updates	\N	\N	2024-04-23 01:14:22.392191+00	1
-f69b8027-ef76-4c42-b577-b59f0dba851f	89c534372340892b20a1060fa45d2ffcea26de0363e51a99d223b01043355c25	2024-04-23 01:14:22.296893+00	20240405145248_add_frontend_reqs	\N	\N	2024-04-23 01:14:22.287838+00	1
-02053bbb-4025-47d7-81c7-8a9eaf4a7bb5	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe4896e46d09370652c9c0d	2024-04-23 01:14:22.323748+00	20240405193931_simplify_schema	\N	\N	2024-04-23 01:14:22.297517+00	1
-0e90351d-fb2b-42ea-bf20-0870511447fa	1deb7e1cffd882e1b868a5898e06b784c4213f101ae52f5962f2bba3df18f6f6	2024-04-23 01:14:22.326409+00	20240407021219_add_prompt_field	\N	\N	2024-04-23 01:14:22.324302+00	1
-e25b2863-b06f-4d93-adf5-668e432a02a5	1f6ebf19afa0787d74346b1d39898b45c485eda5f49ee98088638f349368604e	2024-04-23 01:14:22.398042+00	20240422231143_major_user_changes	\N	\N	2024-04-23 01:14:22.396141+00	1
-e8b2350b-9d01-4d89-b726-c42b5504d807	236aa2fa39007e721889991c99a7f6f86cc095e4517c8483060a9b8f217eb34b	2024-04-23 01:14:22.328615+00	20240410182129_add_image_to_challenge	\N	\N	2024-04-23 01:14:22.326908+00	1
-4f0f4d43-3770-404f-a421-d12d6dfa2659	be4f5e033118c01ec5ac87e78e07ecf2318ad27016a133780ab9477e3f55d351	2024-04-23 01:14:22.347377+00	20240412182541_change	\N	\N	2024-04-23 01:14:22.329187+00	1
-8699fa09-b2d7-427e-813b-9d3b38d82597	ca0a334250251709f091f9b8f3a84e974ade534461ca5455571d4bdd95a53791	2024-04-23 01:14:22.349945+00	20240414013226_change	\N	\N	2024-04-23 01:14:22.34807+00	1
-999308b1-1992-4e5a-80ec-766fdb475f7e	48bea31d29cc7421ed726dd2ed134583e66b27200cb582c5d4891214992a6ae7	2024-04-23 01:14:22.353062+00	20240414022443_fix_challenge_change_issues	\N	\N	2024-04-23 01:14:22.351102+00	1
-68c99b6a-7bea-48c0-8fe7-be92e09006e1	ec882d803bc38d05f8e1ba8daee82d6ec57dbd57d422f963b02d10ae3018dacd	2024-04-23 01:14:22.374873+00	20240415185228_add_correct_mapping	\N	\N	2024-04-23 01:14:22.353863+00	1
-c65dbdf2-ef8e-465d-9aff-1c44ea231f74	f5bdc4c5639bbbca5aed4de1b7fa45ce0b042c307938c3b3bb1133098d1c72e6	2024-04-23 01:14:22.377722+00	20240416032629_added_spanish_challenges	\N	\N	2024-04-23 01:14:22.375694+00	1
-118e8ffd-3b85-43ab-864b-e6afcaba8e48	6e56f5de2ac292c2aa9fb69c8523ccd735a0d6ae1a2014a008304d8d052e88e9	2024-04-23 01:14:22.381265+00	20240416033211_add_unique_to_prompt	\N	\N	2024-04-23 01:14:22.378458+00	1
-e17058a9-c458-4b75-ad3b-bd3603cb52ac	bbe55ce1b4e371256b7278b03678a93ad1ce86caebef62c8272cbba72d589d47	2024-04-23 01:14:22.389319+00	20240416135724_change_date_time_type	\N	\N	2024-04-23 01:14:22.381805+00	1
-d8346c79-ebe1-4292-b3ce-42fcc3e94183	a8fbbe883517d62036144233aab8a11a5042fc4e4a32d36914746ceb94f3ef5e	2024-04-23 01:14:22.391651+00	20240417153835_add_bio_and_completion_twist	\N	\N	2024-04-23 01:14:22.389923+00	1
+883be477-0487-47c2-bbc5-31245e483459	3d0965bc4bf33156535e47ee4c4a41597d146a14b3e9eb3c302b2280863ad806	2024-04-23 02:16:36.799262+00	20240323012108_test	\N	\N	2024-04-23 02:16:36.703363+00	1
+0651dcc8-5d88-48fb-9cf0-4c469bf5082f	e3e31429dea8e107b7cc0a00fbbdc10823bca6b0a000236c467a0667f58cfffd	2024-04-23 02:16:37.062704+00	20240422195755_user_schema_updates	\N	\N	2024-04-23 02:16:37.05359+00	1
+f817ad58-890b-4a74-a712-c7186f63a5d0	89c534372340892b20a1060fa45d2ffcea26de0363e51a99d223b01043355c25	2024-04-23 02:16:36.821138+00	20240405145248_add_frontend_reqs	\N	\N	2024-04-23 02:16:36.800731+00	1
+49fcf081-8d36-4caa-971f-891c81ad7228	9af4530c13a31b0ba43501a8ce0dd424d2512c9cdbe4896e46d09370652c9c0d	2024-04-23 02:16:36.897771+00	20240405193931_simplify_schema	\N	\N	2024-04-23 02:16:36.822687+00	1
+a06b6d95-8d60-421c-9209-9e93a508605c	1deb7e1cffd882e1b868a5898e06b784c4213f101ae52f5962f2bba3df18f6f6	2024-04-23 02:16:36.903625+00	20240407021219_add_prompt_field	\N	\N	2024-04-23 02:16:36.899152+00	1
+fe81fe24-8666-4631-9205-e3bd130cad33	1f6ebf19afa0787d74346b1d39898b45c485eda5f49ee98088638f349368604e	2024-04-23 02:16:37.070757+00	20240422231143_major_user_changes	\N	\N	2024-04-23 02:16:37.064254+00	1
+e4f99fcd-3bdb-4ac1-94f3-8c7ac484d143	236aa2fa39007e721889991c99a7f6f86cc095e4517c8483060a9b8f217eb34b	2024-04-23 02:16:36.90929+00	20240410182129_add_image_to_challenge	\N	\N	2024-04-23 02:16:36.90504+00	1
+0777e475-5371-4367-94f5-6cb7aa18ec30	be4f5e033118c01ec5ac87e78e07ecf2318ad27016a133780ab9477e3f55d351	2024-04-23 02:16:36.953047+00	20240412182541_change	\N	\N	2024-04-23 02:16:36.910668+00	1
+fbe6c4f6-a3c3-49c6-bdab-0cb89caf7920	ca0a334250251709f091f9b8f3a84e974ade534461ca5455571d4bdd95a53791	2024-04-23 02:16:36.959529+00	20240414013226_change	\N	\N	2024-04-23 02:16:36.954373+00	1
+cf51a8be-5dfd-4272-b51b-e5805cae62a2	1570d617c610f0ee252495620a567625e51a11cc6d52343071fda87f028f27b3	2024-04-23 02:16:37.079052+00	20240423021609_add_index_to_completion	\N	\N	2024-04-23 02:16:37.072386+00	1
+9296b4d4-52bb-4804-8f3b-e6844cacc6ea	48bea31d29cc7421ed726dd2ed134583e66b27200cb582c5d4891214992a6ae7	2024-04-23 02:16:36.965383+00	20240414022443_fix_challenge_change_issues	\N	\N	2024-04-23 02:16:36.960903+00	1
+4f922d32-2519-4170-9a70-b96ab1d3afef	ec882d803bc38d05f8e1ba8daee82d6ec57dbd57d422f963b02d10ae3018dacd	2024-04-23 02:16:37.013125+00	20240415185228_add_correct_mapping	\N	\N	2024-04-23 02:16:36.966738+00	1
+a5522cbd-ffac-4cdd-86a7-52e27f68d0f9	f5bdc4c5639bbbca5aed4de1b7fa45ce0b042c307938c3b3bb1133098d1c72e6	2024-04-23 02:16:37.018856+00	20240416032629_added_spanish_challenges	\N	\N	2024-04-23 02:16:37.014648+00	1
+fe68625c-bec3-4d3f-9f88-e626219d08cf	6e56f5de2ac292c2aa9fb69c8523ccd735a0d6ae1a2014a008304d8d052e88e9	2024-04-23 02:16:37.026621+00	20240416033211_add_unique_to_prompt	\N	\N	2024-04-23 02:16:37.020222+00	1
+dcab54b3-9ab4-4e2f-ae15-586ab0bb5977	bbe55ce1b4e371256b7278b03678a93ad1ce86caebef62c8272cbba72d589d47	2024-04-23 02:16:37.045276+00	20240416135724_change_date_time_type	\N	\N	2024-04-23 02:16:37.028113+00	1
+bf0d2485-5213-4bc0-98dd-6170ab31aac6	a8fbbe883517d62036144233aab8a11a5042fc4e4a32d36914746ceb94f3ef5e	2024-04-23 02:16:37.052076+00	20240417153835_add_bio_and_completion_twist	\N	\N	2024-04-23 02:16:37.046749+00	1
 \.
 
 
@@ -288,16 +289,16 @@ COPY public.challenges (id, prompt, suggestion, twist, date, source, rating, ima
 --
 
 COPY public.completions (id, description, date, user_id, challenge_id, completed_twist) FROM stdin;
-1	Completion 1 description	2024-04-23 01:14:22.578	1	1	f
-2	Completion 2 description	2024-04-24 01:14:22.578	2	2	f
-3	Completion 3 description	2024-04-25 01:14:22.578	3	3	f
-4	Completion 4 description	2024-04-26 01:14:22.578	4	4	f
-5	Completion 5 description	2024-04-27 01:14:22.578	5	5	f
-6	Completion 6 description	2024-04-28 01:14:22.578	6	6	f
-7	Completion 7 description	2024-04-29 01:14:22.578	7	7	f
-8	Completion 8 description	2024-04-30 01:14:22.578	8	8	f
-9	Completion 9 description	2024-05-01 01:14:22.578	9	9	f
-10	Completion 10 description	2024-05-02 01:14:22.578	10	10	f
+1	Completion 1 description	2024-04-23 02:16:37.209	1	1	f
+2	Completion 2 description	2024-04-24 02:16:37.209	2	2	f
+3	Completion 3 description	2024-04-25 02:16:37.209	3	3	f
+4	Completion 4 description	2024-04-26 02:16:37.209	4	4	f
+5	Completion 5 description	2024-04-27 02:16:37.209	5	5	f
+6	Completion 6 description	2024-04-28 02:16:37.209	6	6	f
+7	Completion 7 description	2024-04-29 02:16:37.209	7	7	f
+8	Completion 8 description	2024-04-30 02:16:37.209	8	8	f
+9	Completion 9 description	2024-05-01 02:16:37.209	9	9	f
+10	Completion 10 description	2024-05-02 02:16:37.209	10	10	f
 \.
 
 
@@ -419,6 +420,13 @@ CREATE UNIQUE INDEX completions_id_key ON public.completions USING btree (id);
 --
 
 CREATE UNIQUE INDEX completions_user_id_challenge_id_key ON public.completions USING btree (user_id, challenge_id);
+
+
+--
+-- Name: user_id_challenge_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_id_challenge_id ON public.completions USING btree (user_id, challenge_id);
 
 
 --

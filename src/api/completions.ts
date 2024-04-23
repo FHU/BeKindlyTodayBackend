@@ -84,7 +84,7 @@ completions.get('/stats', async (req, res) => {
 completions.get('/:id', async (req, res) => {
   try {
     // declare variable for completion's id
-    let completion_id;
+    const completion_id = parseInt(req.params.id);
 
     // Parse the id parameter provided to filter out bad request
     if (Number.isNaN(completion_id)) {
@@ -112,9 +112,8 @@ completions.get('/:id', async (req, res) => {
 });
 
 // Post method for completions
-completions.post('/', getUser, async (req, res) => {
+completions.post('/', async (req, res) => {
   try {
-    // Get the daily challenge
     const challenge = await prisma.challenge.findUnique({
       where: {
         date: new Date().toISOString(),
@@ -132,19 +131,22 @@ completions.post('/', getUser, async (req, res) => {
 
     // Create object to query completions based on user id an challenge id
     const challenge_id = challenge.id;
-    const user_id_challenge_id = { user_id, challenge_id };
+
+    console.log(`userid:${user_id} challengeid:${challenge_id}`);
 
     // Check for existing completions
     const completion = await prisma.completion.findUnique({
-      where: { user_id_challenge_id },
+      where: {
+        user_id_challenge_id: {
+          user_id,
+          challenge_id,
+        },
+      },
     });
 
-    // Redirect to existing completion if it already exists
+    // Redirecting doesnt make sense since we have already fetched the completion from the backend.
     if (completion !== null) {
-      res
-        .setHeader('location', `api/v1/completions/${completion.id}`)
-        .sendStatus(303);
-      return;
+      return res.status(303).redirect(`/api/v1/completions/${completion.id}`);
     }
 
     // Get the description from the request
@@ -175,6 +177,15 @@ completions.delete('/:id', async (req, res) => {
     if (Number.isNaN(completion_id)) {
       res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
+    }
+
+    //check for deletion (I know this is bad but its a bandaid)
+    const completion = await prisma.completion.findUnique({
+      where: { id: completion_id },
+    });
+
+    if (completion === null) {
+      res.status(404).json({ message: 'Completion not found' });
     }
 
     // delete the requested resource

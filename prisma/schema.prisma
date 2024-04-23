@@ -46,7 +46,8 @@ model Completion {
   user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
   challenge       Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
 
-  @@unique([user_id, challenge_id], name: "user_id_challenge_id")
+  @@unique([user_id, challenge_id])
+  @@index([user_id, challenge_id], name: "user_id_challenge_id")
   @@index([date])
   @@map("completions")
 }
