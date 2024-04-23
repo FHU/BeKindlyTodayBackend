@@ -26,6 +26,7 @@ users.get('/', async (req, res) => {
     const user = await getUser(req);
 
     user.id = 1; //Security decision and everyone will think theyre the first user :)
+    user.kindeId = 'classified';
     res.json(user);
   } catch (err) {
     console.error(err);
@@ -47,6 +48,8 @@ users.put('/bio', async (req, res) => {
       },
     });
 
+    modifiedUser.id = 1; //Security decision and everyone will think theyre the first user :)
+    modifiedUser.kindeId = 'classified';
     res.status(201).json(modifiedUser);
   } catch (err) {
     console.log(err);
@@ -68,6 +71,8 @@ users.put('/profilepicture', async (req, res) => {
       },
     });
 
+    modifiedUser.id = 1; //Security decision and everyone will think theyre the first user :)
+    modifiedUser.kindeId = 'classified';
     res.status(201).json(modifiedUser);
   } catch (err) {
     console.log(err);
@@ -89,6 +94,8 @@ users.put('/username', async (req, res) => {
       },
     });
 
+    modifiedUser.id = 1; //Security decision and everyone will think theyre the first user :)
+    modifiedUser.kindeId = 'classified';
     res.status(201).json(modifiedUser);
   } catch (err) {
     console.log(err);

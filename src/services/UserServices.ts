@@ -20,7 +20,6 @@ const getUser = async (req: KindeRequest | any) => {
     });
   }
 
-  user.kindeId = 'classified';
   return user;
 };
 
