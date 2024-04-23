@@ -38,7 +38,7 @@ users.put('/bio', async (req, res) => {
   const user = await getUser(req);
 
   try {
-    const modifiedUser = prisma.user.update({
+    const modifiedUser = await prisma.user.update({
       where: {
         id: user.id,
       },
@@ -59,12 +59,12 @@ users.put('/profilepicture', async (req, res) => {
   const user = await getUser(req);
 
   try {
-    const modifiedUser = prisma.user.update({
+    const modifiedUser = await prisma.user.update({
       where: {
         id: user.id,
       },
       data: {
-        profilePicture,
+        profilePicture: profilePicture,
       },
     });
 
@@ -80,7 +80,7 @@ users.put('/username', async (req, res) => {
   const user = await getUser(req);
 
   try {
-    const modifiedUser = prisma.user.update({
+    const modifiedUser = await prisma.user.update({
       where: {
         id: user.id,
       },
