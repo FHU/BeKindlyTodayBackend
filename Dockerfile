@@ -10,6 +10,7 @@ EXPOSE ${PORT}
 
 FROM base as prod
 
+ENV ENVIRONMENT=prod
 RUN addgroup api && adduser -S -G api api
 
 USER api
@@ -29,7 +30,7 @@ RUN npx prisma generate
 CMD [ "npm", "run", "prod" ]
 
 FROM base as dev
-
+ENV ENVIRONMENT=dev
 RUN npm install
 COPY . .
 RUN npx prisma generate

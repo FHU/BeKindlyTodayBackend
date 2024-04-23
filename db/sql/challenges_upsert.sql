@@ -74,4 +74,5 @@ DO UPDATE SET
     suggestion = EXCLUDED.suggestion,
     twist = EXCLUDED.twist,
     spanish_twist = EXCLUDED.spanish_twist,
+    source = EXCLUDED.source,
     image = EXCLUDED.image;

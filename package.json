@@ -11,7 +11,8 @@
     "redo-sql": "sh ./db/redo-sql.sh",
     "kill-db": "docker stop db_c && docker rm db_c",
     "prod": "npx prisma migrate deploy && npx ts-node ./server.ts",
-    "dev:docker": "docker compose --env-file ./.env.dev up --detach --build && docker compose --env-file ./.env.dev watch"
+    "dev:docker": "docker compose --env-file ./.env.dev up --detach --build && docker compose --env-file ./.env.dev watch",
+    "kill-docker": "docker stop db_c api_c && docker remove db_c api_c"
   },
   "keywords": [
     "backend",
