@@ -2,6 +2,8 @@ name: Redo Seeding Sql
 
 on:
   push:
+    branches-ignore:
+      - main
     paths:
       - prisma/migrations/*
       - db/sql/*
