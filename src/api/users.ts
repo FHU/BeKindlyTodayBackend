@@ -34,6 +34,29 @@ users.get('/', async (req, res) => {
   }
 });
 
+users.get('/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (isNaN(id)) {
+    return res
+      .status(400)
+      .json({ message: 'Bad request, ids must be integers' });
+  }
+
+  try {
+    const user = prisma.user.findFirst({ where: { id } });
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 users.put('/bio', async (req, res) => {
   const bio = req.body.bio;
   const user = await getUser(req);
