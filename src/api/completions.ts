@@ -185,7 +185,7 @@ completions.delete('/:id', async (req, res) => {
     });
 
     if (completion === null) {
-      res.status(404).json({ message: 'Completion not found' });
+      return res.status(404).json({ message: 'Completion not found' });
     }
 
     // delete the requested resource
