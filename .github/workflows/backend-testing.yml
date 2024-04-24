@@ -1,0 +1,36 @@
+name: Backend Testing For Pushes
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - '**'
+
+jobs:
+  setup-database-and-run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
+      - name: Start local database with Docker Compose
+        run: npm run dev:docker
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Shutdown local database
+        run: npm run kill-docker
