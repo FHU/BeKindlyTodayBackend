@@ -25,6 +25,10 @@ users.get('/', async (req, res) => {
   try {
     const user = await getUser(req);
 
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     user.kindeId = 'classified';
     res.json(user);
   } catch (err) {
@@ -59,9 +63,14 @@ users.get('/:id', async (req, res) => {
 
 users.put('/bio', async (req, res) => {
   const bio = req.body.bio;
-  const user = await getUser(req);
 
   try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     const modifiedUser = await prisma.user.update({
       where: {
         id: user.id,
@@ -81,9 +90,14 @@ users.put('/bio', async (req, res) => {
 
 users.put('/profilepicture', async (req, res) => {
   const profilePicture = req.body.profilePicture;
-  const user = await getUser(req);
 
   try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     const modifiedUser = await prisma.user.update({
       where: {
         id: user.id,
@@ -103,9 +117,14 @@ users.put('/profilepicture', async (req, res) => {
 
 users.put('/username', async (req, res) => {
   const username = req.body.username;
-  const user = await getUser(req);
 
   try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     const modifiedUser = await prisma.user.update({
       where: {
         id: user.id,
