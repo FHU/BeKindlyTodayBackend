@@ -66,7 +66,7 @@ describe("COMPLETIONS SUITE", () => {
       .send({
         challenge_id: challengeId,
         user_id: userId,
-        description,
+        description: description,
       });
 
     expect(response.status).toBe(201);
@@ -82,7 +82,7 @@ describe("COMPLETIONS SUITE", () => {
       .send({
         challenge_id: challengeId,
         user_id: userId,
-        description,
+        description: description,
       });
 
     expect(response.status).toBe(303);
