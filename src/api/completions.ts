@@ -88,39 +88,44 @@ completions.get("/stats", async (req, res) => {
 });
 
 completions.get("/has_completed", async (req, res) => {
-  const user = await getUser(req);
+  try {
+    const user = await getUser(req);
 
-  if (user === null) {
-    res.status(404).json({ message: "User not found" });
-    return;
-  }
+    if (user === null) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
 
-  const user_id = user.id;
+    const user_id = user.id;
 
-  const challenge = await prisma.challenge.findUnique({
-    where: { date: new Date().toISOString() },
-  });
+    const challenge = await prisma.challenge.findUnique({
+      where: { date: new Date().toISOString() },
+    });
 
-  if (challenge === null) {
-    res.status(404).json({ message: "No challenge found for today" });
-    return;
-  }
+    if (challenge === null) {
+      res.status(404).json({ message: "No challenge found for today" });
+      return;
+    }
 
-  const challenge_id = challenge.id;
+    const challenge_id = challenge.id;
 
-  const completion = await prisma.completion.findUnique({
-    where: {
-      user_id_challenge_id: {
-        user_id,
-        challenge_id,
+    const completion = await prisma.completion.findUnique({
+      where: {
+        user_id_challenge_id: {
+          user_id,
+          challenge_id,
+        },
       },
-    },
-  });
+    });
 
-  if (completion === null) {
-    res.status(200).json({ completed: false });
-  } else {
-    res.status(200).json({ completed: true });
+    if (completion === null) {
+      res.status(200).json({ completed: false });
+    } else {
+      res.status(200).json({ completed: true });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
