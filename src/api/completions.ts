@@ -39,6 +39,7 @@ completions.get("/unauth_stats", async (req, res) => {
     const response_body = {
       world_completions_count,
       world_daily_completions_count,
+      user_completions_count: 0,
     };
 
     res.status(200).json(response_body);
