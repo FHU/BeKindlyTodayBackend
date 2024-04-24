@@ -3,6 +3,7 @@ import pandas as pd
 print("Getting data from spreadsheet...")
 sheet_id = "1YQ5sRGze8MS6edGRFEHMjyDEnrYjvst5Hdy9HB5eQ_o"
 df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
+df = df.drop_duplicates()
 
 sql_template = f'INSERT INTO "challenges" (prompt, spanish_prompt, suggestion, twist, spanish_twist, date, source, rating, image) VALUES'
 
@@ -27,11 +28,11 @@ for i, row in enumerate(df.itertuples()):
 
 sql_template = sql_template.rstrip(",") + '''
 
-ON Conflict(prompt)
+ON Conflict(twist)
 DO UPDATE SET
+    prompt = EXCLUDED.prompt,
     spanish_prompt = EXCLUDED.spanish_prompt,
     suggestion = EXCLUDED.suggestion,
-    twist = EXCLUDED.twist,
     spanish_twist = EXCLUDED.spanish_twist,
     source = EXCLUDED.source,
     image = EXCLUDED.image;
