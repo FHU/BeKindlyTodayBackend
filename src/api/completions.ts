@@ -3,10 +3,11 @@
 // Import dependencies
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import getUser from '../services/UserServices';
 import { jwtVerify } from '@kinde-oss/kinde-node-express';
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
-  audience: process.env.SITE_URL!,
+  audience: '', //I know this seems odd, but audiences are not configured on kinde and as a result this works
 });
 
 // Create router
@@ -22,26 +23,7 @@ if (process.env.ENVIRONMENT !== 'dev') {
 // Get all completions that pass filter
 completions.get('/', async (req, res) => {
   try {
-    // Get filter from request query
-    let user_id = req.query.user_id as string;
-
-    // Ensure the user_id is an integer, return 400 error for bad requests
-    if (user_id !== undefined && Number.isNaN(parseInt(user_id))) {
-      res.status(400).json({ message: 'Bad Request, ids must be integers' });
-      return;
-    }
-
-    // Declare completions variable
-    let completions;
-
-    // Set completions based user id
-    if (user_id === undefined) {
-      completions = await prisma.completion.findMany();
-    } else {
-      completions = await prisma.completion.findMany({
-        where: { user_id: parseInt(user_id) },
-      });
-    }
+    const completions = await prisma.completion.findMany();
 
     // Return the completions
     res.json(completions);
@@ -65,7 +47,7 @@ completions.get('/stats', async (req, res) => {
     );
 
     // get the user id from the request body
-    const user_id = parseInt(req.body.user.id);
+    const user_id = (await getUser(req)).id;
 
     // get the world completions and the daily world completions counts
     const world_completions_count = await prisma.completion.count();
@@ -102,7 +84,7 @@ completions.get('/stats', async (req, res) => {
 completions.get('/:id', async (req, res) => {
   try {
     // declare variable for completion's id
-    let completion_id;
+    const completion_id = parseInt(req.params.id);
 
     // Parse the id parameter provided to filter out bad request
     if (Number.isNaN(completion_id)) {
@@ -132,10 +114,9 @@ completions.get('/:id', async (req, res) => {
 // Post method for completions
 completions.post('/', async (req, res) => {
   try {
-    // Get the daily challenge
     const challenge = await prisma.challenge.findUnique({
       where: {
-        date: new Date().toISOString().slice(0, 10),
+        date: new Date().toISOString(),
       },
     });
 
@@ -146,23 +127,24 @@ completions.post('/', async (req, res) => {
     }
 
     // Get the user id from the request
-    const { user_id } = req.body.user; // FIXME Figure out how Kinde will integrate then change this to find the user or user id
+    const user_id = (await getUser(req)).id;
 
     // Create object to query completions based on user id an challenge id
     const challenge_id = challenge.id;
-    const user_id_challenge_id = { user_id, challenge_id };
 
     // Check for existing completions
     const completion = await prisma.completion.findUnique({
-      where: { user_id_challenge_id },
+      where: {
+        user_id_challenge_id: {
+          user_id,
+          challenge_id,
+        },
+      },
     });
 
-    // Redirect to existing completion if it already exists
+    // Redirecting doesnt make sense since we have already fetched the completion from the backend.
     if (completion !== null) {
-      res
-        .setHeader('location', `api/v1/completions/${completion.id}`)
-        .sendStatus(303);
-      return;
+      return res.status(303).redirect(`/api/v1/completions/${completion.id}`);
     }
 
     // Get the description from the request
@@ -196,7 +178,11 @@ completions.delete('/:id', async (req, res) => {
     }
 
     // delete the requested resource
-    await prisma.completion.delete({ where: { id: completion_id } });
+    try {
+      await prisma.completion.delete({ where: { id: completion_id } });
+    } catch (err) {
+      res.status(404).json({ message: 'Error - user not found' });
+    }
 
     res.sendStatus(204);
   } catch (err) {
