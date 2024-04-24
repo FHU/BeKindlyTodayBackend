@@ -1,6 +1,5 @@
-import internal from 'stream';
-import { KindeRequest } from '../interfaces/KindeRequest';
-import { PrismaClient } from '@prisma/client';
+import { KindeRequest } from "../interfaces/KindeRequest";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -21,6 +20,7 @@ const getUser = async (req: KindeRequest | any) => {
     user = await prisma.user.create({
       data: {
         kindeId: req.user.id,
+        username: req.user.first_name + req.user.last_name,
       },
     });
   }
