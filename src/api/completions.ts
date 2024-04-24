@@ -47,7 +47,13 @@ completions.get('/stats', async (req, res) => {
     );
 
     // get the user id from the request body
-    const user_id = (await getUser(req)).id;
+    const user = await getUser(req);
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user_id = user.id;
 
     // get the world completions and the daily world completions counts
     const world_completions_count = await prisma.completion.count();
@@ -127,7 +133,13 @@ completions.post('/', async (req, res) => {
     }
 
     // Get the user id from the request
-    const user_id = (await getUser(req)).id;
+    const user = await getUser(req);
+
+    if (user === null) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user_id = user.id;
 
     // Create object to query completions based on user id an challenge id
     const challenge_id = challenge.id;
