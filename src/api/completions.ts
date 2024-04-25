@@ -16,6 +16,40 @@ const completions = express.Router();
 // Create prisma client
 const prisma = new PrismaClient();
 
+
+completions.get("/unauth_stats", async (req, res) => {
+  try {
+    const DAY_IN_MS = 86400000;
+
+    const start_of_challenge_day =
+      new Date().toISOString().slice(0, 10) + "T00:00:00.000Z";
+
+    const end_of_challenge_day = new Date(
+      new Date(start_of_challenge_day).getTime() + DAY_IN_MS
+    );
+    // get the world completions and the daily world completions counts
+    const world_completions_count = await prisma.completion.count();
+    const world_daily_completions_count = await prisma.completion.count({
+      where: {
+        date: {
+          gte: start_of_challenge_day,
+          lte: end_of_challenge_day,
+        },
+      },
+    });
+    const response_body = {
+      world_completions_count,
+      world_daily_completions_count,
+      user_completions_count: 0,
+    };
+
+    res.status(200).json(response_body);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 if (process.env.ENVIRONMENT !== "dev") {
   completions.use(verifier);
 }
@@ -35,7 +69,6 @@ completions.get("/", async (req, res) => {
 
 // Get the count of completions that pass a filter
 completions.get("/stats", async (req, res) => {
-  console.log("here");
   try {
     const DAY_IN_MS = 86400000;
 
@@ -83,6 +116,7 @@ completions.get("/stats", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
+
   }
 });
 
