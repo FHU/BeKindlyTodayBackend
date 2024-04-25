@@ -5,7 +5,6 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import getUser from "../services/UserServices";
 import { jwtVerify } from "@kinde-oss/kinde-node-express";
-import { json } from "stream/consumers";
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
   audience: "", //I know this seems odd, but audiences are not configured on kinde and as a result this works
