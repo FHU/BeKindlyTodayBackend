@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ENVIRONMENT: dev
+      ENVIRONMENT: .dev
 
     steps:
       - name: Checkout code
