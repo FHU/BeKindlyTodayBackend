@@ -114,7 +114,7 @@ completions.get("/stats", verifier, async (req, res) => {
   }
 });
 
-completions.get("/has_completed", verifier, async (req, res) => {
+completions.get("/today", async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -145,11 +145,7 @@ completions.get("/has_completed", verifier, async (req, res) => {
       },
     });
 
-    if (completion === null) {
-      res.status(200).json({ completed: false });
-    } else {
-      res.status(200).json({ completed: true });
-    }
+    res.status(200).json(completion);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
