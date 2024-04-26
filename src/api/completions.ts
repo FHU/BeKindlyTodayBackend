@@ -16,7 +16,6 @@ const completions = express.Router();
 // Create prisma client
 const prisma = new PrismaClient();
 
-
 completions.get("/unauth_stats", async (req, res) => {
   try {
     const DAY_IN_MS = 86400000;
@@ -116,11 +115,10 @@ completions.get("/stats", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
-
   }
 });
 
-completions.get("/has_completed", async (req, res) => {
+completions.get("/today", async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -151,11 +149,7 @@ completions.get("/has_completed", async (req, res) => {
       },
     });
 
-    if (completion === null) {
-      res.status(200).json({ completed: false });
-    } else {
-      res.status(200).json({ completed: true });
-    }
+    res.status(200).json(completion);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
