@@ -16,6 +16,7 @@ const completions = express.Router();
 // Create prisma client
 const prisma = new PrismaClient();
 
+
 completions.get("/unauth_stats", async (req, res) => {
   try {
     const DAY_IN_MS = 86400000;
@@ -112,6 +113,49 @@ completions.get("/stats", async (req, res) => {
 
     // Return the count
     res.json(response_body);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+
+  }
+});
+
+completions.get("/has_completed", async (req, res) => {
+  try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const user_id = user.id;
+
+    const challenge = await prisma.challenge.findUnique({
+      where: { date: new Date().toISOString() },
+    });
+
+    if (challenge === null) {
+      res.status(404).json({ message: "No challenge found for today" });
+      return;
+    }
+
+    const challenge_id = challenge.id;
+
+    const completion = await prisma.completion.findUnique({
+      where: {
+        user_id_challenge_id: {
+          user_id,
+          challenge_id,
+        },
+      },
+    });
+
+    if (completion === null) {
+      res.status(200).json({ completed: false });
+    } else {
+      res.status(200).json({ completed: true });
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
