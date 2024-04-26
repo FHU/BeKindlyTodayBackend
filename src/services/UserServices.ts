@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 //We are using such an unholy mix of things meant for JS and things meant for TS
 //I will accept one use of any if you do.
 const getUser = async (req: KindeRequest | any) => {
-  if (req.user === null) {
+  if (req.user === undefined) {
     return notKindeLookup(req.body.id);
   }
 
