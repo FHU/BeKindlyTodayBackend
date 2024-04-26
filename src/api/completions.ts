@@ -49,12 +49,8 @@ completions.get("/unauth_stats", async (req, res) => {
   }
 });
 
-if (process.env.ENVIRONMENT !== "dev") {
-  completions.use(verifier);
-}
-
 // Get all completions that pass filter
-completions.get("/", async (req, res) => {
+completions.get("/", verifier, async (req, res) => {
   try {
     const completions = await prisma.completion.findMany();
 
@@ -67,7 +63,7 @@ completions.get("/", async (req, res) => {
 });
 
 // Get the count of completions that pass a filter
-completions.get("/stats", async (req, res) => {
+completions.get("/stats", verifier, async (req, res) => {
   try {
     const DAY_IN_MS = 86400000;
 
@@ -118,8 +114,46 @@ completions.get("/stats", async (req, res) => {
   }
 });
 
+completions.get("/today", async (req, res) => {
+  try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const user_id = user.id;
+
+    const challenge = await prisma.challenge.findUnique({
+      where: { date: new Date().toISOString() },
+    });
+
+    if (challenge === null) {
+      res.status(404).json({ message: "No challenge found for today" });
+      return;
+    }
+
+    const challenge_id = challenge.id;
+
+    const completion = await prisma.completion.findUnique({
+      where: {
+        user_id_challenge_id: {
+          user_id,
+          challenge_id,
+        },
+      },
+    });
+
+    res.status(200).json(completion);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 // Get completion based on id
-completions.get("/:id", async (req, res) => {
+completions.get("/:id", verifier, async (req, res) => {
   try {
     // declare variable for completion's id
     const completion_id = parseInt(req.params.id);
@@ -150,7 +184,7 @@ completions.get("/:id", async (req, res) => {
 });
 
 // Post method for completions
-completions.post("/", async (req, res) => {
+completions.post("/", verifier, async (req, res) => {
   try {
     const challenge = await prisma.challenge.findUnique({
       where: {
@@ -210,7 +244,7 @@ completions.post("/", async (req, res) => {
   }
 });
 
-completions.delete("/:id", async (req, res) => {
+completions.delete("/:id", verifier, async (req, res) => {
   try {
     // get completion id from parameters
     const completion_id = parseInt(req.params.id);
