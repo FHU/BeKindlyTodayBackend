@@ -5,6 +5,7 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import getUser from "../services/UserServices";
 import { jwtVerify } from "@kinde-oss/kinde-node-express";
+import { compute_streak } from "../compute_streaks";
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
   audience: "", //I know this seems odd, but audiences are not configured on kinde and as a result this works
@@ -265,6 +266,32 @@ completions.delete("/:id", verifier, async (req, res) => {
     res.sendStatus(204);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+completions.get("/calendar", async (req, res) => {
+  try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      res.status(404).json({ message: "404 User Not found" });
+      return;
+    }
+
+    const user_id = user.id;
+
+    const user_completions = await prisma.completion.findMany({
+      where: { user_id },
+    });
+
+    const all_challenges = await prisma.challenge.findMany();
+
+    const user_streak = compute_streak(user_completions, all_challenges);
+
+    res.status(200).json({ user_completions, user_streak });
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
