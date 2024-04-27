@@ -289,7 +289,11 @@ completions.get("/calendar", async (req, res) => {
 
     const user_streak = compute_streak(user_completions, all_challenges);
 
-    res.status(200).json({ user_completions, user_streak });
+    const completion_dates = user_completions.map(
+      (completion) => completion.date
+    );
+
+    res.status(200).json({ completion_dates, user_streak });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
