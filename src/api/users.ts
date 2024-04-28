@@ -15,9 +15,12 @@ const users = express.Router();
 
 const prisma = new PrismaClient();
 
-// Routes go here (get, post, put, delete)
+if (process.env.ENVIRONMENT !== "dev") {
+  users.use(verifier);
+}
 
-users.get("/", verifier, async (req, res) => {
+// Routes go here (get, post, put, delete)
+users.get("/", async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -33,7 +36,7 @@ users.get("/", verifier, async (req, res) => {
   }
 });
 
-users.get("/:id", verifier, async (req, res) => {
+users.get("/:id", async (req, res) => {
   const id = parseInt(req.params.id);
 
   if (isNaN(id)) {
@@ -57,7 +60,7 @@ users.get("/:id", verifier, async (req, res) => {
   }
 });
 
-users.put("/bio", verifier, async (req, res) => {
+users.put("/bio", async (req, res) => {
   const bio = req.body.bio;
 
   try {
@@ -84,7 +87,7 @@ users.put("/bio", verifier, async (req, res) => {
   }
 });
 
-users.put("/profilepicture", verifier, async (req, res) => {
+users.put("/profilepicture", async (req, res) => {
   const profilePicture = req.body.profilePicture;
 
   try {
@@ -111,7 +114,7 @@ users.put("/profilepicture", verifier, async (req, res) => {
   }
 });
 
-users.put("/username", verifier, async (req, res) => {
+users.put("/username", async (req, res) => {
   const username = req.body.username;
 
   try {
