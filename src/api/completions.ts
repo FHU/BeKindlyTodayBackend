@@ -115,7 +115,7 @@ completions.get("/stats", verifier, async (req, res) => {
   }
 });
 
-completions.get("/calendar", async (req, res) => {
+completions.get("/calendar", verifier, async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -145,7 +145,7 @@ completions.get("/calendar", async (req, res) => {
   }
 });
 
-completions.get("/today", async (req, res) => {
+completions.get("/today", verifier, async (req, res) => {
   try {
     const user = await getUser(req);
 
