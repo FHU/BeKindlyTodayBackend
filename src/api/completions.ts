@@ -50,8 +50,12 @@ completions.get("/unauth_stats", async (req, res) => {
   }
 });
 
+if (process.env.ENVIRONMENT !== "dev") {
+  completions.use(verifier);
+}
+
 // Get all completions that pass filter
-completions.get("/", verifier, async (req, res) => {
+completions.get("/", async (req, res) => {
   try {
     const completions = await prisma.completion.findMany();
 
@@ -64,7 +68,7 @@ completions.get("/", verifier, async (req, res) => {
 });
 
 // Get the count of completions that pass a filter
-completions.get("/stats", verifier, async (req, res) => {
+completions.get("/stats", async (req, res) => {
   try {
     const DAY_IN_MS = 86400000;
 
@@ -115,7 +119,7 @@ completions.get("/stats", verifier, async (req, res) => {
   }
 });
 
-completions.get("/calendar", verifier, async (req, res) => {
+completions.get("/calendar", async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -145,7 +149,7 @@ completions.get("/calendar", verifier, async (req, res) => {
   }
 });
 
-completions.get("/today", verifier, async (req, res) => {
+completions.get("/today", async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -184,7 +188,7 @@ completions.get("/today", verifier, async (req, res) => {
 });
 
 // Get completion based on id
-completions.get("/:id", verifier, async (req, res) => {
+completions.get("/:id", async (req, res) => {
   try {
     // declare variable for completion's id
     const completion_id = parseInt(req.params.id);
@@ -215,7 +219,7 @@ completions.get("/:id", verifier, async (req, res) => {
 });
 
 // Post method for completions
-completions.post("/", verifier, async (req, res) => {
+completions.post("/", async (req, res) => {
   try {
     const challenge = await prisma.challenge.findUnique({
       where: {
@@ -275,7 +279,7 @@ completions.post("/", verifier, async (req, res) => {
   }
 });
 
-completions.delete("/:id", verifier, async (req, res) => {
+completions.delete("/:id", async (req, res) => {
   try {
     // get completion id from parameters
     const completion_id = parseInt(req.params.id);
