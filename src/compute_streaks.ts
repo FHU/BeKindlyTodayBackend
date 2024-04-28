@@ -7,7 +7,7 @@ export function compute_streak(
   let count = 0;
 
   challenges = challenges.filter((challenge) => {
-    challenge.date <= new Date();
+    return challenge.date <= new Date();
   });
 
   const streak_mapping = challenges.map((challenge) => {
