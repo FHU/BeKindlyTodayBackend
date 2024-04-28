@@ -6,7 +6,7 @@ export function compute_streak(completions: Completion[]) {
   let streak = 1;
 
   const completionDates = completions.map(
-    (completion) => new Date(new Date(completion.date).setHours(0, 0, 0, 0))
+    (completion) => new Date(new Date(completion.date).setHours(0, 0, 0, 0)) //This is done to not edit original completions array
   );
 
   const DAY_IN_MS = 86400000;
