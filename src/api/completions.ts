@@ -207,6 +207,10 @@ completions.get("/all_today", async (req, res) => {
       include: { user: true },
     });
 
+    completions.forEach((completion) => {
+      completion.user.kindeId = "classified";
+    });
+
     res.status(200).json(completions);
   } catch (err) {
     console.error(err);
