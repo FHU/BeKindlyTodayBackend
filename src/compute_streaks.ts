@@ -10,6 +10,7 @@ export function compute_streak(completions: Completion[]) {
   );
 
   const DAY_IN_MS = 86400000;
+  const TODAY = new Date(new Date().setHours(0, 0, 0, 0));
 
   let curr = completionDates.length - 1;
 
@@ -18,6 +19,8 @@ export function compute_streak(completions: Completion[]) {
   while (completionDates[curr] > new Date()) {
     curr--;
   }
+
+  if (completionDates[curr] != TODAY) return 0;
 
   let nextStreakDate = new Date(completionDates[curr].getTime() - DAY_IN_MS);
   let nextCompletionDate = completionDates[curr - 1];
