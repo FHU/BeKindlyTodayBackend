@@ -115,7 +115,37 @@ completions.get("/stats", verifier, async (req, res) => {
   }
 });
 
-completions.get("/today", async (req, res) => {
+completions.get("/calendar", verifier, async (req, res) => {
+  try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      res.status(404).json({ message: "404 User Not found" });
+      return;
+    }
+
+    const user_id = user.id;
+
+    const user_completions = await prisma.completion.findMany({
+      where: { user_id },
+    });
+
+    const all_challenges = await prisma.challenge.findMany();
+
+    const user_streak = compute_streak(user_completions, all_challenges);
+
+    const completion_dates = user_completions.map(
+      (completion) => completion.date
+    );
+
+    res.status(200).json({ completion_dates, user_streak });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+completions.get("/today", verifier, async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -266,32 +296,6 @@ completions.delete("/:id", verifier, async (req, res) => {
     res.sendStatus(204);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
-completions.get("/calendar", async (req, res) => {
-  try {
-    const user = await getUser(req);
-
-    if (user === null) {
-      res.status(404).json({ message: "404 User Not found" });
-      return;
-    }
-
-    const user_id = user.id;
-
-    const user_completions = await prisma.completion.findMany({
-      where: { user_id },
-    });
-
-    const all_challenges = await prisma.challenge.findMany();
-
-    const user_streak = compute_streak(user_completions, all_challenges);
-
-    res.status(200).json({ user_completions, user_streak });
-  } catch (err) {
-    console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
