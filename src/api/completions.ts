@@ -200,13 +200,14 @@ completions.get("/all_today", async (req, res) => {
 
     const challenge_id = challenge.id;
 
-    const completion = await prisma.completion.findMany({
+    const completions = await prisma.completion.findMany({
       where: {
         challenge_id,
       },
+      include: { user: true },
     });
 
-    res.status(200).json(completion);
+    res.status(200).json(completions);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
