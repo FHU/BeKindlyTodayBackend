@@ -20,7 +20,7 @@ export function compute_streak(completions: Completion[]) {
     curr--;
   }
 
-  if (completionDates[curr] != TODAY) return 0;
+  if (completionDates[curr].getTime() !== TODAY.getTime()) return 0;
 
   let nextStreakDate = new Date(completionDates[curr].getTime() - DAY_IN_MS);
   let nextCompletionDate = completionDates[curr - 1];
