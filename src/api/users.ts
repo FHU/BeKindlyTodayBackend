@@ -37,6 +37,32 @@ users.get("/", async (req, res) => {
   }
 });
 
+users.get("/stats", async (req, res) => {
+  try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const user_completions = await prisma.completion.findMany({
+      where: { user_id: user.id },
+    });
+
+    const challenges = await prisma.challenge.findMany();
+
+    const user_completions_count = user_completions.length;
+
+    const user_streak = compute_streak(user_completions, challenges);
+
+    res.json({ user_completions_count, user_streak });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 users.get("/:id", async (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -136,32 +162,6 @@ users.put("/username", async (req, res) => {
 
     modifiedUser.kindeId = "classified";
     res.status(201).json(modifiedUser);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
-users.get("/stats", async (req, res) => {
-  try {
-    const user = await getUser(req);
-
-    if (user === null) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
-
-    const user_completions = await prisma.completion.findMany({
-      where: { user_id: user.id },
-    });
-
-    const challenges = await prisma.challenge.findMany();
-
-    const user_completions_count = user_completions.length;
-
-    const user_streak = compute_streak(user_completions, challenges);
-
-    res.json({ user_completions_count, user_streak });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
