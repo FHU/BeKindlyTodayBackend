@@ -185,6 +185,37 @@ completions.get('/today', async (req, res) => {
   }
 });
 
+completions.get("/all_today", async (req, res) => {
+  try {
+    const challenge = await prisma.challenge.findUnique({
+      where: { date: new Date().toISOString() },
+    });
+
+    if (challenge === null) {
+      res.status(404).json({ message: "No challenge found for today" });
+      return;
+    }
+
+    const challenge_id = challenge.id;
+
+    const completions = await prisma.completion.findMany({
+      where: {
+        challenge_id,
+      },
+      include: { user: true },
+    });
+
+    completions.forEach((completion) => {
+      completion.user.kindeId = "classified";
+    });
+
+    res.status(200).json(completions);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 // Get completion based on id
 completions.get('/:id', async (req, res) => {
   try {
