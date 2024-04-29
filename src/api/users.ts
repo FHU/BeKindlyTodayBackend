@@ -50,11 +50,9 @@ users.get("/stats", async (req, res) => {
       where: { user_id: user.id },
     });
 
-    const challenges = await prisma.challenge.findMany();
-
     const user_completions_count = user_completions.length;
 
-    const user_streak = compute_streak(user_completions, challenges);
+    const user_streak = compute_streak(user_completions);
 
     res.json({ user_completions_count, user_streak });
   } catch (err) {
