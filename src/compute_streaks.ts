@@ -29,7 +29,11 @@ export function compute_streak(completions: Completion[]) {
   let nextStreakDate = new Date(completionDates[curr].getTime() - DAY_IN_MS);
   let nextCompletionDate = completionDates[curr - 1];
 
-  if (nextCompletionDate !== YESTERDAY) return 0;
+  if (
+    completionDates[curr].getTime() !== TODAY.getTime() &&
+    completionDates[curr].getTime() !== YESTERDAY.getTime()
+  )
+    return 0;
 
   //While the next day in the array of completions == next day if there was a streak
   while (nextCompletionDate.getTime() == nextStreakDate.getTime()) {
