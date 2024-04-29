@@ -20,8 +20,13 @@ export function compute_streak(completions: Completion[]) {
     curr--;
   }
 
-  if (completionDates[curr].getTime() !== TODAY.getTime()) return 0;
+  if (completionDates[curr].getTime() !== TODAY.getTime()) return 0; //No completion tooday == no streak
 
+  /**nextStreakDate is meant to be the next day that would exist if you did have a streak
+   * nextCompletionDate is the next day in your completions.
+   * The idea is to move through the completions and anywhere there isnt another completion in sequence
+   * the streak number would be returned.
+   */
   let nextStreakDate = new Date(completionDates[curr].getTime() - DAY_IN_MS);
   let nextCompletionDate = completionDates[curr - 1];
 
