@@ -5,6 +5,7 @@ import express, { Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { jwtVerify } from "@kinde-oss/kinde-node-express";
 import getUser from "../services/UserServices";
+import { compute_streak } from "../compute_streaks";
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
   audience: "", //I know this seems odd, but audiences are not configured on kinde and as a result this works
@@ -15,9 +16,12 @@ const users = express.Router();
 
 const prisma = new PrismaClient();
 
-// Routes go here (get, post, put, delete)
+if (process.env.ENVIRONMENT !== "dev") {
+  users.use(verifier);
+}
 
-users.get("/", verifier, async (req, res) => {
+// Routes go here (get, post, put, delete)
+users.get("/", async (req, res) => {
   try {
     const user = await getUser(req);
 
@@ -33,7 +37,31 @@ users.get("/", verifier, async (req, res) => {
   }
 });
 
-users.get("/:id", verifier, async (req, res) => {
+users.get("/stats", async (req, res) => {
+  try {
+    const user = await getUser(req);
+
+    if (user === null) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const user_completions = await prisma.completion.findMany({
+      where: { user_id: user.id },
+    });
+
+    const user_completions_count = user_completions.length;
+
+    const user_streak = compute_streak(user_completions);
+
+    res.json({ user_completions_count, user_streak });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+users.get("/:id", async (req, res) => {
   const id = parseInt(req.params.id);
 
   if (isNaN(id)) {
@@ -57,7 +85,7 @@ users.get("/:id", verifier, async (req, res) => {
   }
 });
 
-users.put("/bio", verifier, async (req, res) => {
+users.put("/bio", async (req, res) => {
   const bio = req.body.bio;
 
   try {
@@ -84,7 +112,7 @@ users.put("/bio", verifier, async (req, res) => {
   }
 });
 
-users.put("/profilepicture", verifier, async (req, res) => {
+users.put("/profilepicture", async (req, res) => {
   const profilePicture = req.body.profilePicture;
 
   try {
@@ -111,7 +139,7 @@ users.put("/profilepicture", verifier, async (req, res) => {
   }
 });
 
-users.put("/username", verifier, async (req, res) => {
+users.put("/username", async (req, res) => {
   const username = req.body.username;
 
   try {
