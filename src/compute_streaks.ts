@@ -14,7 +14,7 @@ export function compute_streak(completions: Completion[]) {
   const TODAY = new Date(new Date().setHours(0, 0, 0, 0)).getTime();
   const YESTERDAY = new Date(TODAY - DAY_IN_MS).getTime();
 
-  let curr = 0;
+  let curr = completionDates.length - 1;
 
   /**nextStreakDate is meant to be the next day that would exist if you did have a streak
    * nextCompletionDate is the next day in your completions.
@@ -22,7 +22,7 @@ export function compute_streak(completions: Completion[]) {
    * the streak number would be returned.
    */
   let nextStreakDate = new Date(completionDates[curr] - DAY_IN_MS).getTime();
-  let nextCompletionDate = completionDates[curr + 1];
+  let nextCompletionDate = completionDates[curr - 1];
 
   if (completionDates[curr] !== TODAY && completionDates[curr] !== YESTERDAY)
     return 0;
@@ -30,10 +30,10 @@ export function compute_streak(completions: Completion[]) {
   //While the next day in the array of completions == next day if there was a streak
   while (nextCompletionDate == nextStreakDate) {
     streak++;
-    curr++;
+    curr--;
 
     nextStreakDate = new Date(completionDates[curr] - DAY_IN_MS).getTime();
-    nextCompletionDate = completionDates[curr + 1];
+    nextCompletionDate = completionDates[curr - 1];
 
     if (nextCompletionDate === undefined) break;
   }
