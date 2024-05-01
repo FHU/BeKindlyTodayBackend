@@ -301,10 +301,10 @@ completions.post('/', async (req, res) => {
       },
     });
 
-    res.json(new_completion);
+    return res.json(new_completion);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
