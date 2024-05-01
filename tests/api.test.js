@@ -66,7 +66,7 @@ describe("COMPLETIONS SUITE", () => {
     const userId = 11;
     const description = "Completion 11 description";
 
-    const response = await request("/api/v1/completions/")
+    const response = await request(URL)
       .post("/api/v1/completions")
       .send({
         challenge_id: challengeId,
@@ -82,7 +82,7 @@ describe("COMPLETIONS SUITE", () => {
     const userId = 1;
     const description = "Completion 1 description";
 
-    const response = await request("/api/v1/completions/")
+    const response = await request(URL)
       .post("/api/v1/completions")
       .send({
         challenge_id: challengeId,
