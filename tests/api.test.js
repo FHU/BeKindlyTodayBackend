@@ -4,6 +4,11 @@ import request from "supertest";
 
 const URL = "http://localhost:5000";
 
+test("should return status code 200", async () => {
+  const res = await request(URL).get("/api/");
+  expect(res.statusCode).toBe(200);
+});
+
 describe("USERS SUITE", () => {
   test("should get users and return status code 200", async () => {
     const res = await request(URL).get("/api/v1/users/");
@@ -15,7 +20,7 @@ describe("CHALLENGES SUITE", () => {
   test("should get today's challenge and return status code 200", async () => {
     const res = await request(URL).get("/api/v1/challenges/today");
     expect(res.statusCode).toBe(200);
-  });
+  });q
 
   test("should send bad request and return status code 400", async () => {
     const res = await request(URL).get("/api/v1/challenges/foobar/");
