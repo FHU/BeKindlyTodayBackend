@@ -16,6 +16,7 @@ const app = express();
 
 // Use express json middleware for all routes
 app.use(express.json());
+app.use(express.static('public'));
 app.use(cors<Request>());
 
 // Set debug based on environment variables
