@@ -36,7 +36,7 @@ jobs:
         run: npm run spin-db
 
       - name: Start API
-        run: npm run dev
+        run: nohup npm run dev &
 
       - name: Run tests
         run: npm run test
