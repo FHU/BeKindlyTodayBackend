@@ -3,7 +3,7 @@ import { test, expect, request } from 'vitest';
 import request from 'supertest';
 
 const PORT = process.env.PORT || 5000;
-const URL = `http://localhost:${PORT}`;
+const URL = `https://localhost:${PORT}`;
 
 test("should return status code 200, 'pointless test'", async () => {
   const res = await request(URL).get('/api/');

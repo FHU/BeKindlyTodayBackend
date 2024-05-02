@@ -13,6 +13,7 @@ jobs:
 
     env:
       ENVIRONMENT: dev
+      PORT: 5000
 
     steps:
       - name: Checkout code
@@ -33,6 +34,8 @@ jobs:
 
       - name: Start local database with Docker Compose
         run: docker compose --env-file ./.env.example up --detach
+
+      - run: docker ps
 
       - name: Run tests
         run: npm run test
