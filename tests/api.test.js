@@ -2,7 +2,7 @@ import { describe } from 'node:test';
 import { test, expect, request } from 'vitest';
 import request from 'supertest';
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const URL = `http://localhost:${PORT}`;
 
 test("should return status code 200, 'pointless test'", async () => {
