@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: Install dependencies
-        run: npx prisma client generate
+        run: npx prisma generate
 
       - name: Start local database with Docker Compose
         run: npm run spin-db
