@@ -27,18 +27,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set up Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+      # - name: Set up Docker Compose
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y docker-compose
 
       - name: Start local database with Docker Compose
-        run: docker compose --env-file ./.env.example up --detach
+        run: npm run spin-db
 
-      - run: docker ps
+      - name: Start API
+        run: npm run dev
 
       - name: Run tests
         run: npm run test
 
       - name: Shutdown local database
-        run: npm run kill-docker
+        run: npm run kill-db
