@@ -185,14 +185,14 @@ completions.get('/today', async (req, res) => {
   }
 });
 
-completions.get("/all_today", async (req, res) => {
+completions.get('/all_today', async (req, res) => {
   try {
     const challenge = await prisma.challenge.findUnique({
       where: { date: new Date().toISOString() },
     });
 
     if (challenge === null) {
-      res.status(404).json({ message: "No challenge found for today" });
+      res.status(404).json({ message: 'No challenge found for today' });
       return;
     }
 
@@ -206,13 +206,13 @@ completions.get("/all_today", async (req, res) => {
     });
 
     completions.forEach((completion) => {
-      completion.user.kindeId = "classified";
+      completion.user.kindeId = 'classified';
     });
 
     res.status(200).json(completions);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
@@ -301,10 +301,10 @@ completions.post('/', async (req, res) => {
       },
     });
 
-    res.json(new_completion);
+    return res.json(new_completion);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
@@ -323,7 +323,7 @@ completions.delete('/:id', async (req, res) => {
     try {
       await prisma.completion.delete({ where: { id: completion_id } });
     } catch (err) {
-      res.status(404).json({ message: 'Error - user not found' });
+      return res.status(404).json({ message: 'Error - user not found' });
     }
 
     res.sendStatus(204);

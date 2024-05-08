@@ -29,6 +29,7 @@ const getUser = async (req: KindeRequest | any) => {
 };
 
 const notKindeLookup = async (id: number) => {
+  if (!id) return null;
   return await prisma.user.findUnique({ where: { id } });
 };
 

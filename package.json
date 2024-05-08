@@ -7,11 +7,11 @@
     "test": "vitest",
     "dev": "dotenv -e ./.env.dev nodemon ./server.ts",
     "dev:studio": "dotenv -e ./.env.dev npx prisma studio",
-    "spin-db": ". ./.env.dev && docker build -t bkt_db_img_dev ./db && docker run -dp 5432:5432 -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD --name db_c bkt_db_img_dev",
+    "spin-db": "docker build -t bkt_db_img_dev ./db && docker run -dp 5432:5432 -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD --name db_c bkt_db_img_dev",
     "redo-sql": "sh ./db/redo-sql.sh",
     "kill-db": "docker stop db_c && docker rm db_c",
     "prod": "npx prisma migrate deploy && npx ts-node ./server.ts",
-    "dev:docker": "docker compose --env-file ./.env.dev up --detach --build && docker compose --env-file ./.env.dev watch",
+    "dev:docker": "docker compose --env-file ./.env.dev up --detach && docker compose --env-file ./.env.dev watch",
     "kill-docker": "docker stop db_c api_c && docker remove db_c api_c"
   },
   "keywords": [
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@kinde-oss/kinde-node-express": "^1.3.0",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "pg": "^8.11.5"
   }
 }

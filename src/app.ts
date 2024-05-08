@@ -59,6 +59,11 @@ app.use((req, res, next) => {
 });
 
 // Use the users router in the corresponding route.
+app.get('/api/',(req, res) => {
+  console.log("in /api")
+  res.json({ message: 'Welcome to the API' })
+} )
+
 app.use('/api/v1/users', users);
 
 app.use('/api/v1/challenges', challenges);
