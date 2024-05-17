@@ -15,6 +15,12 @@ const getUser = async (req: KindeRequest | any) => {
     where: {
       kindeId: req.user.id,
     },
+    select: {
+      id: true,
+      username: true,
+      bio: true,
+      profilePicture: true,
+    },
   });
 
   if (user === null) {
@@ -30,7 +36,15 @@ const getUser = async (req: KindeRequest | any) => {
 
 const notKindeLookup = async (id: number) => {
   if (!id) return null;
-  return await prisma.user.findUnique({ where: { id } });
+  return await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      username: true,
+      bio: true,
+      profilePicture: true,
+    },
+  });
 };
 
 export default getUser;
