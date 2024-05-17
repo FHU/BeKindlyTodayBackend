@@ -27,6 +27,7 @@ completions.get('/unauth_stats', async (req, res) => {
     const end_of_challenge_day = new Date(
       new Date(start_of_challenge_day).getTime() + DAY_IN_MS
     );
+
     // get the world completions and the daily world completions counts
     const world_completions_count = await prisma.completion.count();
     const world_daily_completions_count = await prisma.completion.count({
@@ -37,6 +38,7 @@ completions.get('/unauth_stats', async (req, res) => {
         },
       },
     });
+
     const response_body = {
       world_completions_count,
       world_daily_completions_count,
@@ -57,7 +59,16 @@ if (process.env.ENVIRONMENT !== 'dev') {
 // Get all completions that pass filter
 completions.get('/', async (req, res) => {
   try {
-    const completions = await prisma.completion.findMany();
+    const completions = await prisma.completion.findMany({
+      select: {
+        id: true,
+        description: true,
+        date: true,
+        user_id: true,
+        challenge_id: true,
+        completed_twist: true,
+      },
+    });
 
     // Return the completions
     res.json(completions);
@@ -176,6 +187,14 @@ completions.get('/today', async (req, res) => {
           challenge_id,
         },
       },
+      select: {
+        id: true,
+        description: true,
+        date: true,
+        user_id: true,
+        challenge_id: true,
+        completed_twist: true,
+      },
     });
 
     res.status(200).json(completion);
@@ -202,11 +221,11 @@ completions.get('/all_today', async (req, res) => {
       where: {
         challenge_id,
       },
-      include: { user: true },
-    });
-
-    completions.forEach((completion) => {
-      completion.user.kindeId = 'classified';
+      include: {
+        user: {
+          select: { id: true, username: true, bio: true, profilePicture: true },
+        },
+      },
     });
 
     res.status(200).json(completions);
@@ -231,6 +250,14 @@ completions.get('/:id', async (req, res) => {
     // Get the completion from the database
     const completion = await prisma.completion.findUnique({
       where: { id: completion_id },
+      select: {
+        id: true,
+        description: true,
+        date: true,
+        user_id: true,
+        challenge_id: true,
+        completed_twist: true,
+      },
     });
 
     // Check for 404 errors
@@ -298,6 +325,14 @@ completions.post('/', async (req, res) => {
         challenge_id,
         user_id,
         description,
+      },
+      select: {
+        id: true,
+        description: true,
+        date: true,
+        user_id: true,
+        challenge_id: true,
+        completed_twist: true,
       },
     });
 
