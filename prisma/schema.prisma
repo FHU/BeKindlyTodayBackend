@@ -37,17 +37,17 @@ model Challenge {
 }
 
 model Completion {
-  id              Int       @id @unique @default(autoincrement())
-  description     String
-  date            DateTime  @default(now())
-  user_id         Int
-  challenge_id    Int
-  completed_twist Boolean   @default(false) // Provide a default value to allow migration without conflicts
-  user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  challenge       Challenge @relation(fields: [challenge_id], references: [id], onDelete: Cascade)
+  id             Int       @id @unique @default(autoincrement())
+  description    String
+  date           DateTime  @default(now())
+  userId         Int       @map("user_id")
+  challengeId    Int       @map("challenge_id")
+  completedTwist Boolean   @default(false) @map("completion_twist") // Provide a default value to allow migration without conflicts
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge      Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
-  @@unique([user_id, challenge_id])
-  @@index([user_id, challenge_id], name: "user_id_challenge_id")
+  @@unique([userId, challengeId])
+  @@index([userId, challengeId], name: "user_id_challenge_id")
   @@index([date])
   @@map("completions")
 }

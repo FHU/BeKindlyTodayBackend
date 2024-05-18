@@ -64,9 +64,9 @@ completions.get('/', async (req, res) => {
         id: true,
         description: true,
         date: true,
-        user_id: true,
-        challenge_id: true,
-        completed_twist: true,
+        userId: true,
+        challengeId: true,
+        completedTwist: true,
       },
     });
 
@@ -112,7 +112,7 @@ completions.get('/stats', async (req, res) => {
 
     // get the user's completions count
     const user_completions_count = await prisma.completion.count({
-      where: { user_id },
+      where: { userId },
     });
 
     // Create the response body
@@ -139,10 +139,10 @@ completions.get('/calendar', async (req, res) => {
       return;
     }
 
-    const user_id = user.id;
+    const userId = user.id;
 
     const user_completions = await prisma.completion.findMany({
-      where: { user_id },
+      where: { userId },
     });
 
     const completion_dates = user_completions.map(
@@ -167,7 +167,7 @@ completions.get('/today', async (req, res) => {
       return;
     }
 
-    const user_id = user.id;
+    const userId = user.id;
 
     const challenge = await prisma.challenge.findUnique({
       where: { date: new Date().toISOString() },
@@ -178,22 +178,22 @@ completions.get('/today', async (req, res) => {
       return;
     }
 
-    const challenge_id = challenge.id;
+    const challengeId = challenge.id;
 
     const completion = await prisma.completion.findUnique({
       where: {
-        user_id_challenge_id: {
-          user_id,
-          challenge_id,
+        userId_challengeId: {
+          userId,
+          challengeId,
         },
       },
       select: {
         id: true,
         description: true,
         date: true,
-        user_id: true,
-        challenge_id: true,
-        completed_twist: true,
+        userId: true,
+        challengeId: true,
+        completedTwist: true,
       },
     });
 
@@ -215,11 +215,11 @@ completions.get('/all_today', async (req, res) => {
       return;
     }
 
-    const challenge_id = challenge.id;
+    const challengeId = challenge.id;
 
     const completions = await prisma.completion.findMany({
       where: {
-        challenge_id,
+        challengeId,
       },
       include: {
         user: {
@@ -254,9 +254,9 @@ completions.get('/:id', async (req, res) => {
         id: true,
         description: true,
         date: true,
-        user_id: true,
-        challenge_id: true,
-        completed_twist: true,
+        userId: true,
+        challengeId: true,
+        completedTwist: true,
       },
     });
 
@@ -296,17 +296,17 @@ completions.post('/', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const user_id = user.id;
+    const userId = user.id;
 
     // Create object to query completions based on user id an challenge id
-    const challenge_id = challenge.id;
+    const challengeId = challenge.id;
 
     // Check for existing completions
     const completion = await prisma.completion.findUnique({
       where: {
-        user_id_challenge_id: {
-          user_id,
-          challenge_id,
+        userId_challengeId: {
+          userId,
+          challengeId,
         },
       },
     });
@@ -322,17 +322,17 @@ completions.post('/', async (req, res) => {
     // Create the new completion
     const new_completion = await prisma.completion.create({
       data: {
-        challenge_id,
-        user_id,
+        challengeId,
+        userId,
         description,
       },
       select: {
         id: true,
         description: true,
         date: true,
-        user_id: true,
-        challenge_id: true,
-        completed_twist: true,
+        userId: true,
+        challengeId: true,
+        completedTwist: true,
       },
     });
 
