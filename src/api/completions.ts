@@ -5,7 +5,7 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import getUser from '../services/UserServices';
 import { jwtVerify } from '@kinde-oss/kinde-node-express';
-import { compute_streak } from '../compute_streaks';
+import { computeStreak } from '../ComputeStreaks';
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
   audience: '', //I know this seems odd, but audiences are not configured on kinde and as a result this works
@@ -21,31 +21,31 @@ completions.get('/unauth_stats', async (req, res) => {
   try {
     const DAY_IN_MS = 86400000;
 
-    const start_of_challenge_day =
+    const startOfChallengeDay =
       new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z';
 
-    const end_of_challenge_day = new Date(
-      new Date(start_of_challenge_day).getTime() + DAY_IN_MS
+    const endOfChallengeDay = new Date(
+      new Date(startOfChallengeDay).getTime() + DAY_IN_MS
     );
 
     // get the world completions and the daily world completions counts
-    const world_completions_count = await prisma.completion.count();
-    const world_daily_completions_count = await prisma.completion.count({
+    const worldCompletionsCount = await prisma.completion.count();
+    const worldDailyCompletionsCount = await prisma.completion.count({
       where: {
         date: {
-          gte: start_of_challenge_day,
-          lte: end_of_challenge_day,
+          gte: startOfChallengeDay,
+          lte: endOfChallengeDay,
         },
       },
     });
 
-    const response_body = {
-      world_completions_count,
-      world_daily_completions_count,
-      user_completions_count: 0,
+    const responseBody = {
+      worldCompletionsCount,
+      worldDailyCompletionsCount,
+      userCompletionsCount: 0, //TODO change fronte end to not require this
     };
 
-    res.status(200).json(response_body);
+    res.status(200).json(responseBody);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -83,11 +83,11 @@ completions.get('/stats', async (req, res) => {
   try {
     const DAY_IN_MS = 86400000;
 
-    const start_of_challenge_day =
+    const startOfChallengeDay =
       new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z';
 
-    const end_of_challenge_day = new Date(
-      new Date(start_of_challenge_day).getTime() + DAY_IN_MS
+    const endOfChallengeDay = new Date(
+      new Date(startOfChallengeDay).getTime() + DAY_IN_MS
     );
 
     // get the user id from the request body
@@ -97,33 +97,33 @@ completions.get('/stats', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const user_id = user.id;
+    const userId = user.id;
 
     // get the world completions and the daily world completions counts
-    const world_completions_count = await prisma.completion.count();
-    const world_daily_completions_count = await prisma.completion.count({
+    const worldCompletionsCount = await prisma.completion.count();
+    const worldDailyCompletionsCount = await prisma.completion.count({
       where: {
         date: {
-          gte: start_of_challenge_day,
-          lte: end_of_challenge_day,
+          gte: startOfChallengeDay,
+          lte: endOfChallengeDay,
         },
       },
     });
 
     // get the user's completions count
-    const user_completions_count = await prisma.completion.count({
+    const userCompletionsCount = await prisma.completion.count({
       where: { userId },
     });
 
     // Create the response body
-    const response_body = {
-      world_completions_count,
-      world_daily_completions_count,
-      user_completions_count,
+    const responseBody = {
+      worldCompletionsCount,
+      worldDailyCompletionsCount,
+      userCompletionsCount,
     };
 
     // Return the count
-    res.json(response_body);
+    res.json(responseBody);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -141,17 +141,17 @@ completions.get('/calendar', async (req, res) => {
 
     const userId = user.id;
 
-    const user_completions = await prisma.completion.findMany({
+    const userCompletions = await prisma.completion.findMany({
       where: { userId },
     });
 
-    const completion_dates = user_completions.map(
+    const completionDates = userCompletions.map(
       (completion) => completion.date
     );
 
-    const user_streak = compute_streak(user_completions);
+    const userStreak = computeStreak(userCompletions);
 
-    res.status(200).json({ completion_dates, user_streak });
+    res.status(200).json({ completionDates, userStreak });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -239,17 +239,17 @@ completions.get('/all_today', async (req, res) => {
 completions.get('/:id', async (req, res) => {
   try {
     // declare variable for completion's id
-    const completion_id = parseInt(req.params.id);
+    const completionId = parseInt(req.params.id);
 
     // Parse the id parameter provided to filter out bad request
-    if (Number.isNaN(completion_id)) {
+    if (isNaN(completionId)) {
       res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
 
     // Get the completion from the database
     const completion = await prisma.completion.findUnique({
-      where: { id: completion_id },
+      where: { id: completionId },
       select: {
         id: true,
         description: true,
@@ -320,7 +320,7 @@ completions.post('/', async (req, res) => {
     const { description } = req.body;
 
     // Create the new completion
-    const new_completion = await prisma.completion.create({
+    const newCompletion = await prisma.completion.create({
       data: {
         challengeId,
         userId,
@@ -336,7 +336,7 @@ completions.post('/', async (req, res) => {
       },
     });
 
-    return res.json(new_completion);
+    return res.json(newCompletion);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -346,17 +346,17 @@ completions.post('/', async (req, res) => {
 completions.delete('/:id', async (req, res) => {
   try {
     // get completion id from parameters
-    const completion_id = parseInt(req.params.id);
+    const completionId = parseInt(req.params.id);
 
     // Check that the id can be parsed to an integer, return 400 error for bad requests
-    if (Number.isNaN(completion_id)) {
+    if (isNaN(completionId)) {
       res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
 
     // delete the requested resource
     try {
-      await prisma.completion.delete({ where: { id: completion_id } });
+      await prisma.completion.delete({ where: { id: completionId } });
     } catch (err) {
       return res.status(404).json({ message: 'Error - user not found' });
     }

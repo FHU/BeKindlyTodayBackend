@@ -19,7 +19,7 @@ challenges.use('/:id/*', async (req, res, next) => {
   try {
     // Try to parse the id into a number, if it is NaN, return 400 error
     const id = parseInt(req.params.id);
-    if (Number.isNaN(id)) {
+    if (isNaN(id)) {
       res.status(400).json({ message: 'Bad Request, ids must be integers' });
       return;
     }
@@ -27,8 +27,18 @@ challenges.use('/:id/*', async (req, res, next) => {
     // Once the id is parsed, retrieve the corresponding challenge from the database
     // If no challenges have a matching id, return a 404 error and return to stop execution.
 
-    let challenge;
-    challenge = await prisma.challenge.findUnique({ where: { id: id } });
+    const challenge = await prisma.challenge.findUnique({
+      where: { id: id },
+      select: {
+        id: true,
+        prompt: true,
+        spanishPrompt: true,
+        twist: true,
+        spanishTwist: true,
+        date: true,
+        image: true,
+      },
+    });
 
     if (challenge === null) {
       res

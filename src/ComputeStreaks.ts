@@ -1,6 +1,6 @@
 import { Completion } from '@prisma/client';
 
-export function compute_streak(completions: Completion[]) {
+export function computeStreak(completions: Completion[]) {
   if (completions.length === 0) return 0;
 
   const completionDates = completions.map(

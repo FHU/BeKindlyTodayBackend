@@ -23,8 +23,8 @@ app.use(cors<Request>());
 const DEBUG = process.env.DEBUG?.toLowerCase() === 'true' || false;
 
 // Set logging level based on debug mode and add morgan middleware to app
-const logging_level = DEBUG ? 'dev' : 'tiny';
-app.use(morgan(logging_level));
+const loggingLevel = DEBUG ? 'dev' : 'tiny';
+app.use(morgan(loggingLevel));
 
 // Config settings for Kinde
 if (process.env.ENVIRONMENT !== 'dev') {

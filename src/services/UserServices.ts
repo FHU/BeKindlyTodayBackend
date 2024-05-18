@@ -1,4 +1,3 @@
-import internal from 'stream';
 import { KindeRequest } from '../interfaces/KindeRequest';
 import { PrismaClient } from '@prisma/client';
 
