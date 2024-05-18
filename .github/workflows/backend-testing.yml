@@ -39,7 +39,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres
           PORT: 5000
-        run: nohup npm run prod &
+        run: nohup npm run dev &
 
       - name: Run tests
         run: npm run test
