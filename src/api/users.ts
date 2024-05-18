@@ -6,21 +6,20 @@ import { PrismaClient } from '@prisma/client';
 import { jwtVerify } from '@kinde-oss/kinde-node-express';
 import getUser from '../services/UserServices';
 import { computeStreak } from '../ComputeStreaks';
+import { inDev } from '../Config';
 
 const verifier = jwtVerify(process.env.KINDE_URL!, {
   audience: '', //I know this seems odd, but audiences are not configured on kinde and as a result this works
 });
 
-// Create the router
 const users = express.Router();
 
 const prisma = new PrismaClient();
 
-if (process.env.ENVIRONMENT !== 'dev') {
+if (!inDev) {
   users.use(verifier);
 }
 
-// Routes go here (get, post, put, delete)
 users.get('/', async (req, res) => {
   try {
     const user = await getUser(req);
