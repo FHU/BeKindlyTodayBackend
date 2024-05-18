@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ENVIRONMENT: dev
+      NODE_ENV: development
       PORT: 5000
 
     steps:
@@ -39,7 +39,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:Mydatabasepassword1@localhost:5432/postgres
           PORT: 5000
-        run: nohup npm run dev &
+        run: nohup npm run prod &
 
       - name: Run tests
         run: npm run test
