@@ -1,6 +1,6 @@
 import { GrantType } from '@kinde-oss/kinde-node-express';
 
-export const inDev = process.env.NODE_ENV == 'dev';
+export const inDev = process.env.NODE_ENV == 'development';
 
 export const kindeConfig = {
   clientId: process.env.KINDE_BACKEND_CLIENT_ID,
